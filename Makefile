@@ -3,17 +3,20 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
+#    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2024/12/03 11:19:54 by msoriano         ###   ########.fr        #
+#    Updated: 2025/01/09 17:31:59 by macastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
 SRC = src/main.c \
-		src/playground.c \
+		src/hooks.c \
+		src/image.c \
+		src/window.c \
+		#src/playground.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -39,5 +42,8 @@ fclean: clean
 	make fclean -C libft
 
 re: fclean all
+
+test: 		$(NAME)
+			./$(NAME) img/teapot.xpm
 
 .PHONY: all clean fclean re

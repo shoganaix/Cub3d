@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2024/12/17 18:35:15 by macastro         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:32:13 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,25 @@
 # include <mlx.h>
 //# include "mlx_linux/mlx.h"
 //# include "../libft/libft.h"
+
+typedef struct	s_game {
+	void	*mlx;
+	void	*win;
+}				t_game;
+
+typedef struct	s_image
+{
+	void      *mlximg;
+	char      *addr;
+	int       bits_per_pixel;
+	int       line_size;
+	int       endian;
+}   t_image;
+
+int	close_window(t_game *game);
+int	key_press_hndlr(int keycode, void *param);
+void paint_img(t_game game, char *img_path, int posX, int posY);
+
 
 # define VP_H		        1080			// viewport height
 # define VP_W		        1920			// viewport width

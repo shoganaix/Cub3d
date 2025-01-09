@@ -4,6 +4,7 @@
 # compiled obj
 *.o
 *.obj
+*.a
 
 # exec
 *.out
