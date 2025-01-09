@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hooks.c                                            :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/09 17:57:15 by macastro         ###   ########.fr       */
+/*   Updated: 2025/01/09 17:55:58 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-int	key_press_hndlr(int keycode, void *param)
+void	debug(char *msg)
 {
-    t_game *game;
+    ft_putstr_fd(ANSI_COLOR_YELLOW "", 2);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	ft_putstr_fd("" ANSI_COLOR_RESET, 2);
 
-    game = (t_game *)param;
-    debug_int("key pressed", keycode);
-    if (keycode == KEY_ESC)
-        close_window(game);
-    
-    if (keycode == KEY_A)
-        debug("pressed A");
-    if (keycode == KEY_S)
-        debug("pressed S");
-    if (keycode == KEY_W)
-        debug("pressed W");
-    if (keycode == KEY_D)
-        debug("pressed D");
+}
 
-    if (keycode == KEY_LEFT)
-        debug("pressed <-");
-    if (keycode == KEY_RIGHT)
-        debug("pressed ->");
-    return (0);
+void	debug_int(char *name_desc, int n)
+{
+	// if (!DEBUG)
+	// 	return ;
+	ft_putstr_fd(ANSI_COLOR_YELLOW "", 2);
+	write(2, name_desc, ft_strlen(name_desc));
+	write(2, " ", 1);
+	ft_putnbr_fd(n, 2);
+	write(2, "\n", 1);
+	ft_putstr_fd("" ANSI_COLOR_RESET, 2);
 }

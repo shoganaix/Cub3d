@@ -6,7 +6,7 @@
 #    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/01/09 17:31:59 by macastro         ###   ########.fr        #
+#    Updated: 2025/01/09 18:46:25 by macastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,11 @@ NAME = cub3D
 SRC = src/main.c \
 		src/hooks.c \
 		src/image.c \
+		src/map.c \
+		src/parse.c \
 		src/window.c \
-		#src/playground.c \
+		src/debug.c
+#src/playground.c
 
 OBJ = $(SRC:.c=.o)
 
