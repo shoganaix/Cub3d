@@ -1,3 +1,10 @@
+
+.vscode/
+
+# compiled obj
 *.o
+*.obj
+
+# exec
 *.out
 cub3D
