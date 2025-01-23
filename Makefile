@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
+#    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/01/09 18:46:25 by macastro         ###   ########.fr        #
+#    Updated: 2025/01/23 18:03:11 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
+NAMETEST = testing
 
 SRC = src/main.c \
 		src/hooks.c \
@@ -18,10 +19,22 @@ SRC = src/main.c \
 		src/map.c \
 		src/parse.c \
 		src/window.c \
+		src/error.c \
 		src/debug.c
 #src/playground.c
 
+TESTSRC = test/test_map.c \
+		src/hooks.c \
+		src/image.c \
+		src/map.c \
+		src/parse.c \
+		src/window.c \
+		src/error.c \
+		src/debug.c
+
+
 OBJ = $(SRC:.c=.o)
+TESTOBJ = $(TESTSRC:.c=.o)
 
 CC = cc
 
@@ -35,6 +48,11 @@ $(NAME): $(OBJ)
 	make -C libft
 	$(CC) $(OBJ) -Llibft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
 
+$(NAMETEST): $(TESTOBJ)
+	make -C mlx_linux
+	make -C libft
+	$(CC) $(TESTOBJ) -Llibft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAMETEST)
+
 clean:
 	rm -rfv $(OBJ)
 	make clean -C mlx_linux
@@ -46,7 +64,6 @@ fclean: clean
 
 re: fclean all
 
-test: 		$(NAME)
-			./$(NAME) img/teapot.xpm
+test: 		$(NAMETEST)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test

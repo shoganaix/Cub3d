@@ -3,53 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/09 18:48:53 by macastro         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:51:23 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	init_info(t_info *info)
+{
+	ft_bzero(&info, sizeof(info));
+	info->ceiling.r = -1;
+	info->ceiling.g = -1;
+	info->ceiling.b = -1;
+	info->floor.r = -1;
+	info->floor.g = -1;
+	info->floor.b = -1;
+}
 
-/**
- * 
- */
+void	destroy_info(t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (i < NUM_CARD)
+		free(info->textures[i++]);
+}
+
+	/**
+	 * check args : nargs, extension
+	 * read map file .cub
+	 * init game
+	 * draw <---
+	 * insert_hooks(win, prog);
+	 * mlx_loop(mlx);
+	 */
 int	main(int argc, char *argv[])
 {
-    t_game game;
-    
-    char	*img1 = "./img/test.xpm";
-    char	*img2 = "./img/teapot.xpm";
+	t_game	game;
+	t_info	info;
+	char	*img1 = "./img/test.xpm";
+	char	*img2 = "./img/teapot.xpm";
 
-    game.mlx = mlx_init();
-    game.win = mlx_new_window(game.mlx, VP_W, VP_H, WIN_NAME);
+	// check args
+	if (!check_args(argc, argv))
+		my_perror_exit("Not valid arguments");
+	// map
+	if (!check_map(argv[1], &info))
+		my_perror_exit("Error: Map failed");
+	// init
+	game.mlx = mlx_init();
+	game.win = mlx_new_window(game.mlx, VP_W, VP_H, WIN_NAME);
 
-    /**
-     * check args : nargs, extension
-     * read map file .cub
-     * init game
-     * draw <---
-     * insert_hooks(win, prog);
-     * mlx_loop(mlx);
-     */
+	// draw
+	paint_img(game, img1, 0, 0);
+	paint_img(game, img2, 250, 250);
 
-    // args
-    if (!check_args(argc, argv))
-        return (2); // terminate with error
-    // map
-    
-    // init
-    
-    // draw
-    paint_img(game, img1, 0, 0);
-    paint_img(game, img2, 250, 250);
-
-    // hooks
+	// hooks
 	mlx_hook(game.win, EVENT_KEYPRESS, 1L<<0, key_press_hndlr, &game);
-    mlx_hook(game.win, EVENT_CLOSEWINDOW, 0, close_window, &game);
-    
-    mlx_loop(game.mlx);
-    return(0);
+	mlx_hook(game.win, EVENT_CLOSEWINDOW, 0, close_window, &game);
+
+	mlx_loop(game.mlx);
+	return(0);
 }

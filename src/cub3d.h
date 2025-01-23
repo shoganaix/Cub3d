@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/09 18:28:28 by macastro         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:50:26 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-# include <mlx.h>
-//# include "mlx_linux/mlx.h"
+//# include <mlx.h>
+# include <fcntl.h>
+# include "../mlx_linux/mlx.h"
 # include "../libft/include/libft.h"
 
 /* WINDOW */
@@ -31,27 +32,60 @@ typedef struct	s_game {
 	void	*mlx;
 	void	*win;
 }				t_game;
+typedef struct	s_color
+{
+	int r;
+	int g;
+	int b;
+} t_color;
+
+typedef enum e_card
+{
+	NO,
+	SO,
+	WE,
+	EA,
+	NUM_CARD
+} t_card;
+
+typedef struct	s_info
+{
+	char	*textures[4];
+	t_color	floor;
+	t_color ceiling;
+}   t_info;
 
 typedef struct	s_image
 {
-	void      *mlximg;
-	char      *addr;
-	int       bits_per_pixel;
-	int       line_size;
-	int       endian;
+	void	*mlximg;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_size;
+	int		endian;
 }   t_image;
 
-int     close_window(t_game *game);
-int     key_press_hndlr(int keycode, void *param);
+int		close_window(t_game *game);
+int		key_press_hndlr(int keycode, void *param);
 
 
-void    paint_img(t_game game, char *img_path, int posX, int posY);
+void	paint_img(t_game game, char *img_path, int posX, int posY);
 
-void    debug(char *msg);
-void    debug_int(char *name_desc, int n);
+void	debug(char *msg);
+void	debug_int(char *name_desc, int n);
+void	debug_str(char *name_desc, char *str);
 
-t_bool check_args(int argn, char *args[]);
+t_bool	check_args(int argn, char *args[]);
 
+void	my_perror(char *msg);
+void	my_perror_exit(char *msg);
+void	my_perror_exit_st(char *msg, int err);
+void	my_perr_arg(char *msg, char *var_name);
+void	my_perr_arg_exit(char *msg, char *var_name);
+
+
+t_bool check_map(char *cubfile, t_info *info);
+t_bool check_texture(char *line, t_info *info, char *texture, t_card cp);
+char *next_word(char *line, int *len);
 
 /* EVENT */
 # define EVENT_KEYPRESS		2
