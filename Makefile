@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
+#    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/01/23 18:03:11 by msoriano         ###   ########.fr        #
+#    Updated: 2025/01/24 20:09:14 by macastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = src/main.c \
 		src/parse.c \
 		src/window.c \
 		src/error.c \
+		src/info.c \
 		src/debug.c
 #src/playground.c
 
@@ -30,6 +31,7 @@ TESTSRC = test/test_map.c \
 		src/parse.c \
 		src/window.c \
 		src/error.c \
+		src/info.c \
 		src/debug.c
 
 
@@ -60,6 +62,7 @@ clean:
 
 fclean: clean
 	rm -rfv $(NAME)
+	rm -rfv $(NAMETEST)
 	make fclean -C libft
 
 re: fclean all

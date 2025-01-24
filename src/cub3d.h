@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/23 18:50:26 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:54:52 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,13 @@ void	my_perror_exit_st(char *msg, int err);
 void	my_perr_arg(char *msg, char *var_name);
 void	my_perr_arg_exit(char *msg, char *var_name);
 
+void	init_info(t_info *info);
+void	destroy_info(t_info *info);
+void	show_info(t_info info);
 
 t_bool check_map(char *cubfile, t_info *info);
 t_bool check_texture(char *line, t_info *info, char *texture, t_card cp);
+t_bool	check_color(char *line, t_info *info, char *item);
 char *next_word(char *line, int *len);
 
 /* EVENT */

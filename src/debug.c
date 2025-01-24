@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/23 18:15:23 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:37:39 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	debug_str(char *name_desc, char *str)
 	// 	return ;
 	ft_putstr_fd(ANSI_COLOR_YELLOW "", 2);
 	write(2, name_desc, ft_strlen(name_desc));
-	write(2, " ", 1);
+	write(2, " [", 2);
 	ft_putstr_fd(str, 2);
-	write(2, "\n", 1);
+	write(2, "]\n", 2);
 	ft_putstr_fd("" ANSI_COLOR_RESET, 2);
 }

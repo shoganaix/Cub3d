@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/23 18:51:23 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:12:26 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	init_info(t_info *info)
-{
-	ft_bzero(&info, sizeof(info));
-	info->ceiling.r = -1;
-	info->ceiling.g = -1;
-	info->ceiling.b = -1;
-	info->floor.r = -1;
-	info->floor.g = -1;
-	info->floor.b = -1;
-}
-
-void	destroy_info(t_info *info)
-{
-	int	i;
-
-	i = 0;
-	while (i < NUM_CARD)
-		free(info->textures[i++]);
-}
 
 	/**
 	 * check args : nargs, extension
