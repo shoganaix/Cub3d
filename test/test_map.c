@@ -197,10 +197,10 @@ void test_check_color_nl()
 
 
 /********** check_map ******** */
-void test_check_map()
+void test_check_map_ok_input()
 {
-	t_info info;
 	char *file = "maps/map1.cub";
+	t_info info;
 
 	t_bool b = check_map(file, &info);
 	assert(b == TRUE);
@@ -220,6 +220,25 @@ void test_check_map()
 	assert(info.ceiling.b == 0);
 	printf("check_map - info ok passed 🌱\n");
 
+}
+
+void test_check_map_random()
+{
+//	char *file = "test/map_info_t1";
+	char *file = "maps/map1.cub";
+
+	t_info info;
+	t_bool b = check_map(file, &info);
+	if (b)
+	{
+		printf("check_map FILE:%s - read\n", file);
+		show_info(info);
+	}
+	else
+	{
+		printf("check_map FILE:%s - error\n", file);
+		show_info(info);
+	}
 }
 
 int main()
@@ -243,5 +262,6 @@ int main()
 	test_check_color_chars_in_color();
 	test_check_color_nl();
 
-	test_check_map();
+	test_check_map_ok_input();
+	test_check_map_random();
 }

@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/24 20:07:42 by macastro         ###   ########.fr       */
+/*   Updated: 2025/01/24 20:28:12 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,20 +115,13 @@ t_bool check_line(char *line, t_info *info)
 	return FALSE;
 }
 
-//t_bool check_map_info()
-
-t_bool check_map(char *cubfile, t_info *info)
+t_bool check_map_info(int fd_in, t_info *info)
 {
-	int		fdin;
 	char	*line;
 	t_bool	is_complete;
 
-	fdin = open(cubfile, O_RDONLY);
-	if (fdin == -1)
-		my_perror_exit("Error. File not found or allowed.");
-	init_info(info);
 	is_complete = FALSE;
-	line = get_next_line(fdin);
+	line = get_next_line(fd_in);
 	while (line && !is_complete)
 	{
 		if (ft_strcmp(line, "\n") != 0)
@@ -143,7 +136,22 @@ t_bool check_map(char *cubfile, t_info *info)
 					&& (info->floor.r != -1));
 		}
 		free(line);
-		line = get_next_line(fdin);
+		line = get_next_line(fd_in);
 	}
+	return (is_complete);
+}
+
+t_bool check_map(char *cubfile, t_info *info)
+{
+	int		fdin;
+	t_bool	is_complete;
+
+	fdin = open(cubfile, O_RDONLY);
+	if (fdin == -1)
+		my_perror_exit("Error. File not found or allowed.");
+	init_info(info);
+	is_complete = check_map_info(fdin, info);
+	debug_int("is_complete  ---", is_complete);
+	close(fdin);
 	return (is_complete);
 }
