@@ -11,35 +11,28 @@
 # **************************************************************************** #
 
 NAME = cub3D
-NAMETEST = testing
-
-SRC = src/main.c \
-		src/hooks.c \
-		src/image.c \
-		src/map.c \
-		src/parse.c \
-		src/window.c \
-		src/error.c \
-		src/info.c \
-		src/debug.c
-#src/playground.c
-
-TESTSRC = test/test_map.c \
-		src/hooks.c \
-		src/image.c \
-		src/map.c \
-		src/parse.c \
-		src/window.c \
-		src/error.c \
-		src/info.c \
-		src/debug.c
-
-
-OBJ = $(SRC:.c=.o)
-TESTOBJ = $(TESTSRC:.c=.o)
+NAME_T = testing
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
+SRCFILES = src/hooks.c \
+		src/image.c \
+		src/map.c \
+		src/parse.c \
+		src/window.c \
+		src/error.c \
+		src/info.c \
+		src/debug.c
+
+TEST_SRC = test/test_map.c 
+
+SRC =  src/main.c $(SRCFILES)
+#src/playground.c
+SRC_T = $(TEST_SRC) $(SRCFILES)
+
+OBJ = $(SRC:%.c=build/%.o)
+OBJ_T = $(SRC_T:%.c=build/%.o)
 
 LIBFT = -Llibft -lft # Lib path, lib link
 # LIBFT	= $(LIBFT_PATH)/libft.a
@@ -73,28 +66,29 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(LIBFT) $(MLX_LIB) -o $(NAME)
 
 
-%.o: %.c
-# $(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -g3 -O3 -c $< -o $@
+build/%.o: %.c
+	@mkdir -p $(dir $@)
+#	$(CC) -Wall -Wextra -Werror -I/usr/include -Imlx_linux -g3 -O3 -c $< -o $@
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAMETEST): $(TESTOBJ)
+$(NAME_T): $(OBJ_T)
 	make -C $(MLX_PATH)
 	make -C libft
-#	$(CC) $(TESTOBJ) -Llibft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAMETEST)
-	$(CC) $(TESTOBJ) $(LIBFT) $(MLX_LIB) -o $(NAMETEST)
+#	$(CC) $(OBJ_T) -Llibft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME_T)
+	$(CC) $(OBJ_T) $(LIBFT) $(MLX_LIB) -o $(NAME_T)
 
 clean:
-	rm -rfv $(OBJ)
+	rm -rfv build
 	make clean -C $(MLX_PATH)
 	make clean -C libft
 
 fclean: clean
 	rm -rfv $(NAME)
-	rm -rfv $(NAMETEST)
+	rm -rfv $(NAME_T)
 	make fclean -C libft
 
 re: fclean all
 
-test: 		$(NAMETEST)
+test: 		$(NAME_T)
 
 .PHONY: all clean fclean re test
