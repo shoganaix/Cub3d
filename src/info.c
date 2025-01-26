@@ -31,7 +31,14 @@ void	destroy_info(t_info *info)
 
 	i = 0;
 	while (i < NUM_CARD)
-		free(info->textures[i++]);
+	{
+		if (info->textures[i])
+		{
+			free(info->textures[i]);
+			info->textures[i] = NULL;
+		}
+		++i;
+	}
 }
 
 void	show_info(t_info info)

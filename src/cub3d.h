@@ -23,6 +23,8 @@
 # include "../mlx_linux/mlx.h"
 # include "../libft/include/libft.h"
 
+# define DEBUG		0 // debug flag
+
 /* WINDOW */
 # define VP_H		        1080			// viewport height
 # define VP_W		        1920			// viewport width

@@ -49,7 +49,7 @@ void test_read_texture_line_sp_end()
 	ft_bzero(&info, sizeof(info));
 	t_bool b = check_texture(line, &info, "NO", NO);
 	assert(b == FALSE);
-	printf("check_texture - end w/spaces passed 🌱\n");
+	printf("check_texture - end w/spaces at the end passed 🌱\n");
 }
 
 // textures consist of 2 words only
@@ -218,27 +218,20 @@ void test_check_map_ok_input()
 	assert(info.ceiling.r == 225);
 	assert(info.ceiling.g == 30);
 	assert(info.ceiling.b == 0);
+	destroy_info(&info);
 	printf("check_map - info ok passed 🌱\n");
-
 }
 
 void test_check_map_random()
 {
-//	char *file = "test/map_info_t1";
-	char *file = "maps/map1.cub";
-
+	char *file = "test/map_info_t1";
+	// char *file = "maps/map1.cub";
 	t_info info;
+
 	t_bool b = check_map(file, &info);
-	if (b)
-	{
-		printf("check_map FILE:%s - read\n", file);
-		show_info(info);
-	}
-	else
-	{
-		printf("check_map FILE:%s - error\n", file);
-		show_info(info);
-	}
+	printf("Check map FILE:'%s'. Result: %i\n", file, b);
+	show_info(info);
+	
 }
 
 int main()
