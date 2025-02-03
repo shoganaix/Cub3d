@@ -9,8 +9,8 @@ void test_read_texture_line_notok()
 	char *line = "ENO  ./path-to-no";
 
 	t_info info;
-	t_bool b = check_texture(line, &info, "NO", NO);
-	assert(b == FALSE);
+	t_errcode b = check_texture(line, &info, NO);
+	assert(b == ERR_CUBINFOFORMAT);
 	printf("check_texture - notok input passed 🌱\n");
 }
 
@@ -20,8 +20,8 @@ void test_read_texture_line_ok()
 
 	t_info info;
 	ft_bzero(&info, sizeof(info));
-	t_bool b = check_texture(line, &info, "NO", NO);
-	assert(b == TRUE);
+	t_errcode b = check_texture(line, &info, NO);
+	assert(b == ERR_OK);
 	assert(info.textures[NO] != NULL);
 	assert(ft_strcmp(info.textures[NO], "./path-to-no") == 0);
 	printf("check_texture - ok input passed 🌱\n");
@@ -34,8 +34,8 @@ void test_read_texture_line_sp_begin()
 
 	t_info info;
 	ft_bzero(&info, sizeof(info));
-	t_bool b = check_texture(line, &info, "NO", NO);
-	assert(b == FALSE);
+	t_errcode b = check_texture(line, &info, NO);
+	assert(b == ERR_CUBINFOFORMAT);
 	assert(info.textures[NO] == NULL);
 	printf("check_texture - start w/spaces passed 🌱\n");
 }
@@ -47,8 +47,8 @@ void test_read_texture_line_sp_end()
 
 	t_info info;
 	ft_bzero(&info, sizeof(info));
-	t_bool b = check_texture(line, &info, "NO", NO);
-	assert(b == FALSE);
+	t_errcode b = check_texture(line, &info, NO);
+	assert(b == ERR_CUBINFOFORMAT);
 	printf("check_texture - end w/spaces at the end passed 🌱\n");
 }
 
@@ -59,8 +59,8 @@ void test_read_texture_line_more_words()
 
 	t_info info;
 	ft_bzero(&info, sizeof(info));
-	t_bool b = check_texture(line, &info, "NO", NO);
-	assert(b == FALSE);
+	t_errcode b = check_texture(line, &info, NO);
+	assert(b == ERR_CUBINFOFORMAT);
 	printf("check_texture - more than 2 words passed 🌱\n");
 }
 // already filled that texture
@@ -71,8 +71,8 @@ void test_read_texture_line_filled()
 	t_info info;
 	ft_bzero(&info, sizeof(info));
 	info.textures[NO] = "filled-already";
-	t_bool b = check_texture(line, &info, "NO", NO);
-	assert(b == FALSE);
+	t_errcode b = check_texture(line, &info, NO);
+	assert(b == ERR_CUBINFODUPPED);
 	printf("check_texture - already filled passed 🌱\n");
 }
 
@@ -202,8 +202,8 @@ void test_check_map_ok_input()
 	char *file = "maps/map1.cub";
 	t_info info;
 
-	t_bool b = check_map(file, &info);
-	assert(b == TRUE);
+	t_errcode b = check_map(file, &info);
+	assert(b == ERR_OK);
 	assert(info.textures[NO] != NULL);
 	assert(info.textures[SO] != NULL);
 	assert(info.textures[WE] != NULL);
@@ -224,11 +224,14 @@ void test_check_map_ok_input()
 
 void test_check_map_random()
 {
+	printf("test_check_map_random - init\n");
+
 	char *file = "test/map_info_t1";
 	// char *file = "maps/map1.cub";
 	t_info info;
 
-	t_bool b = check_map(file, &info);
+	t_errcode b = check_map(file, &info);
+	my_perrorcode(b, "testing");
 	printf("Check map FILE:'%s'. Result: %i\n", file, b);
 	show_info(info);
 	

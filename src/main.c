@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/24 19:12:26 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:33:31 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	main(int argc, char *argv[])
 	t_info	info;
 	char	*img1 = "./img/test.xpm";
 	char	*img2 = "./img/teapot.xpm";
+	t_errcode e;
 
 	// check args
-	if (!check_args(argc, argv))
-		my_perror_exit("Not valid arguments");
+	e = check_args(argc, argv);
+	if (e != ERR_OK)
+		my_perrorcode_exit(e, NULL);
 	// map
 	if (!check_map(argv[1], &info))
 		my_perror_exit("Error: Map failed");

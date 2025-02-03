@@ -6,21 +6,21 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:27:48 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/23 16:42:04 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 12:37:21 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_bool can_open (const char *file_name)
+t_bool	can_open(const char *file_name)
 {
 	int			fdin;
 
 	fdin = open(file_name, O_RDONLY);
 	if (fdin < 0)
-		return (my_perror("Error: input file error at open"), FALSE);
+		return (FALSE);
 	close(fdin);
-	return TRUE;
+	return (TRUE);
 }
 
 t_bool check_fmt_extension(const char *file_name, char *ext_w_dot)
@@ -38,14 +38,14 @@ t_bool check_fmt_extension(const char *file_name, char *ext_w_dot)
  * - extension
  * - file existence, can be read
  */
-t_bool check_args(int argn, char *args[])
+t_errcode check_args(int argn, char *args[])
 {
 	if (argn != 2)
-		return FALSE;
+		return ERR_ARGNUM;
 	if (!check_fmt_extension(args[1], ".cub"))
-		return FALSE;
+		return ERR_ARGFORMAT;
 	if (!can_open(args[1]))
-		return FALSE;
-	return TRUE;
+		return ERR_ARGNOTFOUND;
+	return ERR_OK;
 }
 

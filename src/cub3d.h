@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/24 19:54:52 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:11:14 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ typedef enum e_card
 	NUM_CARD
 } t_card;
 
+typedef enum e_errcode
+{
+	ERR_OK,
+	ERR_ARGNUM,
+	ERR_ARGFORMAT,
+	ERR_ARGNOTFOUND,
+	ERR_CUBINFOFORMAT,
+	ERR_CUBINFOMISSING,
+	ERR_CUBINFODUPPED,
+	NUM_ERR
+} t_errcode;
+
+
 typedef struct	s_info
 {
 	char	*textures[4];
@@ -76,20 +89,23 @@ void	debug(char *msg);
 void	debug_int(char *name_desc, int n);
 void	debug_str(char *name_desc, char *str);
 
-t_bool	check_args(int argn, char *args[]);
+t_errcode	check_args(int argn, char *args[]);
 
 void	my_perror(char *msg);
 void	my_perror_exit(char *msg);
 void	my_perror_exit_st(char *msg, int err);
+void	my_perrorcode(t_errcode err, char *msg);
+void	my_perrorcode_exit(t_errcode err, char *msg);
 void	my_perr_arg(char *msg, char *var_name);
 void	my_perr_arg_exit(char *msg, char *var_name);
 
 void	init_info(t_info *info);
 void	destroy_info(t_info *info);
 void	show_info(t_info info);
+char	*cardinal_tostr(t_card c);
 
-t_bool check_map(char *cubfile, t_info *info);
-t_bool check_texture(char *line, t_info *info, char *texture, t_card cp);
+t_errcode check_map(char *cubfile, t_info *info);
+t_errcode check_texture(char *line, t_info *info, t_card cp);
 t_bool	check_color(char *line, t_info *info, char *item);
 char *next_word(char *line, int *len);
 

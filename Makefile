@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
+#    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/01/24 20:09:14 by macastro         ###   ########.fr        #
+#    Updated: 2025/02/03 11:50:11 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ NAME_T = testing
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
+# common
 SRCFILES = src/hooks.c \
 		src/image.c \
 		src/map.c \

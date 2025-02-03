@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/01/24 19:54:29 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:06:27 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	destroy_info(t_info *info)
 
 void	show_info(t_info info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < NUM_CARD)
@@ -54,6 +54,21 @@ void	show_info(t_info info)
 			printf("\t%i texture: NULL\n", i);
 		i++;
 	}
-	printf("\tceiling %i %i %i\n", info.ceiling.r, info.ceiling.g, info.ceiling.b);
+	printf("\tceiling %i %i %i\n",
+		info.ceiling.r, info.ceiling.g, info.ceiling.b);
 	printf("\tfloor %i %i %i\n", info.floor.r, info.floor.g, info.floor.b);
+}
+
+char	*cardinal_tostr(t_card c)
+{
+	if (c == NO)
+		return ("NO");
+	if (c == SO)
+		return ("SO");
+	if (c == WE)
+		return ("WE");
+	if (c == EA)
+		return ("EA");
+	my_perror_exit("Unexpected cardinal");
+	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/24 20:28:12 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:05:39 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,14 @@ char	*next_word(char *line, int *len)
 	return (w);
 }
 
-t_bool	check_texture(char *line, t_info *info, char *texture, t_card cp)
+t_errcode	check_texture(char *line, t_info *info, t_card cp)
 {
-	debug_str("-- check_texture", texture);
 	char	*first;
 	int		i;
 
 	i = 0;
 	first = next_word(line, &i);
-	if (ft_strcmp(first, texture) == 0)
+	if (ft_strcmp(first, cardinal_tostr(cp)) == 0)
 	{
 		free(first);
 		while (is_space(line[i]))
@@ -40,15 +39,15 @@ t_bool	check_texture(char *line, t_info *info, char *texture, t_card cp)
 		if (line[i])
 		{
 			if (info->textures[cp] != NULL)
-				return (debug("already complete"), FALSE);
+				return (ERR_CUBINFODUPPED);
 			info->textures[cp] = next_word(&line[i], &i);
 		}
-		if (line[i])
-			return (debug("some irrelevant info at the end of line"), FALSE);
-		return (debug("return !=null"),info->textures[cp] != NULL);
+		if (line[i] || info->textures[cp] == NULL)
+			return (ERR_CUBINFOFORMAT);
+		return (ERR_OK);
 	}
 	free(first);
-	return (debug("wrong code"), FALSE);
+	return (ERR_CUBINFOFORMAT);
 }
 
 
@@ -97,39 +96,42 @@ t_bool	check_color(char *line, t_info *info, char *item)
 	return (FALSE);
 }
 
-
-t_bool check_line(char *line, t_info *info)
+t_errcode check_line(char *line, t_info *info)
 {
+	t_errcode	e;
+	t_card		cp;
+
 	line = ft_strtrim(line, "\n");
-	if (check_texture(line, info, "NO", NO))
-		return TRUE;
-	if (check_texture(line, info, "SO", SO))
-		return TRUE;
-	if (check_texture(line, info, "WE", WE))
-		return TRUE;
-	if (check_texture(line, info, "EA", EA))
-		return TRUE;
+	cp = 0;
+	while (cp < NUM_CARD)
+	{
+		e = check_texture(line, info, cp);
+		if (e != ERR_CUBINFOFORMAT)
+			return (e);
+		cp++;
+	}
 	if (check_color(line, info, "C"))
-		return TRUE;
+		return (ERR_OK);
 	if (check_color(line, info, "F"))
-		return TRUE;
+		return (ERR_OK);
 	debug("wrong input");
-	return FALSE;
+	return (ERR_CUBINFOFORMAT);
 }
 
-t_bool check_map_info(int fd_in, t_info *info, char **line)
+t_errcode	check_map_info(int fd_in, t_info *info, char **line)
 {
-	t_bool	is_complete;
+	t_bool		is_complete;
+	t_errcode	e;
 
 	is_complete = FALSE;
-	
+	e = ERR_OK;
 	while (*line && !is_complete)
 	{
 		if (ft_strcmp(*line, "\n") != 0)
 		{
-			debug_str("line", *line);
-			if (!check_line(*line, info))
-				return (debug("check line failed"), FALSE);
+			e = check_line(*line, info);
+			if (e != ERR_OK)
+				return (e);
 			is_complete = ((info->textures[NO] != NULL)
 					&& (info->textures[SO] != NULL)
 					&& (info->textures[WE] != NULL)
@@ -140,28 +142,29 @@ t_bool check_map_info(int fd_in, t_info *info, char **line)
 		free(*line);
 		*line = get_next_line(fd_in);
 	}
-	return (is_complete);
+	if (!is_complete)
+		return (ERR_CUBINFOMISSING);
+	return (e);
 }
 
-t_bool check_map(char *cubfile, t_info *info)
+t_errcode check_map(char *cubfile, t_info *info)
 {
 	int		fdin;
-	t_bool	is_complete;
 	char	*line;
+	t_errcode e;
 
 	init_info(info);
 	fdin = open(cubfile, O_RDONLY);
 	if (fdin == -1)
-		my_perror_exit("Error. File not found or allowed.");
+		return (ERR_ARGNOTFOUND);
 	line = get_next_line(fdin);
-	is_complete = check_map_info(fdin, info, &line);
+	e = check_map_info(fdin, info, &line);
 	while (line)
 	{
 		free(line);
 		line = NULL;
 		line = get_next_line(fdin);
 	}
-	debug_int("is_complete  ---", is_complete);
 	close(fdin);
-	return (is_complete);
+	return (e);
 }
