@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:10:36 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:15:01 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:44:43 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	my_perrorcode(t_errcode err, char *msg)
 		my_perror("Error: argument must be a cub file.");
 	else if (err == ERR_ARGNOTFOUND)
 		my_perror("Error: file not found. Check permissions.");
-
 	else if (err == ERR_CUBINFOFORMAT)
 		my_perror("Error: not valid format in cub info.");
 	else if (err == ERR_CUBINFOMISSING)
@@ -54,21 +53,4 @@ void	my_perror_exit_st(char *msg, int err)
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
 	exit(err);
-}
-
-void	my_perr_arg(char *msg, char *var_name)
-{
-	write(2, msg, ft_strlen(msg));
-	write(2, ": ", 2);
-	write(2, var_name, ft_strlen(var_name));
-	write(2, "\n", 1);
-}
-
-void	my_perr_arg_exit(char *msg, char *var_name)
-{
-	write(2, msg, ft_strlen(msg));
-	write(2, ": ", 2);
-	write(2, var_name, ft_strlen(var_name));
-	write(2, "\n", 1);
-	exit(1);
 }

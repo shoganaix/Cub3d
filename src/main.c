@@ -6,20 +6,20 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 12:33:31 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:48:12 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-	/**
-	 * check args : nargs, extension
-	 * read map file .cub
-	 * init game
-	 * draw <---
-	 * insert_hooks(win, prog);
-	 * mlx_loop(mlx);
-	 */
+/**
+ * check args : nargs, extension
+ * read map file .cub
+ * init game
+ * draw <---
+ * insert_hooks(win, prog);
+ * mlx_loop(mlx);
+ */
 int	main(int argc, char *argv[])
 {
 	t_game	game;
@@ -33,8 +33,9 @@ int	main(int argc, char *argv[])
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
 	// map
-	if (!check_map(argv[1], &info))
-		my_perror_exit("Error: Map failed");
+	e = check_map(argv[1], &info);
+	if (e != ERR_OK)
+		my_perrorcode_exit(e, NULL);
 	// init
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, VP_W, VP_H, WIN_NAME);
@@ -44,9 +45,9 @@ int	main(int argc, char *argv[])
 	paint_img(game, img2, 250, 250);
 
 	// hooks
-	mlx_hook(game.win, EVENT_KEYPRESS, 1L<<0, key_press_hndlr, &game);
+	mlx_hook(game.win, EVENT_KEYPRESS, 1L << 0, key_press_hndlr, &game);
 	mlx_hook(game.win, EVENT_CLOSEWINDOW, 0, close_window, &game);
 
 	mlx_loop(game.mlx);
-	return(0);
+	return (0);
 }

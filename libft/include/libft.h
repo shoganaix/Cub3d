@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:33:50 by macastro          #+#    #+#             */
-/*   Updated: 2024/10/07 15:55:57 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:09:04 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ char	*ft_strjoin_inplace(char **s1, const char *s2);
 char	*ft_strjoin_inplace2(char **s1, char **s2);
 char	*ft_strappendc(char *s1, const char c);
 char	*ft_strappendc_inplace(char *s1, const char c);
-char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim(char *s, char const *set);
+char	*ft_strtriml(char *s, char const *set);
+char	*ft_strtrimr(char *s, char const *set);
 int		ft_count_words(const char *s, char sep);
 char	**ft_split(char const *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));

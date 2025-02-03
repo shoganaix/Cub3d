@@ -6,23 +6,11 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:05:39 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:07:36 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
-
-char	*next_word(char *line, int *len)
-{
-	char	*w;
-
-	if (!ft_strchri(line, ' '))
-		w = ft_strdup(line);
-	else
-		w = ft_substr(line, 0, ft_strchri(line, ' '));
-	*len += ft_strlen(w);
-	return (w);
-}
+#include "cub3d.h"
 
 t_errcode	check_texture(char *line, t_info *info, t_card cp)
 {
@@ -50,53 +38,36 @@ t_errcode	check_texture(char *line, t_info *info, t_card cp)
 	return (ERR_CUBINFOFORMAT);
 }
 
-
-t_bool color_val_ok(char *s, int *v)
+t_errcode	check_color(char *line, char *item, t_color *color)
 {
-	if (!s) 
-		return (FALSE);
-	if (ft_atoi_secure(s, v) && *v >= 0 && *v <= 255)
-		return (TRUE);
-	return (FALSE);
-}
-
-t_bool	check_color(char *line, t_info *info, char *item)
-{
-	debug_str("-- check_color", item);
 	char	*first;
 	int		i;
-	char **strs;
-	t_color	*color;
+	char	**strs;
 
-	if (ft_strcmp(item, "C") == 0)
-		color = &info->ceiling;
-	if (ft_strcmp(item, "F") == 0)
-		color = &info->floor;
 	i = 0;
 	first = next_word(line, &i);
 	if (ft_strcmp(first, item) != 0)
-		return (debug("wrong code"), free(first), FALSE);
+		return (free(first), ERR_CUBINFOFORMAT);
 	free(first);
 	while (is_space(line[i]))
 		i++;
 	if (line[i])
 	{
 		if (color->r != -1)
-			return (debug("already filled"), FALSE);
+			return (ERR_CUBINFODUPPED);
 		strs = ft_split(&line[i], ',');
-		if (!(color_val_ok(strs[0], &color->r) 
-			&& color_val_ok(strs[1], &color->g)
-			&& color_val_ok(strs[2], &color->b)))
-			return (debug("bad format color"), ft_free_arrstr(strs), FALSE);
+		if (!(color_val_ok(strs[0], &color->r)
+				&& color_val_ok(strs[1], &color->g)
+				&& color_val_ok(strs[2], &color->b)))
+			return (ft_free_arrstr(strs), ERR_CUBINFOFORMAT);
 		if (strs[3])
-			return (debug("more than needed"), ft_free_arrstr(strs), FALSE);
-		return (ft_free_arrstr(strs), TRUE);
+			return (ft_free_arrstr(strs), ERR_CUBINFOFORMAT);
+		return (ft_free_arrstr(strs), ERR_OK);
 	}
-	debug("no color given for the code");
-	return (FALSE);
+	return (ERR_CUBINFOFORMAT);
 }
 
-t_errcode check_line(char *line, t_info *info)
+t_errcode	check_line(char *line, t_info *info)
 {
 	t_errcode	e;
 	t_card		cp;
@@ -110,11 +81,12 @@ t_errcode check_line(char *line, t_info *info)
 			return (e);
 		cp++;
 	}
-	if (check_color(line, info, "C"))
-		return (ERR_OK);
-	if (check_color(line, info, "F"))
-		return (ERR_OK);
-	debug("wrong input");
+	e = check_color(line, "C", &info->ceiling);
+	if (e != ERR_CUBINFOFORMAT)
+		return (e);
+	e = check_color(line, "F", &info->floor);
+	if (e != ERR_CUBINFOFORMAT)
+		return (e);
 	return (ERR_CUBINFOFORMAT);
 }
 
@@ -147,7 +119,7 @@ t_errcode	check_map_info(int fd_in, t_info *info, char **line)
 	return (e);
 }
 
-t_errcode check_map(char *cubfile, t_info *info)
+t_errcode	check_map(char *cubfile, t_info *info)
 {
 	int		fdin;
 	char	*line;

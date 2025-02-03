@@ -6,7 +6,7 @@
 #    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/02/03 11:50:11 by msoriano         ###   ########.fr        #
+#    Updated: 2025/02/03 13:22:12 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCFILES = src/hooks.c \
 		src/parse.c \
 		src/window.c \
 		src/error.c \
+		src/error2.c \
 		src/info.c \
 		src/debug.c
 

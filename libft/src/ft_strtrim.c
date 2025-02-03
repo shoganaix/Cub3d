@@ -3,33 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:48:08 by macastro          #+#    #+#             */
-/*   Updated: 2024/10/16 18:41:51 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:09:20 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-char	*ft_strtrim(char const *s1, char const *set)
+static int	c_in_set(char c, char const *set)
 {
-	int		start;
-	int		len;
-	char	*ptr;
+	return (ft_strchr(set, c) != NULL);
+}
 
-	len = ft_strlen(s1);
-	start = 0;
-	while (ft_strchr(set, s1[start]) && start < len)
-	{
-		start++;
-	}
-	len--;
-	while (len > start && ft_strchr(set, s1[len]))
-		len--;
-	ptr = (char *)ft_calloc(len - start + 2, 1);
-	if (!ptr)
-		return (NULL);
-	ft_strlcpy(ptr, s1 + start, len - start + 2);
-	return (ptr);
+char	*ft_strtriml(char *s, char const *set)
+{
+	while (c_in_set(*s, set))
+		s++;
+	return (s);
+}
+
+char	*ft_strtrimr(char *s, char const *set)
+{
+	char	*back;
+
+	back = s + ft_strlen(s);
+	back--;
+	while (c_in_set(*back, set))
+		back--;
+	*(back + 1) = '\0';
+	return (s);
+}
+
+char	*ft_strtrim(char *s, char const *set)
+{
+	return (ft_strtrimr(ft_strtriml(s, set), set));
 }

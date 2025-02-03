@@ -3,25 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/01/24 19:37:39 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:46:27 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 void	debug(char *msg)
 {
 	if (!DEBUG)
 		return ;
-    ft_putstr_fd(ANSI_COLOR_YELLOW "", 2);
+	ft_putstr_fd(ANSI_COLOR_YELLOW "", 2);
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
 	ft_putstr_fd("" ANSI_COLOR_RESET, 2);
-
 }
 
 void	debug_int(char *name_desc, int n)

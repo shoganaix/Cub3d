@@ -111,8 +111,8 @@ void test_check_color_ok()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == TRUE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_OK);
 	assert(info.ceiling.r == 125);
 	assert(info.ceiling.g == 127);
 	assert(info.ceiling.b == 124);
@@ -126,8 +126,8 @@ void test_check_color_sp()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == TRUE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_OK);
 	assert(info.ceiling.r == 125);
 	assert(info.ceiling.g == 127);
 	assert(info.ceiling.b == 124);
@@ -141,8 +141,8 @@ void test_check_color_wrong()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == FALSE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_CUBINFOFORMAT);
 	assert(info.ceiling.r == -1);
 
 	printf("check_color - wrong input passed 🌱\n");
@@ -154,8 +154,8 @@ void test_check_color_more_colors()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == FALSE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_CUBINFOFORMAT);
 
 	printf("check_color - more colors passed 🌱\n");
 }
@@ -166,8 +166,8 @@ void test_check_color_no_comma()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == FALSE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_CUBINFOFORMAT);
 
 	printf("check_color - no commas passed 🌱\n");
 }
@@ -177,8 +177,8 @@ void test_check_color_chars_in_color()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == FALSE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_CUBINFOFORMAT);
 
 	printf("check_color - chars in color passed 🌱\n");
 }
@@ -189,12 +189,23 @@ void test_check_color_nl()
 	t_info info;
 	init_info(&info);
 
-	t_bool b = check_color(line, &info, "C");
-	assert(b == FALSE);
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_CUBINFOFORMAT);
 
 	printf("check_color - ok input w/nl at the end passed 🌱\n");
 }
 
+void test_read_color_line_filled()
+{
+	char *line = "C    125,127,124\n";
+
+	t_info info;
+	ft_bzero(&info, sizeof(info));
+	info.ceiling = (t_color){.r=3, .g=45, .b=344};
+	t_errcode b = check_color(line, "C", &info.ceiling);
+	assert(b == ERR_CUBINFODUPPED);
+	printf("check_color - already filled passed 🌱\n");
+}
 
 /********** check_map ******** */
 void test_check_map_ok_input()
@@ -257,6 +268,7 @@ int main()
 	test_check_color_no_comma();
 	test_check_color_chars_in_color();
 	test_check_color_nl();
+	test_read_color_line_filled();
 
 	test_check_map_ok_input();
 	test_check_map_random();

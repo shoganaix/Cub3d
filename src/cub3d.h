@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:11:14 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 13:49:07 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@
 # define VP_W		        1920			// viewport width
 # define WIN_NAME           ".:++### CUB3D ###++:."
 
-typedef struct	s_game {
+typedef struct s_game
+{
 	void	*mlx;
 	void	*win;
-}				t_game;
-typedef struct	s_color
+}	t_game;
+
+typedef struct s_color
 {
-	int r;
-	int g;
-	int b;
-} t_color;
+	int	r;
+	int	g;
+	int	b;
+}	t_color;
 
 typedef enum e_card
 {
@@ -48,7 +50,7 @@ typedef enum e_card
 	WE,
 	EA,
 	NUM_CARD
-} t_card;
+}	t_card;
 
 typedef enum e_errcode
 {
@@ -60,54 +62,54 @@ typedef enum e_errcode
 	ERR_CUBINFOMISSING,
 	ERR_CUBINFODUPPED,
 	NUM_ERR
-} t_errcode;
+}	t_errcode;
 
 
-typedef struct	s_info
+typedef struct s_info
 {
 	char	*textures[4];
 	t_color	floor;
-	t_color ceiling;
-}   t_info;
+	t_color	ceiling;
+}	t_info;
 
-typedef struct	s_image
+typedef struct s_image
 {
 	void	*mlximg;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_size;
 	int		endian;
-}   t_image;
+}	t_image;
 
-int		close_window(t_game *game);
-int		key_press_hndlr(int keycode, void *param);
+int			close_window(t_game *game);
+int			key_press_hndlr(int keycode, void *param);
 
+void		paint_img(t_game game, char *img_path, int posX, int posY);
 
-void	paint_img(t_game game, char *img_path, int posX, int posY);
-
-void	debug(char *msg);
-void	debug_int(char *name_desc, int n);
-void	debug_str(char *name_desc, char *str);
+void		debug(char *msg);
+void		debug_int(char *name_desc, int n);
+void		debug_str(char *name_desc, char *str);
 
 t_errcode	check_args(int argn, char *args[]);
 
-void	my_perror(char *msg);
-void	my_perror_exit(char *msg);
-void	my_perror_exit_st(char *msg, int err);
-void	my_perrorcode(t_errcode err, char *msg);
-void	my_perrorcode_exit(t_errcode err, char *msg);
-void	my_perr_arg(char *msg, char *var_name);
-void	my_perr_arg_exit(char *msg, char *var_name);
+void		my_perror(char *msg);
+void		my_perror_exit(char *msg);
+void		my_perror_exit_st(char *msg, int err);
+void		my_perrorcode(t_errcode err, char *msg);
+void		my_perrorcode_exit(t_errcode err, char *msg);
+void		my_perr_arg(char *msg, char *var_name);
+void		my_perr_arg_exit(char *msg, char *var_name);
 
-void	init_info(t_info *info);
-void	destroy_info(t_info *info);
-void	show_info(t_info info);
-char	*cardinal_tostr(t_card c);
+void		init_info(t_info *info);
+void		destroy_info(t_info *info);
+void		show_info(t_info info);
+char		*cardinal_tostr(t_card c);
 
-t_errcode check_map(char *cubfile, t_info *info);
-t_errcode check_texture(char *line, t_info *info, t_card cp);
-t_bool	check_color(char *line, t_info *info, char *item);
-char *next_word(char *line, int *len);
+t_errcode	check_map(char *cubfile, t_info *info);
+t_errcode	check_texture(char *line, t_info *info, t_card cp);
+t_errcode	check_color(char *line, char *item, t_color *color);
+char		*next_word(char *line, int *len);
+t_bool		color_val_ok(char *s, int *v);
 
 /* EVENT */
 # define EVENT_KEYPRESS		2
