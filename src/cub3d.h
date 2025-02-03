@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:49:07 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:27:54 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../mlx_linux/mlx.h"
 # include "../libft/include/libft.h"
 
-# define DEBUG		0 // debug flag
+# define DEBUG		1 // debug flag
 
 /* WINDOW */
 # define VP_H		        1080			// viewport height
@@ -61,6 +61,7 @@ typedef enum e_errcode
 	ERR_CUBINFOFORMAT,
 	ERR_CUBINFOMISSING,
 	ERR_CUBINFODUPPED,
+	ERR_MEM,
 	NUM_ERR
 }	t_errcode;
 
@@ -71,6 +72,22 @@ typedef struct s_info
 	t_color	floor;
 	t_color	ceiling;
 }	t_info;
+
+typedef struct s_map
+{
+	char	**map;
+	int		height;
+	int		width;
+	int		player_pos[2];
+	t_card	player_or;		// orientation
+}	t_map;
+
+/* cub */
+typedef struct s_cub
+{
+	t_info	info;
+	t_map	smap;
+}	t_cub;
 
 typedef struct s_image
 {
@@ -100,12 +117,16 @@ void		my_perrorcode_exit(t_errcode err, char *msg);
 void		my_perr_arg(char *msg, char *var_name);
 void		my_perr_arg_exit(char *msg, char *var_name);
 
+
+void		init_cub(t_cub *cub);
+void		destroy_cub(t_cub *cub);
 void		init_info(t_info *info);
 void		destroy_info(t_info *info);
 void		show_info(t_info info);
 char		*cardinal_tostr(t_card c);
 
-t_errcode	check_map(char *cubfile, t_info *info);
+t_errcode	check_cubfile(char *cubfile, t_cub *cub);
+t_errcode	check_cub_info(int fd_in, t_info *info, char **line);
 t_errcode	check_texture(char *line, t_info *info, t_card cp);
 t_errcode	check_color(char *line, char *item, t_color *color);
 char		*next_word(char *line, int *len);

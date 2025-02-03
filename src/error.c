@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:10:36 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:44:43 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:40:56 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	my_perrorcode(t_errcode err, char *msg)
 		my_perror("Error: info is missing in cub file.");
 	else if (err == ERR_CUBINFODUPPED)
 		my_perror("Error: info is dupped in cub file.");
+	else if (err == ERR_MEM)
+		my_perror("Error: memory failed.");
 	if (msg != NULL)
 		my_perror(msg);
 }

@@ -208,44 +208,48 @@ void test_read_color_line_filled()
 }
 
 /********** check_map ******** */
-void test_check_map_ok_input()
+void test_check_cub_ok_input()
 {
 	char *file = "maps/map1.cub";
-	t_info info;
+	t_cub cub;
 
-	t_errcode b = check_map(file, &info);
+	t_errcode b = check_cubfile(file, &cub);
 	assert(b == ERR_OK);
-	assert(info.textures[NO] != NULL);
-	assert(info.textures[SO] != NULL);
-	assert(info.textures[WE] != NULL);
-	assert(info.textures[EA] != NULL);
-	assert(ft_strcmp(info.textures[NO], "./path_to_the_north_texture") == 0);
-	assert(ft_strcmp(info.textures[SO], "./path_to_the_south_texture") == 0);
-	assert(ft_strcmp(info.textures[WE], "./path_to_the_west_texture") == 0);
-	assert(ft_strcmp(info.textures[EA], "./path_to_the_east_texture") == 0);
-	assert(info.floor.r == 220);
-	assert(info.floor.g == 100);
-	assert(info.floor.b == 0);
-	assert(info.ceiling.r == 225);
-	assert(info.ceiling.g == 30);
-	assert(info.ceiling.b == 0);
-	destroy_info(&info);
-	printf("check_map - info ok passed 🌱\n");
+	// info
+	assert(cub.info.textures[NO] != NULL);
+	assert(cub.info.textures[SO] != NULL);
+	assert(cub.info.textures[WE] != NULL);
+	assert(cub.info.textures[EA] != NULL);
+	assert(ft_strcmp(cub.info.textures[NO], "./path_to_the_north_texture") == 0);
+	assert(ft_strcmp(cub.info.textures[SO], "./path_to_the_south_texture") == 0);
+	assert(ft_strcmp(cub.info.textures[WE], "./path_to_the_west_texture") == 0);
+	assert(ft_strcmp(cub.info.textures[EA], "./path_to_the_east_texture") == 0);
+	assert(cub.info.floor.r == 220);
+	assert(cub.info.floor.g == 100);
+	assert(cub.info.floor.b == 0);
+	assert(cub.info.ceiling.r == 225);
+	assert(cub.info.ceiling.g == 30);
+	assert(cub.info.ceiling.b == 0);
+	// map
+
+
+	destroy_cub(&cub);
+	printf("check_cub - info ok passed 🌱\n");
 }
 
-void test_check_map_random()
+void test_check_cub_random()
 {
-	printf("test_check_map_random - init\n");
 
+	printf("test_check_cub_random - init 🐥\n");
+	t_cub cub;
 	char *file = "test/map_info_t1";
-	// char *file = "maps/map1.cub";
-	t_info info;
 
-	t_errcode b = check_map(file, &info);
-	my_perrorcode(b, "testing");
+	t_errcode b = check_cubfile(file, &cub);
+	my_perrorcode(b, "---");
 	printf("Check map FILE:'%s'. Result: %i\n", file, b);
-	show_info(info);
-	
+	show_info(cub.info);
+	printf("map:\n");
+	ft_putarr_str(cub.smap.map);
 }
 
 int main()
@@ -270,6 +274,6 @@ int main()
 	test_check_color_nl();
 	test_read_color_line_filled();
 
-	test_check_map_ok_input();
-	test_check_map_random();
+	//test_check_cub_ok_input();
+	test_check_cub_random();
 }

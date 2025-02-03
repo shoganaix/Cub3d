@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:48:12 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:23:30 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 int	main(int argc, char *argv[])
 {
 	t_game	game;
-	t_info	info;
+	t_cub 	cub;
 	char	*img1 = "./img/test.xpm";
 	char	*img2 = "./img/teapot.xpm";
 	t_errcode e;
@@ -33,7 +33,7 @@ int	main(int argc, char *argv[])
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
 	// map
-	e = check_map(argv[1], &info);
+	e = check_cubfile(argv[1], &cub);
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
 	// init

@@ -6,11 +6,35 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/03 13:45:24 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:34:13 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
+void	init_cub(t_cub *cub)
+{
+	init_info(&cub->info);
+	// map???
+	cub->smap.map = calloc(1, sizeof(char *));
+	if (cub->smap.map == NULL)
+	{
+		destroy_info(&cub->info);
+		my_perrorcode_exit(ERR_MEM, NULL);
+	}
+	cub->smap.height = 0;
+	cub->smap.width = 0;
+	cub->smap.player_pos[0] = -1;
+	cub->smap.player_pos[1] = -1;
+	cub->smap.player_or = NO;
+}
+
+void	destroy_cub(t_cub *cub)
+{
+	destroy_info(&cub->info);
+	ft_free_arrstr(cub->smap.map);
+}
 
 void	init_info(t_info *info)
 {

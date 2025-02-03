@@ -6,11 +6,14 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 15:07:36 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/03 15:47:15 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
+
 
 t_errcode	check_texture(char *line, t_info *info, t_card cp)
 {
@@ -67,7 +70,7 @@ t_errcode	check_color(char *line, char *item, t_color *color)
 	return (ERR_CUBINFOFORMAT);
 }
 
-t_errcode	check_line(char *line, t_info *info)
+t_errcode	check_infoline(char *line, t_info *info)
 {
 	t_errcode	e;
 	t_card		cp;
@@ -90,7 +93,7 @@ t_errcode	check_line(char *line, t_info *info)
 	return (ERR_CUBINFOFORMAT);
 }
 
-t_errcode	check_map_info(int fd_in, t_info *info, char **line)
+t_errcode	check_cub_info(int fd_in, t_info *info, char **line)
 {
 	t_bool		is_complete;
 	t_errcode	e;
@@ -101,7 +104,7 @@ t_errcode	check_map_info(int fd_in, t_info *info, char **line)
 	{
 		if (ft_strcmp(*line, "\n") != 0)
 		{
-			e = check_line(*line, info);
+			e = check_infoline(*line, info);
 			if (e != ERR_OK)
 				return (e);
 			is_complete = ((info->textures[NO] != NULL)
@@ -119,24 +122,3 @@ t_errcode	check_map_info(int fd_in, t_info *info, char **line)
 	return (e);
 }
 
-t_errcode	check_map(char *cubfile, t_info *info)
-{
-	int		fdin;
-	char	*line;
-	t_errcode e;
-
-	init_info(info);
-	fdin = open(cubfile, O_RDONLY);
-	if (fdin == -1)
-		return (ERR_ARGNOTFOUND);
-	line = get_next_line(fdin);
-	e = check_map_info(fdin, info, &line);
-	while (line)
-	{
-		free(line);
-		line = NULL;
-		line = get_next_line(fdin);
-	}
-	close(fdin);
-	return (e);
-}
