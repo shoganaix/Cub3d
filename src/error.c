@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:10:36 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 15:40:56 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:42:03 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	my_perror_exit(char *msg)
 void	my_perrorcode(t_errcode err, char *msg)
 {
 	if (err == ERR_ARGNUM)
-		my_perror("Error: wrong number of arguments. Expected 1.");
+		my_perror("Error: wrong number of args. Expected 1: a cub file.");
 	else if (err == ERR_ARGFORMAT)
 		my_perror("Error: argument must be a cub file.");
 	else if (err == ERR_ARGNOTFOUND)
-		my_perror("Error: file not found. Check permissions.");
+		my_perror("Error: file not found or not enough permissions.");
 	else if (err == ERR_CUBINFOFORMAT)
 		my_perror("Error: not valid format in cub info.");
 	else if (err == ERR_CUBINFOMISSING)
@@ -40,6 +40,14 @@ void	my_perrorcode(t_errcode err, char *msg)
 		my_perror("Error: info is dupped in cub file.");
 	else if (err == ERR_MEM)
 		my_perror("Error: memory failed.");
+	else if (err == ERR_CUBINVALID)
+		my_perror("Error: invalid character in map.");
+	else if (err == ERR_CUBINVALIDSPC)
+		my_perror("Error: invalid space character in map.");
+	else if (err == ERR_PLAYERNOTFOUND)
+		my_perror("Error: player not found in map.");
+	else
+		my_perror("Error: unknown.");
 	if (msg != NULL)
 		my_perror(msg);
 }

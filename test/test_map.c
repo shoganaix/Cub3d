@@ -237,20 +237,77 @@ void test_check_cub_ok_input()
 	printf("check_cub - info ok passed 🌱\n");
 }
 
-void test_check_cub_random()
+void test_show_cub_random()
 {
 
-	printf("test_check_cub_random - init 🐥\n");
+	printf("test_show_cub_random - init 🐥\n");
 	t_cub cub;
-	char *file = "test/map_info_t1";
+	char *file = "test/wip";
 
 	t_errcode b = check_cubfile(file, &cub);
 	my_perrorcode(b, "---");
+	debug_int("res", b);
 	printf("Check map FILE:'%s'. Result: %i\n", file, b);
-	show_info(cub.info);
-	printf("map:\n");
-	ft_putarr_str(cub.smap.map);
+	if (b == ERR_OK)
+	{
+		show_info(cub.info);
+		printf("map:\n");
+		ft_putarr_str(cub.smap.map);
+	}
+	printf("test_show_cub_random - end 🐥\n");
 }
+
+void test_check_cub_map_bf_info()
+{
+	t_cub cub;
+	char *file = "test/map_bf_info";
+
+	t_errcode b = check_cubfile(file, &cub);
+	assert(b == ERR_CUBINFOFORMAT);	
+	printf("check_cub - map before info passed 🌱\n");
+}
+
+void test_check_cub_map_invalid_char()
+{
+	t_cub	cub;
+	char	*file = "test/invalid_char1";
+
+	t_errcode b = check_cubfile(file, &cub);
+	assert(b == ERR_CUBINVALID);	
+	printf("check_cub - invalid char passed 🌱\n");
+}
+
+void test_check_cub_map_moret1player()
+{
+	t_cub	cub;
+	char	*file = "test/more_than1_player";
+
+	t_errcode b = check_cubfile(file, &cub);
+	assert(b == ERR_CUBINVALID);	
+	printf("check_cub - more than 1 player passed 🌱\n");
+}
+
+void test_check_cub_map_noplayer()
+{
+	t_cub	cub;
+	char	*file = "test/noplayer";
+
+	t_errcode b = check_cubfile(file, &cub);
+	//my_perrorcode(b, "!--");
+
+	assert(b == ERR_PLAYERNOTFOUND);	
+	printf("check_cub - no player passed 🌱\n");
+}
+void test_check_cub_map_space_after0()
+{
+	t_cub	cub;
+	char	*file = "test/space_and_zero";
+
+	t_errcode b = check_cubfile(file, &cub);
+	assert(b == ERR_CUBINVALIDSPC);
+	printf("check_cub - space with zero passed 🌱\n");
+}
+
 
 int main()
 {
@@ -274,6 +331,14 @@ int main()
 	test_check_color_nl();
 	test_read_color_line_filled();
 
-	//test_check_cub_ok_input();
-	test_check_cub_random();
+
+
+	test_check_cub_ok_input();
+	test_check_cub_map_bf_info();
+	test_check_cub_map_invalid_char();
+	test_check_cub_map_moret1player();
+	test_check_cub_map_noplayer();
+	test_check_cub_map_space_after0();
+	
+	test_show_cub_random();
 }

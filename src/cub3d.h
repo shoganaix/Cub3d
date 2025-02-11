@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 16:27:54 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:39:19 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef enum e_errcode
 	ERR_CUBINFOFORMAT,
 	ERR_CUBINFOMISSING,
 	ERR_CUBINFODUPPED,
+	ERR_CUBINVALID,
+	ERR_CUBINVALIDSPC,
+	ERR_PLAYERNOTFOUND,
 	ERR_MEM,
 	NUM_ERR
 }	t_errcode;
@@ -106,6 +109,7 @@ void		paint_img(t_game game, char *img_path, int posX, int posY);
 void		debug(char *msg);
 void		debug_int(char *name_desc, int n);
 void		debug_str(char *name_desc, char *str);
+void		debug_chr(char *name_desc, char c);
 
 t_errcode	check_args(int argn, char *args[]);
 
@@ -116,7 +120,6 @@ void		my_perrorcode(t_errcode err, char *msg);
 void		my_perrorcode_exit(t_errcode err, char *msg);
 void		my_perr_arg(char *msg, char *var_name);
 void		my_perr_arg_exit(char *msg, char *var_name);
-
 
 void		init_cub(t_cub *cub);
 void		destroy_cub(t_cub *cub);

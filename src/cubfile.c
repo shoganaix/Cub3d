@@ -3,20 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   cubfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:18:11 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 16:48:38 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/11 14:50:50 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
 // t_errcode	check_mapline(char *line, int &max_width)
 // {
 
 // }
+
+t_errcode	check_cub_map_row(t_cub *cub, int r, t_bool *player_found)
+{
+	char	last;
+	int		c;
+
+	c = 0;
+	last = '\0';
+	while (c < cub->smap.width && cub->smap.map[r][c] != '\n')
+	{
+		if (ft_strchr("01 ", cub->smap.map[r][c]) == NULL)
+		{
+			if (!(*player_found) && ft_strchr("NSEW", cub->smap.map[r][c]))
+				*player_found = TRUE;
+			else
+				return (destroy_cub(cub), ERR_CUBINVALID);
+		}
+		if ((cub->smap.map[r][c] == ' ')
+				&& !(!last || last == ' ' || last == '1'))
+			return (destroy_cub(cub), ERR_CUBINVALIDSPC);
+		last = cub->smap.map[r][c];
+		c++;
+	}
+	return (ERR_OK);
+}
+
+	//caracteres validos : space, 1, 0, personaje
+		//que haya un solo caracter N,S,W,E
+		//no espacios interm ni intros intermedios
+	//que este rodeado de 1
+t_errcode	check_cub_map(t_cub *cub)
+{
+	int			r;
+	t_bool		player_found;
+	t_errcode	e;
+
+	player_found = FALSE;
+	r = 0;
+	while (r < cub->smap.height)
+	{
+		e = check_cub_map_row(cub, r, &player_found);
+		if (e != ERR_OK)
+			return (e);
+		r++;
+	}
+	if (!player_found)
+		return (ERR_PLAYERNOTFOUND);
+	return (ERR_OK);
+}
 
 void	save_mapline(t_cub *cub, char *line)
 {
@@ -25,6 +73,7 @@ void	save_mapline(t_cub *cub, char *line)
 
 	if (!line)
 		return ;
+	cub->smap.width = ft_max_nbr(cub->smap.width, ft_strlen(line));
 	cub->smap.height++;
 	map_tmp = (char **)ft_calloc((cub->smap.height + 1), sizeof(char *));
 	if (map_tmp == NULL)
@@ -44,22 +93,9 @@ void	save_mapline(t_cub *cub, char *line)
 	cub->smap.map = map_tmp;
 }
 
-t_errcode	check_cub_map(t_cub *cub)
-{
-
-	//caracteres validos
-		//que haya un solo caracter N,S,W,E
-		//no espacios interm ni intros intermedios
-	//que este rodeado de 1
-	(void)cub;
-	return ERR_OK;
-
-}
-
 static void	eat_newlines(int fd_in, char **line)
 {
-	debug("eating nl");
-	while (*line && ft_strcmp(*line, "\n") != 0)
+	while (*line && ft_strcmp(*line, "\n") == 0)
 	{
 		free(*line);
 		*line = get_next_line(fd_in);
@@ -71,7 +107,6 @@ t_errcode	check_cubfile(char *cubfile, t_cub *cub)
 	int			fdin;
 	char		*line;
 	t_errcode	e;
-
 
 	init_cub(cub);
 	fdin = open(cubfile, O_RDONLY);
@@ -89,6 +124,6 @@ t_errcode	check_cubfile(char *cubfile, t_cub *cub)
 		line = get_next_line(fdin);
 	}
 	close(fdin);
-	check_cub_map(cub);
+	e = check_cub_map(cub); //
 	return (e);
 }
