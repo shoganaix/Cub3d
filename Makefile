@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
+#    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/02/03 15:19:27 by msoriano         ###   ########.fr        #
+#    Updated: 2025/02/12 16:48:24 by macastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCFILES = src/hooks.c \
 		src/error.c \
 		src/error2.c \
 		src/info.c \
+		src/utils.c \
 		src/debug.c
 
 TEST_SRC = test/test_map.c 

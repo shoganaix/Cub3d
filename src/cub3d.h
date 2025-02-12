@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/11 14:39:19 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:23:13 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef enum e_errcode
 	ERR_CUBINVALID,
 	ERR_CUBINVALIDSPC,
 	ERR_PLAYERNOTFOUND,
+	ERR_CUBNOTCLOSED,
 	ERR_MEM,
 	NUM_ERR
 }	t_errcode;

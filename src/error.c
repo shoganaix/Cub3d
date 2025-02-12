@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:10:36 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/11 14:42:03 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:59:17 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,24 @@ void	my_perror_exit(char *msg)
 
 void	my_perrorcode(t_errcode err, char *msg)
 {
-	if (err == ERR_ARGNUM)
-		my_perror("Error: wrong number of args. Expected 1: a cub file.");
-	else if (err == ERR_ARGFORMAT)
-		my_perror("Error: argument must be a cub file.");
-	else if (err == ERR_ARGNOTFOUND)
-		my_perror("Error: file not found or not enough permissions.");
-	else if (err == ERR_CUBINFOFORMAT)
-		my_perror("Error: not valid format in cub info.");
-	else if (err == ERR_CUBINFOMISSING)
-		my_perror("Error: info is missing in cub file.");
-	else if (err == ERR_CUBINFODUPPED)
-		my_perror("Error: info is dupped in cub file.");
-	else if (err == ERR_MEM)
-		my_perror("Error: memory failed.");
-	else if (err == ERR_CUBINVALID)
-		my_perror("Error: invalid character in map.");
-	else if (err == ERR_CUBINVALIDSPC)
-		my_perror("Error: invalid space character in map.");
-	else if (err == ERR_PLAYERNOTFOUND)
-		my_perror("Error: player not found in map.");
+	const char	*err_msg[NUM_ERR] = {
+		"Success",
+		"Error: wrong number of args. Expected 1: a cub file.",
+		"Error: file not found or not enough permissions.",
+		"Error: argument must be a cub file.",
+		"Error: not valid format in cub info.",
+		"Error: info is missing in cub file.",
+		"Error: info is dupped in cub file.",
+		"Error: invalid character in map.",
+		"Error: invalid space character in map.",
+		"Error: player not found in map.",
+		"Error: map not closed.",
+
+		"Error: memory failed."
+	};
+
+	if (err >= 0 && err < NUM_ERR)
+		my_perror((char *)err_msg[err]);
 	else
 		my_perror("Error: unknown.");
 	if (msg != NULL)

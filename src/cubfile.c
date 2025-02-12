@@ -6,16 +6,11 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:18:11 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/11 14:50:50 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:46:25 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// t_errcode	check_mapline(char *line, int &max_width)
-// {
-
-// }
 
 t_errcode	check_cub_map_row(t_cub *cub, int r, t_bool *player_found)
 {
@@ -29,24 +24,31 @@ t_errcode	check_cub_map_row(t_cub *cub, int r, t_bool *player_found)
 		if (ft_strchr("01 ", cub->smap.map[r][c]) == NULL)
 		{
 			if (!(*player_found) && ft_strchr("NSEW", cub->smap.map[r][c]))
+			{
 				*player_found = TRUE;
+				cub->smap.player_pos[0] = r;
+				cub->smap.player_pos[1] = c;
+				cub->smap.player_or = cub->smap.map[r][c];
+			}
 			else
 				return (destroy_cub(cub), ERR_CUBINVALID);
 		}
 		if ((cub->smap.map[r][c] == ' ')
 				&& !(!last || last == ' ' || last == '1'))
 			return (destroy_cub(cub), ERR_CUBINVALIDSPC);
-		last = cub->smap.map[r][c];
-		c++;
+		last = cub->smap.map[r][c++];
 	}
 	return (ERR_OK);
 }
 
-	//caracteres validos : space, 1, 0, personaje
-		//que haya un solo caracter N,S,W,E
-		//no espacios interm ni intros intermedios
-	//que este rodeado de 1
-t_errcode	check_cub_map(t_cub *cub)
+/**
+ * Check if there are invalid characters:
+ * - valid: space, 1, 0, player char
+ * - player char appears only once
+ * - no horizontal spaces in between maps content
+ * Saves player position and orientation
+ */
+t_errcode	check_invalid_chars(t_cub *cub)
 {
 	int			r;
 	t_bool		player_found;
@@ -63,6 +65,85 @@ t_errcode	check_cub_map(t_cub *cub)
 	}
 	if (!player_found)
 		return (ERR_PLAYERNOTFOUND);
+	return (ERR_OK);
+}
+
+/**
+ * if flood == 0 -> the map is closed
+ * if flood > 0 -> flood overflows
+ * 
+ * The first call must be inside.
+ * cases:
+ * - out of the map -> overflow
+ * - is wall or already seen -> end recursion
+ * - is not valid terrain ('0') -> overflow
+ * - is valid terrain -> mark as seen + explore 4 directions (recursion)
+ */
+int	apply_flood_fill(char **map_copy, int i, int j, char filled)
+{
+	if (i < 0 || j < 0
+		|| map_copy[i] == NULL
+		|| j > (int) ft_strlen(map_copy[i])
+		|| map_copy[i][j] == '\n' || map_copy[i][j] == '\0'
+		)
+		return (1);
+	else if (map_copy[i][j] == '1' || map_copy[i][j] == filled)
+		return (0);
+	else if (map_copy[i][j] != '0')
+		return (1);
+	map_copy[i][j] = filled;
+	return (
+		apply_flood_fill(map_copy, i, j - 1, filled)
+		+ apply_flood_fill(map_copy, i - 1, j, filled)
+		+ apply_flood_fill(map_copy, i, j + 1, filled)
+		+ apply_flood_fill(map_copy, i + 1, j, filled)
+	);
+}
+
+char	**copy_map_arr(t_map m)
+{
+	char	**map_copy;
+	int		i;
+	int		j;
+
+	map_copy = (char **)ft_calloc((m.height + 1), sizeof(char *));
+	if (map_copy == NULL)
+		return (NULL);
+	i = 0;
+	while (i < m.height)
+	{
+		j = 0;
+		map_copy[i] = (char *)ft_calloc(ft_strlen(m.map[i]) + 1, sizeof(char));
+		if (map_copy[i] == NULL)
+			return (ft_free_arrstr(map_copy), NULL);
+		while (m.map[i][j] != '\0')
+		{
+			map_copy[i][j] = m.map[i][j];
+			j++;
+		}
+		i++;
+	}
+	return (map_copy);
+}
+
+// create copy to explore
+// algo
+t_errcode	check_cub_closed(t_cub *cub)
+{
+	char	**map_copy;
+	int		flood;
+
+	map_copy = copy_map_arr(cub->smap);
+	if (map_copy == NULL)
+		return (destroy_cub(cub), ERR_MEM);
+	map_copy[cub->smap.player_pos[0]][cub->smap.player_pos[1]] = '0';
+	flood = apply_flood_fill(map_copy, cub->smap.player_pos[0],
+			cub->smap.player_pos[1], cub->smap.player_or);
+	debug_int("flood", flood);
+	ft_putarr_str(map_copy);
+	debug_int("flood", flood);
+	if (flood > 0)
+		return (destroy_cub(cub), ERR_CUBNOTCLOSED);
 	return (ERR_OK);
 }
 
@@ -124,6 +205,8 @@ t_errcode	check_cubfile(char *cubfile, t_cub *cub)
 		line = get_next_line(fdin);
 	}
 	close(fdin);
-	e = check_cub_map(cub); //
+	e = check_invalid_chars(cub);
+	if (e == ERR_OK)
+		e = check_cub_closed(cub);
 	return (e);
 }
