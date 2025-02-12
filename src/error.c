@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:10:36 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/12 16:59:17 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:25:16 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	my_perrorcode(t_errcode err, char *msg)
 		"Error: invalid space character in map.",
 		"Error: player not found in map.",
 		"Error: map not closed.",
-
 		"Error: memory failed."
 	};
 
@@ -56,9 +55,9 @@ void	my_perrorcode_exit(t_errcode err, char *msg)
 	exit(1);
 }
 
-void	my_perror_exit_st(char *msg, int err)
+void	my_perror_exit_st(char *msg, int status)
 {
 	write(2, msg, ft_strlen(msg));
 	write(2, "\n", 1);
-	exit(err);
+	exit(status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 15:23:30 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:09:05 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
  */
 int	main(int argc, char *argv[])
 {
-	t_game	game;
-	t_cub 	cub;
-	char	*img1 = "./img/test.xpm";
-	char	*img2 = "./img/teapot.xpm";
-	t_errcode e;
+	t_game		game;
+	t_cub		cub;
+	t_errcode	e;
+	char		*img1 = "./img/test.xpm";
+	char		*img2 = "./img/teapot.xpm";
 
 	// check args
 	e = check_args(argc, argv);
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
 	// map
-	e = check_cubfile(argv[1], &cub);
+	e = read_cubfile(argv[1], &cub);
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
 	// init
@@ -44,7 +44,7 @@ int	main(int argc, char *argv[])
 	paint_img(game, img1, 0, 0);
 	paint_img(game, img2, 250, 250);
 
-	// hooks
+	// hooks // todo- add cub to game and free at EXIT by key/button
 	mlx_hook(game.win, EVENT_KEYPRESS, 1L << 0, key_press_hndlr, &game);
 	mlx_hook(game.win, EVENT_CLOSEWINDOW, 0, close_window, &game);
 

@@ -3,122 +3,145 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 15:47:15 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:06:45 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-
-
-t_errcode	check_texture(char *line, t_info *info, t_card cp)
+static t_errcode	check_map_row(t_cub *cub, int r, t_bool *player_found)
 {
-	char	*first;
-	int		i;
+	char	last;
+	int		c;
 
-	i = 0;
-	first = next_word(line, &i);
-	if (ft_strcmp(first, cardinal_tostr(cp)) == 0)
+	c = 0;
+	last = '\0';
+	while (c < cub->smap.width && cub->smap.map[r][c] != '\n')
 	{
-		free(first);
-		while (is_space(line[i]))
-			i++;
-		if (line[i])
+		if (ft_strchr("01 ", cub->smap.map[r][c]) == NULL)
 		{
-			if (info->textures[cp] != NULL)
-				return (ERR_CUBINFODUPPED);
-			info->textures[cp] = next_word(&line[i], &i);
+			if (!(*player_found) && ft_strchr("NSEW", cub->smap.map[r][c]))
+			{
+				*player_found = TRUE;
+				cub->smap.player_pos[0] = r;
+				cub->smap.player_pos[1] = c;
+				cub->smap.player_or = cub->smap.map[r][c];
+			}
+			else
+				return (destroy_cub(cub), ERR_CUBINVALID);
 		}
-		if (line[i] || info->textures[cp] == NULL)
-			return (ERR_CUBINFOFORMAT);
-		return (ERR_OK);
+		if ((cub->smap.map[r][c] == ' ')
+				&& !(!last || last == ' ' || last == '1'))
+			return (destroy_cub(cub), ERR_CUBINVALIDSPC);
+		last = cub->smap.map[r][c++];
 	}
-	free(first);
-	return (ERR_CUBINFOFORMAT);
+	return (ERR_OK);
 }
 
-t_errcode	check_color(char *line, char *item, t_color *color)
+/**
+ * Check if there are invalid characters:
+ * - valid: space, 1, 0, player char
+ * - player char appears only once
+ * - no horizontal spaces in between maps content
+ * Saves player position and orientation
+ */
+t_errcode	check_map_invalid_chars(t_cub *cub)
 {
-	char	*first;
-	int		i;
-	char	**strs;
-
-	i = 0;
-	first = next_word(line, &i);
-	if (ft_strcmp(first, item) != 0)
-		return (free(first), ERR_CUBINFOFORMAT);
-	free(first);
-	while (is_space(line[i]))
-		i++;
-	if (line[i])
-	{
-		if (color->r != -1)
-			return (ERR_CUBINFODUPPED);
-		strs = ft_split(&line[i], ',');
-		if (!(color_val_ok(strs[0], &color->r)
-				&& color_val_ok(strs[1], &color->g)
-				&& color_val_ok(strs[2], &color->b)))
-			return (ft_free_arrstr(strs), ERR_CUBINFOFORMAT);
-		if (strs[3])
-			return (ft_free_arrstr(strs), ERR_CUBINFOFORMAT);
-		return (ft_free_arrstr(strs), ERR_OK);
-	}
-	return (ERR_CUBINFOFORMAT);
-}
-
-t_errcode	check_infoline(char *line, t_info *info)
-{
+	int			r;
+	t_bool		player_found;
 	t_errcode	e;
-	t_card		cp;
 
-	line = ft_strtrim(line, "\n");
-	cp = 0;
-	while (cp < NUM_CARD)
+	player_found = FALSE;
+	r = 0;
+	while (r < cub->smap.height)
 	{
-		e = check_texture(line, info, cp);
-		if (e != ERR_CUBINFOFORMAT)
+		e = check_map_row(cub, r, &player_found);
+		if (e != ERR_OK)
 			return (e);
-		cp++;
+		r++;
 	}
-	e = check_color(line, "C", &info->ceiling);
-	if (e != ERR_CUBINFOFORMAT)
-		return (e);
-	e = check_color(line, "F", &info->floor);
-	if (e != ERR_CUBINFOFORMAT)
-		return (e);
-	return (ERR_CUBINFOFORMAT);
+	if (!player_found)
+		return (ERR_PLAYERNOTFOUND);
+	return (ERR_OK);
 }
 
-t_errcode	check_cub_info(int fd_in, t_info *info, char **line)
+/**
+ * if flood == 0 -> the map is closed
+ * if flood > 0 -> flood overflows
+ * 
+ * The first call must be inside.
+ * cases:
+ * - out of the map -> overflow
+ * - is wall or already seen -> end recursion
+ * - is not valid terrain ('0') -> overflow
+ * - is valid terrain -> mark as seen + explore 4 directions (recursion)
+ */
+static int	apply_flood_fill(char **map_copy, int i, int j, char filled)
 {
-	t_bool		is_complete;
-	t_errcode	e;
-
-	is_complete = FALSE;
-	e = ERR_OK;
-	while (*line && !is_complete)
-	{
-		if (ft_strcmp(*line, "\n") != 0)
-		{
-			e = check_infoline(*line, info);
-			if (e != ERR_OK)
-				return (e);
-			is_complete = ((info->textures[NO] != NULL)
-					&& (info->textures[SO] != NULL)
-					&& (info->textures[WE] != NULL)
-					&& (info->textures[EA] != NULL)
-					&& (info->ceiling.r != -1)
-					&& (info->floor.r != -1));
-		}
-		free(*line);
-		*line = get_next_line(fd_in);
-	}
-	if (!is_complete)
-		return (ERR_CUBINFOMISSING);
-	return (e);
+	if (i < 0 || j < 0
+		|| map_copy[i] == NULL
+		|| j > (int) ft_strlen(map_copy[i])
+		|| map_copy[i][j] == '\n' || map_copy[i][j] == '\0'
+		)
+		return (1);
+	else if (map_copy[i][j] == '1' || map_copy[i][j] == filled)
+		return (0);
+	else if (map_copy[i][j] != '0')
+		return (1);
+	map_copy[i][j] = filled;
+	return (
+		apply_flood_fill(map_copy, i, j - 1, filled)
+		+ apply_flood_fill(map_copy, i - 1, j, filled)
+		+ apply_flood_fill(map_copy, i, j + 1, filled)
+		+ apply_flood_fill(map_copy, i + 1, j, filled)
+	);
 }
 
+static char	**copy_map_arr(t_map m)
+{
+	char	**map_copy;
+	int		i;
+	int		j;
+
+	map_copy = (char **)ft_calloc((m.height + 1), sizeof(char *));
+	if (map_copy == NULL)
+		return (NULL);
+	i = 0;
+	while (i < m.height)
+	{
+		j = 0;
+		map_copy[i] = (char *)ft_calloc(ft_strlen(m.map[i]) + 1, sizeof(char));
+		if (map_copy[i] == NULL)
+			return (ft_free_arrstr(map_copy), NULL);
+		while (m.map[i][j] != '\0')
+		{
+			map_copy[i][j] = m.map[i][j];
+			j++;
+		}
+		i++;
+	}
+	return (map_copy);
+}
+
+t_errcode	check_map_closed(t_cub *cub)
+{
+	char	**map_copy;
+	int		flood;
+
+	map_copy = copy_map_arr(cub->smap);
+	if (map_copy == NULL)
+		return (destroy_cub(cub), ERR_MEM);
+	map_copy[cub->smap.player_pos[0]][cub->smap.player_pos[1]] = '0';
+	flood = apply_flood_fill(map_copy, cub->smap.player_pos[0],
+			cub->smap.player_pos[1], cub->smap.player_or);
+	// debug_int("flood", flood);
+	// ft_putarr_str(map_copy);
+	// debug_int("flood", flood);
+	ft_free_arrstr(map_copy);
+	if (flood > 0)
+		return (destroy_cub(cub), ERR_CUBNOTCLOSED);
+	return (ERR_OK);
+}

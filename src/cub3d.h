@@ -6,35 +6,28 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/12 16:23:13 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:32:39 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-/*LIBS DEFINED*/
+/* LIBS DEFINED */
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
-//# include <mlx.h>
 # include <fcntl.h>
 # include "../mlx_linux/mlx.h"
 # include "../libft/include/libft.h"
 
-# define DEBUG		1 // debug flag
+# define DEBUG				1 				// debug flag
 
 /* WINDOW */
 # define VP_H		        1080			// viewport height
 # define VP_W		        1920			// viewport width
 # define WIN_NAME           ".:++### CUB3D ###++:."
-
-typedef struct s_game
-{
-	void	*mlx;
-	void	*win;
-}	t_game;
 
 typedef struct s_color
 {
@@ -69,7 +62,6 @@ typedef enum e_errcode
 	NUM_ERR
 }	t_errcode;
 
-
 typedef struct s_info
 {
 	char	*textures[4];
@@ -92,6 +84,13 @@ typedef struct s_cub
 	t_info	info;
 	t_map	smap;
 }	t_cub;
+
+/* game */
+typedef struct s_game
+{
+	void	*mlx;
+	void	*win;
+}	t_game;
 
 typedef struct s_image
 {
@@ -129,12 +128,14 @@ void		destroy_info(t_info *info);
 void		show_info(t_info info);
 char		*cardinal_tostr(t_card c);
 
-t_errcode	check_cubfile(char *cubfile, t_cub *cub);
+t_errcode	read_cubfile(char *cubfile, t_cub *cub);
 t_errcode	check_cub_info(int fd_in, t_info *info, char **line);
 t_errcode	check_texture(char *line, t_info *info, t_card cp);
 t_errcode	check_color(char *line, char *item, t_color *color);
 char		*next_word(char *line, int *len);
 t_bool		color_val_ok(char *s, int *v);
+t_errcode	check_map_closed(t_cub *cub);
+t_errcode	check_map_invalid_chars(t_cub *cub);
 
 /* EVENT */
 # define EVENT_KEYPRESS		2
