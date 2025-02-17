@@ -6,13 +6,13 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/12 17:02:50 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:31:24 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*cardinal_tostr(t_card c)
+char	*cardinal_to_str(t_card c)
 {
 	if (c == NO)
 		return ("NO");
@@ -22,6 +22,20 @@ char	*cardinal_tostr(t_card c)
 		return ("WE");
 	if (c == EA)
 		return ("EA");
-	my_perror_exit("Unexpected cardinal");
+	my_perror_exit("Unexpected cardinal1");
 	return (NULL);
+}
+
+int	cardinal_to_angle(t_card c)
+{
+	if (c == EA)
+		return (0);
+	if (c == NO)
+		return (90);
+	if (c == WE)
+		return (180);
+	if (c == SO)
+		return (270);
+	my_perror_exit("Unexpected cardinal2");
+	return (-1);
 }

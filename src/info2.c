@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/12 17:25:49 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:34:16 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_errcode	check_texture(char *line, t_info *info, t_card cp)
 
 	i = 0;
 	first = next_word(line, &i);
-	if (ft_strcmp(first, cardinal_tostr(cp)) == 0)
+	if (ft_strcmp(first, cardinal_to_str(cp)) == 0)
 	{
 		free(first);
 		while (is_space(line[i]))

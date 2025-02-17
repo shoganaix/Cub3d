@@ -6,7 +6,7 @@
 #    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/02/12 17:23:19 by macastro         ###   ########.fr        #
+#    Updated: 2025/02/17 20:58:24 by macastro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCFILES = src/hooks.c \
 		src/info.c \
 		src/info2.c \
 		src/utils.c \
+		src/game.c \
 		src/debug.c
 
 TEST_SRC = test/test_map.c 

@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/12 17:32:39 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:16:16 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,15 @@
 # define DEBUG				1 				// debug flag
 
 /* WINDOW */
-# define VP_H		        1080			// viewport height
-# define VP_W		        1920			// viewport width
 # define WIN_NAME           ".:++### CUB3D ###++:."
+# define WIN_H		        200			// viewport height
+# define WIN_W		        320			// viewport width
+# define CUB_SIZE           64
+# define FOV           		60
+//
+
+
+
 
 typedef struct s_color
 {
@@ -62,6 +68,15 @@ typedef enum e_errcode
 	NUM_ERR
 }	t_errcode;
 
+typedef struct s_image
+{
+	void	*mlximg;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_size;		// bytes
+	int		endian;
+}	t_image;
+
 typedef struct s_info
 {
 	char	*textures[4];
@@ -85,21 +100,32 @@ typedef struct s_cub
 	t_map	smap;
 }	t_cub;
 
+/* world */
+typedef struct s_world
+{
+	int	pl_height;
+	int	pl_pos[2];	// pixels
+	int	pl_angle;
+
+	int	ray_angle;
+	int	dist_to_plane;
+
+	void	*textures[4];
+	
+
+}	t_world;
+
 /* game */
 typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
+	t_image	img;
+	t_cub	cub;
+	t_world	world;
 }	t_game;
 
-typedef struct s_image
-{
-	void	*mlximg;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_size;
-	int		endian;
-}	t_image;
+
 
 int			close_window(t_game *game);
 int			key_press_hndlr(int keycode, void *param);
@@ -111,7 +137,7 @@ void		debug_int(char *name_desc, int n);
 void		debug_str(char *name_desc, char *str);
 void		debug_chr(char *name_desc, char c);
 
-t_errcode	check_args(int argn, char *args[]);
+void		check_args(int argn, char *args[]);
 
 void		my_perror(char *msg);
 void		my_perror_exit(char *msg);
@@ -126,7 +152,9 @@ void		destroy_cub(t_cub *cub);
 void		init_info(t_info *info);
 void		destroy_info(t_info *info);
 void		show_info(t_info info);
-char		*cardinal_tostr(t_card c);
+char		*cardinal_to_str(t_card c);
+int			cardinal_to_angle(t_card c);
+
 
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);
 t_errcode	check_cub_info(int fd_in, t_info *info, char **line);
@@ -136,6 +164,11 @@ char		*next_word(char *line, int *len);
 t_bool		color_val_ok(char *s, int *v);
 t_errcode	check_map_closed(t_cub *cub);
 t_errcode	check_map_invalid_chars(t_cub *cub);
+
+void		init_world(t_game *game);
+t_image		new_empty_img(void *mlx, int width_px, int height_px);
+void		draw_bg_on_img(t_color color_ceiling, t_color color_floor, t_image *img);
+void	init_game(t_game *game);
 
 /* EVENT */
 # define EVENT_KEYPRESS		2

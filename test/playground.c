@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2024/12/17 18:36:15 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:21:29 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(void)
     char	*img2 = "./img/teapot.xpm";
 
     game.mlx = mlx_init();
-    game.win = mlx_new_window(game.mlx, VP_W, VP_H, "CUB3D");
+    game.win = mlx_new_window(game.mlx, WIN_W, WIN_H, "CUB3D");
 
     paint_img(game, img1, 0, 0);
     paint_img(game, img2, 250, 250);

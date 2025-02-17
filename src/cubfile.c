@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:18:11 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/12 20:07:05 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 21:35:18 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_cub(t_cub *cub)
 	cub->smap.player_pos[0] = -1;
 	cub->smap.player_pos[1] = -1;
 	cub->smap.player_or = NO;
+	debug_int("or0", cub->smap.player_or);
 }
 
 void	destroy_cub(t_cub *cub)

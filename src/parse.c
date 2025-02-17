@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:27:48 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:42:46 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/17 20:17:44 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,19 @@ t_bool	check_fmt_extension(const char *file_name, char *ext_w_dot)
  * - extension
  * - file existence, can be read
  */
-t_errcode	check_args(int argn, char *args[])
+void	check_args(int argn, char *args[])
 {
+	t_errcode	e;
+
+	e = ERR_OK;
 	if (argn != 2)
-		return (ERR_ARGNUM);
+		e = ERR_ARGNUM;
 	if (!check_fmt_extension(args[1], ".cub"))
-		return (ERR_ARGFORMAT);
+		e = ERR_ARGFORMAT;
 	if (!can_open(args[1]))
-		return (ERR_ARGNOTFOUND);
-	return (ERR_OK);
+		e = ERR_ARGNOTFOUND;
+	if (e != ERR_OK)
+		my_perrorcode_exit(e, NULL);
 }
 
 t_bool	color_val_ok(char *s, int *v)
