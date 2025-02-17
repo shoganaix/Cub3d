@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:27:48 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 20:17:44 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:58:52 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	check_args(int argn, char *args[])
 	e = ERR_OK;
 	if (argn != 2)
 		e = ERR_ARGNUM;
-	if (!check_fmt_extension(args[1], ".cub"))
+	else if (!check_fmt_extension(args[1], ".cub"))
 		e = ERR_ARGFORMAT;
-	if (!can_open(args[1]))
+	else if (!can_open(args[1]))
 		e = ERR_ARGNOTFOUND;
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);

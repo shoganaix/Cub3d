@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/17 21:32:23 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 23:52:10 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	init_world(t_game *game)
 		+ CUB_SIZE / 2;
 	game->world.pl_pos[1] = game->cub.smap.player_pos[1] * CUB_SIZE
 		+ CUB_SIZE / 2;
-	debug_int("or", game->cub.smap.player_or);
 	game->world.pl_angle = cardinal_to_angle(game->cub.smap.player_or);
 
 	game->world.ray_angle = WIN_W / FOV;
@@ -41,5 +40,6 @@ void	init_world(t_game *game)
 
 void	init_game(t_game *game)
 {
+	debug("llego");
 	draw_bg_on_img(game->cub.info.ceiling, game->cub.info.floor, &game->img);
 }

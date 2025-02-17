@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 21:16:16 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:59:00 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 # define WIN_W		        320			// viewport width
 # define CUB_SIZE           64
 # define FOV           		60
-//
-
-
-
 
 typedef struct s_color
 {
@@ -103,16 +99,14 @@ typedef struct s_cub
 /* world */
 typedef struct s_world
 {
-	int	pl_height;
-	int	pl_pos[2];	// pixels
-	int	pl_angle;
+	int		pl_height;
+	int		pl_pos[2];	// pixels
+	int		pl_angle;
 
-	int	ray_angle;
-	int	dist_to_plane;
+	int		ray_angle;
+	int		dist_to_plane;
 
 	void	*textures[4];
-	
-
 }	t_world;
 
 /* game */
@@ -124,8 +118,6 @@ typedef struct s_game
 	t_cub	cub;
 	t_world	world;
 }	t_game;
-
-
 
 int			close_window(t_game *game);
 int			key_press_hndlr(int keycode, void *param);
@@ -154,6 +146,7 @@ void		destroy_info(t_info *info);
 void		show_info(t_info info);
 char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
+t_card		chartocard(char c);
 
 
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);
@@ -167,8 +160,9 @@ t_errcode	check_map_invalid_chars(t_cub *cub);
 
 void		init_world(t_game *game);
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
-void		draw_bg_on_img(t_color color_ceiling, t_color color_floor, t_image *img);
-void	init_game(t_game *game);
+void		draw_bg_on_img(t_color color_ceiling, t_color color_floor,
+				t_image *img);
+void		init_game(t_game *game);
 
 /* EVENT */
 # define EVENT_KEYPRESS		2

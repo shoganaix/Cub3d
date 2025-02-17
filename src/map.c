@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 22:07:20 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 23:50:37 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static t_errcode	check_map_row(t_cub *cub, int r, t_bool *player_found)
 				*player_found = TRUE;
 				cub->smap.player_pos[0] = r;
 				cub->smap.player_pos[1] = c;
-				cub->smap.player_or = cub->smap.map[r][c]; // TODO - char to card
+				cub->smap.player_or = chartocard(cub->smap.map[r][c]);
+				//cub->smap.player_or = cub->smap.map[r][c];
 			}
 			else
 				return (destroy_cub(cub), ERR_CUBINVALID);
@@ -91,13 +92,12 @@ static int	apply_flood_fill(char **map_copy, int i, int j, char filled)
 		return (0);
 	else if (map_copy[i][j] != '0')
 		return (1);
-	map_copy[i][j] = filled;
-	return (
-		apply_flood_fill(map_copy, i, j - 1, filled)
+	map_copy[i][j] = '1';
+	//map_copy[i][j] = filled;
+	return (apply_flood_fill(map_copy, i, j - 1, filled)
 		+ apply_flood_fill(map_copy, i - 1, j, filled)
 		+ apply_flood_fill(map_copy, i, j + 1, filled)
-		+ apply_flood_fill(map_copy, i + 1, j, filled)
-	);
+		+ apply_flood_fill(map_copy, i + 1, j, filled));
 }
 
 static char	**copy_map_arr(t_map m)
@@ -137,9 +137,9 @@ t_errcode	check_map_closed(t_cub *cub)
 	map_copy[cub->smap.player_pos[0]][cub->smap.player_pos[1]] = '0';
 	flood = apply_flood_fill(map_copy, cub->smap.player_pos[0],
 			cub->smap.player_pos[1], cub->smap.player_or);
-	// debug_int("flood", flood);
-	// ft_putarr_str(map_copy);
-	// debug_int("flood", flood);
+	//debug_int("flood", flood); //
+	//ft_putarr_str(map_copy); //
+	//debug_int("flood", flood); //
 	ft_free_arrstr(map_copy);
 	if (flood > 0)
 		return (destroy_cub(cub), ERR_CUBNOTCLOSED);

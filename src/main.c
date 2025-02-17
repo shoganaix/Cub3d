@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 21:15:32 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/17 22:59:14 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(int argc, char *argv[])
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
 	// world struct
-	init_world(&game);
+	    //init_world(&game);
 	// init
 	game.mlx = mlx_init();
 	game.win = mlx_new_window(game.mlx, WIN_W, WIN_H, WIN_NAME);
@@ -52,3 +52,4 @@ int	main(int argc, char *argv[])
 	mlx_loop(game.mlx);
 	return (0);
 }
+
