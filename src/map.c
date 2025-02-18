@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 23:50:37 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:47:39 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static t_errcode	check_map_row(t_cub *cub, int r, t_bool *player_found)
 				*player_found = TRUE;
 				cub->smap.player_pos[0] = r;
 				cub->smap.player_pos[1] = c;
-				cub->smap.player_or = chartocard(cub->smap.map[r][c]);
+				cub->smap.player_or = char_to_cardinal(cub->smap.map[r][c]);
 				//cub->smap.player_or = cub->smap.map[r][c];
 			}
 			else

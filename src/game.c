@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/17 23:52:10 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:24:29 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ void	init_world(t_game *game)
 				my_perror_exit("mlx_xpm_file_to_image failed"));
 	}
 }
+/**
+ * added mlx_put_image_to_window
+ */
 
 void	init_game(t_game *game)
 {
-	debug("llego");
 	draw_bg_on_img(game->cub.info.ceiling, game->cub.info.floor, &game->img);
+	mlx_put_image_to_window(game->mlx, game->win, game->img.mlximg, 0, 0);
 }

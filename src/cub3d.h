@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 22:59:00 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:20:31 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void		destroy_info(t_info *info);
 void		show_info(t_info info);
 char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
-t_card		chartocard(char c);
+t_card		char_to_cardinal(char c);
 
 
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);

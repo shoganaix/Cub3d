@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 23:53:12 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:21:59 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_image	new_empty_img(void *mlx, int width_px, int height_px)
 	t_image	img;
 	int		bytes_per_px;
 
+
 	img.mlximg = mlx_new_image(mlx, width_px, height_px);
 	img.addr = mlx_get_data_addr(img.mlximg,
 			&img.bits_per_pixel, &img.line_size, &img.endian);
@@ -95,5 +96,3 @@ t_image	new_empty_img(void *mlx, int width_px, int height_px)
 	// img.mlx = mlx;
 	return (img);
 }
-
-

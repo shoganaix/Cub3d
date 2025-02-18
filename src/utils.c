@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/17 22:38:10 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:47:44 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	cardinal_to_angle(t_card c)
 	return (-1);
 }
 
-t_card	chartocard(char c)
+t_card	char_to_cardinal(char c)
 {
 	if (c == 'N')
 		return (NO);
