@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:46:09 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/03 13:46:13 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:32:43 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // frees, destroys ??
 int	close_window(t_game *game)
 {
-	mlx_destroy_window(game->mlx, game->win);
-	printf("Bye bye\n");
+	destroy_game(game);
+	ft_printf("Bye bye\n");
 	exit(0);
 }

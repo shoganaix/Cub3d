@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/17 20:34:16 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:23:59 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ t_errcode	check_texture(char *line, t_info *info, t_card cp)
 			i++;
 		if (line[i])
 		{
-			if (info->textures[cp] != NULL)
+			if (info->tx_paths[cp] != NULL)
 				return (ERR_CUBINFODUPPED);
-			info->textures[cp] = next_word(&line[i], &i);
+			info->tx_paths[cp] = next_word(&line[i], &i);
 		}
-		if (line[i] || info->textures[cp] == NULL)
+		if (line[i] || info->tx_paths[cp] == NULL)
 			return (ERR_CUBINFOFORMAT);
 		return (ERR_OK);
 	}
@@ -67,6 +67,10 @@ t_errcode	check_color(char *line, char *item, t_color *color)
 	return (ERR_CUBINFOFORMAT);
 }
 
+/**
+ * check if a texture line or color line is read.
+ * Otherwise, format error
+ */
 t_errcode	check_infoline(char *line, t_info *info)
 {
 	t_errcode	e;
@@ -90,6 +94,15 @@ t_errcode	check_infoline(char *line, t_info *info)
 	return (ERR_CUBINFOFORMAT);
 }
 
+void	finish_gnl(int fd_in, char **line)
+{
+	while (*line)
+	{
+		free(*line);
+		*line = get_next_line(fd_in);
+	}
+}
+
 t_errcode	check_cub_info(int fd_in, t_info *info, char **line)
 {
 	t_bool		is_complete;
@@ -103,11 +116,11 @@ t_errcode	check_cub_info(int fd_in, t_info *info, char **line)
 		{
 			e = check_infoline(*line, info);
 			if (e != ERR_OK)
-				return (e);
-			is_complete = ((info->textures[NO] != NULL)
-					&& (info->textures[SO] != NULL)
-					&& (info->textures[WE] != NULL)
-					&& (info->textures[EA] != NULL)
+				return (my_perr_arg("error in line", *line), e);
+			is_complete = ((info->tx_paths[NO] != NULL)
+					&& (info->tx_paths[SO] != NULL)
+					&& (info->tx_paths[WE] != NULL)
+					&& (info->tx_paths[EA] != NULL)
 					&& (info->ceiling.r != -1)
 					&& (info->floor.r != -1));
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/18 14:20:46 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:39:31 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 /**
  * check args : nargs, extension
- * read map file .cub
- * init game
+ * read map file .cub -> cub
+ * init game + cub -> game
  * draw <---
  * insert_hooks(win, prog);
  * mlx_loop(mlx);
@@ -23,25 +23,19 @@
 int	main(int argc, char *argv[])
 {
 	t_game		game;
+	t_cub		cub;
 	t_errcode	e;
-	// char		*img1 = "./img/test.xpm";
-	// char		*img2 = "./img/teapot.xpm";
 
 	// check args
 	check_args(argc, argv);
 	// map
-	e = read_cubfile(argv[1], &game.cub);
+	e = read_cubfile(argv[1], &cub);
 	if (e != ERR_OK)
 		my_perrorcode_exit(e, NULL);
-	// world struct
-	    //init_world(&game);
 	// init
-	game.mlx = mlx_init();
-	game.win = mlx_new_window(game.mlx, WIN_W, WIN_H, WIN_NAME);
-	game.img = new_empty_img(game.mlx, WIN_W, WIN_H);
-
+	init_game(&game, &cub);
 	// draw
-	init_game(&game);
+	draw_game(&game);
 	// paint_img(game, img1, 0, 0);
 	// paint_img(game, img2, 250, 250);
 

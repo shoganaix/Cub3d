@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/12 17:25:28 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:17:33 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	destroy_info(t_info *info)
 	i = 0;
 	while (i < NUM_CARD)
 	{
-		if (info->textures[i])
+		if (info->tx_paths[i])
 		{
-			free(info->textures[i]);
-			info->textures[i] = NULL;
+			free(info->tx_paths[i]);
+			info->tx_paths[i] = NULL;
 		}
 		++i;
 	}
@@ -46,8 +46,8 @@ void	show_info(t_info info)
 	i = 0;
 	while (i < NUM_CARD)
 	{
-		if (info.textures[i])
-			printf("\t%i texture: %s\n", i, info.textures[i]);
+		if (info.tx_paths[i])
+			printf("\t%i texture: %s\n", i, info.tx_paths[i]);
 		else
 			printf("\t%i texture: NULL\n", i);
 		i++;

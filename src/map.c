@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/18 13:47:39 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:18:18 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static t_errcode	check_map_row(t_cub *cub, int r, t_bool *player_found)
 				cub->smap.player_pos[0] = r;
 				cub->smap.player_pos[1] = c;
 				cub->smap.player_or = char_to_cardinal(cub->smap.map[r][c]);
-				//cub->smap.player_or = cub->smap.map[r][c];
 			}
 			else
 				return (destroy_cub(cub), ERR_CUBINVALID);
@@ -92,19 +91,20 @@ static int	apply_flood_fill(char **map_copy, int i, int j, char filled)
 		return (0);
 	else if (map_copy[i][j] != '0')
 		return (1);
-	map_copy[i][j] = '1';
-	//map_copy[i][j] = filled;
+	map_copy[i][j] = filled;
 	return (apply_flood_fill(map_copy, i, j - 1, filled)
 		+ apply_flood_fill(map_copy, i - 1, j, filled)
 		+ apply_flood_fill(map_copy, i, j + 1, filled)
 		+ apply_flood_fill(map_copy, i + 1, j, filled));
 }
 
-static char	**copy_map_arr(t_map m)
+/**
+ * returns NULL if memory allocation fails.
+ */
+char	**copy_map_arr(t_map m)
 {
 	char	**map_copy;
 	int		i;
-	int		j;
 
 	map_copy = (char **)ft_calloc((m.height + 1), sizeof(char *));
 	if (map_copy == NULL)
@@ -112,15 +112,9 @@ static char	**copy_map_arr(t_map m)
 	i = 0;
 	while (i < m.height)
 	{
-		j = 0;
-		map_copy[i] = (char *)ft_calloc(ft_strlen(m.map[i]) + 1, sizeof(char));
+		map_copy[i] = ft_strdup(m.map[i]);
 		if (map_copy[i] == NULL)
 			return (ft_free_arrstr(map_copy), NULL);
-		while (m.map[i][j] != '\0')
-		{
-			map_copy[i][j] = m.map[i][j];
-			j++;
-		}
 		i++;
 	}
 	return (map_copy);
@@ -136,7 +130,7 @@ t_errcode	check_map_closed(t_cub *cub)
 		return (destroy_cub(cub), ERR_MEM);
 	map_copy[cub->smap.player_pos[0]][cub->smap.player_pos[1]] = '0';
 	flood = apply_flood_fill(map_copy, cub->smap.player_pos[0],
-			cub->smap.player_pos[1], cub->smap.player_or);
+			cub->smap.player_pos[1], 'X');
 	//debug_int("flood", flood); //
 	//ft_putarr_str(map_copy); //
 	//debug_int("flood", flood); //

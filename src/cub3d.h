@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/18 14:20:31 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:46:48 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 # include "../mlx_linux/mlx.h"
 # include "../libft/include/libft.h"
 
-# define DEBUG				1 				// debug flag
+# define DEBUG				1 			// debug flag
 
 /* WINDOW */
 # define WIN_NAME           ".:++### CUB3D ###++:."
-# define WIN_H		        200			// viewport height
-# define WIN_W		        320			// viewport width
-# define CUB_SIZE           64
-# define FOV           		60
+# define WIN_H		        200			// viewport height (pixels)
+# define WIN_W		        320			// viewport width (pixels)
+# define CUB_SIZE           64			// cubes side in pixels
+# define FOV           		60			// field of view in degrees
 
 typedef struct s_color
 {
@@ -75,7 +75,7 @@ typedef struct s_image
 
 typedef struct s_info
 {
-	char	*textures[4];
+	char	*tx_paths[4];		// texture paths
 	t_color	floor;
 	t_color	ceiling;
 }	t_info;
@@ -86,7 +86,7 @@ typedef struct s_map
 	int		height;
 	int		width;
 	int		player_pos[2];
-	t_card	player_or;		// orientation
+	t_card	player_or;			// orientation
 }	t_map;
 
 /* cub */
@@ -99,14 +99,20 @@ typedef struct s_cub
 /* world */
 typedef struct s_world
 {
+	t_color	floor;
+	t_color	ceiling;
+
+	char	**map;			// grid
+	int		map_height;		// grid height
+
 	int		pl_height;
-	int		pl_pos[2];	// pixels
+	int		pl_pos[2];		// pixels
 	int		pl_angle;
 
 	int		ray_angle;
 	int		dist_to_plane;
 
-	void	*textures[4];
+	void	*tx_imgs[4];	// texture images
 }	t_world;
 
 /* game */
@@ -115,7 +121,6 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	t_image	img;
-	t_cub	cub;
 	t_world	world;
 }	t_game;
 
@@ -148,7 +153,7 @@ char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
 t_card		char_to_cardinal(char c);
 
-
+t_bool		can_open(const char *file_name);
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);
 t_errcode	check_cub_info(int fd_in, t_info *info, char **line);
 t_errcode	check_texture(char *line, t_info *info, t_card cp);
@@ -157,12 +162,14 @@ char		*next_word(char *line, int *len);
 t_bool		color_val_ok(char *s, int *v);
 t_errcode	check_map_closed(t_cub *cub);
 t_errcode	check_map_invalid_chars(t_cub *cub);
+char		**copy_map_arr(t_map m);
+void		finish_gnl(int fd_in, char **line);
 
-void		init_world(t_game *game);
+void		init_game(t_game *game, t_cub *cub);
+void		destroy_game(t_game *game);
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
-void		draw_bg_on_img(t_color color_ceiling, t_color color_floor,
-				t_image *img);
-void		init_game(t_game *game);
+void		draw_game(t_game *game);
+void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
 
 /* EVENT */
 # define EVENT_KEYPRESS		2
@@ -179,9 +186,9 @@ void		init_game(t_game *game);
 
 /* KEYS */
 # define KEY_A			97
-# define KEY_S			KEY_A +  's' - 'a'
-# define KEY_D			KEY_A +  'd' - 'a'
-# define KEY_W			KEY_A +  'w' - 'a'
+# define KEY_S			115
+# define KEY_D			100		// KEY_A +  'd' - 'a'
+# define KEY_W			119		// KEY_A +  'w' - 'a'
 
 # define KEY_ESC		65307
 

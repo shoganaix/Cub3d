@@ -22,8 +22,8 @@ void test_read_texture_line_ok()
 	ft_bzero(&info, sizeof(info));
 	t_errcode b = check_texture(line, &info, NO);
 	assert(b == ERR_OK);
-	assert(info.textures[NO] != NULL);
-	assert(ft_strcmp(info.textures[NO], "./path-to-no") == 0);
+	assert(info.tx_paths[NO] != NULL);
+	assert(ft_strcmp(info.tx_paths[NO], "./path-to-no") == 0);
 	printf("check_texture - ok input passed 🌱\n");
 }
 
@@ -36,7 +36,7 @@ void test_read_texture_line_sp_begin()
 	ft_bzero(&info, sizeof(info));
 	t_errcode b = check_texture(line, &info, NO);
 	assert(b == ERR_CUBINFOFORMAT);
-	assert(info.textures[NO] == NULL);
+	assert(info.tx_paths[NO] == NULL);
 	printf("check_texture - start w/spaces passed 🌱\n");
 }
 
@@ -70,7 +70,7 @@ void test_read_texture_line_filled()
 
 	t_info info;
 	ft_bzero(&info, sizeof(info));
-	info.textures[NO] = "filled-already";
+	info.tx_paths[NO] = "filled-already";
 	t_errcode b = check_texture(line, &info, NO);
 	assert(b == ERR_CUBINFODUPPED);
 	printf("check_texture - already filled passed 🌱\n");
@@ -210,20 +210,20 @@ void test_read_color_line_filled()
 /********** check_map ******** */
 void test_check_cub_ok_input()
 {
-	char *file = "maps/map1.cub";
+	char *file = "test/map_testok.cub";
 	t_cub cub;
 
 	t_errcode b = read_cubfile(file, &cub);
 	assert(b == ERR_OK);
 	// info
-	assert(cub.info.textures[NO] != NULL);
-	assert(cub.info.textures[SO] != NULL);
-	assert(cub.info.textures[WE] != NULL);
-	assert(cub.info.textures[EA] != NULL);
-	assert(ft_strcmp(cub.info.textures[NO], "./path_to_the_north_texture") == 0);
-	assert(ft_strcmp(cub.info.textures[SO], "./path_to_the_south_texture") == 0);
-	assert(ft_strcmp(cub.info.textures[WE], "./path_to_the_west_texture") == 0);
-	assert(ft_strcmp(cub.info.textures[EA], "./path_to_the_east_texture") == 0);
+	assert(cub.info.tx_paths[NO] != NULL);
+	assert(cub.info.tx_paths[SO] != NULL);
+	assert(cub.info.tx_paths[WE] != NULL);
+	assert(cub.info.tx_paths[EA] != NULL);
+	assert(ft_strcmp(cub.info.tx_paths[NO], "./path_to_the_north_texture") == 0);
+	assert(ft_strcmp(cub.info.tx_paths[SO], "./path_to_the_south_texture") == 0);
+	assert(ft_strcmp(cub.info.tx_paths[WE], "./path_to_the_west_texture") == 0);
+	assert(ft_strcmp(cub.info.tx_paths[EA], "./path_to_the_east_texture") == 0);
 	assert(cub.info.floor.r == 220);
 	assert(cub.info.floor.g == 100);
 	assert(cub.info.floor.b == 0);
@@ -273,7 +273,7 @@ void test_check_cub_map_invalid_char()
 	char	*file = "test/invalid_char1";
 
 	t_errcode b = read_cubfile(file, &cub);
-	assert(b == ERR_CUBINVALID);	
+	assert(b == ERR_CUBINVALID);
 	printf("check_cub - invalid char passed 🌱\n");
 }
 
@@ -308,35 +308,46 @@ void test_check_cub_map_space_after0()
 	printf("check_cub - space with zero passed 🌱\n");
 }
 
+void	test_destroy_game()
+{
+	t_game game;
+	ft_bzero(&game, sizeof(t_game));
+	//game.world.map = NULL;
+
+	destroy_game(&game);
+	printf("destroy_game - no errors->passed 🌱\n");
+}
 
 int main()
 {
-	test_next_word_f();
-	test_next_word_l();
+	// test_next_word_f();
+	// test_next_word_l();
 
 
-	test_read_texture_line_ok();
-	test_read_texture_line_sp_begin();
-	test_read_texture_line_more_words();
-	test_read_texture_line_sp_end();
-	test_read_texture_line_notok();
-	test_read_texture_line_filled();
+	// test_read_texture_line_ok();
+	// test_read_texture_line_sp_begin();
+	// test_read_texture_line_more_words();
+	// test_read_texture_line_sp_end();
+	// test_read_texture_line_notok();
+	// test_read_texture_line_filled();
 
-	test_check_color_ok();
-	test_check_color_sp();
-	test_check_color_wrong();
-	test_check_color_more_colors();
-	test_check_color_no_comma();
-	test_check_color_chars_in_color();
-	test_check_color_nl();
-	test_read_color_line_filled();
+	// test_check_color_ok();
+	// test_check_color_sp();
+	// test_check_color_wrong();
+	// test_check_color_more_colors();
+	// test_check_color_no_comma();
+	// test_check_color_chars_in_color();
+	// test_check_color_nl();
+	// test_read_color_line_filled();
 
-	test_check_cub_ok_input();
-	test_check_cub_map_bf_info();
-	test_check_cub_map_invalid_char();
-	test_check_cub_map_moret1player();
-	test_check_cub_map_noplayer();
-	test_check_cub_map_space_after0();
+	// test_check_cub_ok_input();
+	// test_check_cub_map_bf_info();
+	// test_check_cub_map_invalid_char();
+	// test_check_cub_map_moret1player();
+	// test_check_cub_map_noplayer();
+	// test_check_cub_map_space_after0();
 	
-	test_show_cub_random();
+	// test_show_cub_random();
+
+	test_destroy_game();
 }

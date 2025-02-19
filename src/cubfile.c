@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cubfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:18:11 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/17 22:41:16 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:23:19 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_errcode	read_cubfile(char *cubfile, t_cub *cub)
 	line = get_next_line(fdin);
 	e = check_cub_info(fdin, &cub->info, &line);
 	if (e != ERR_OK)
-		return (close(fdin), e);
+		return (finish_gnl(fdin, &line), close(fdin), my_perror("Error in cub info."), e);
 	eat_newlines(fdin, &line);
 	while (line)
 	{
