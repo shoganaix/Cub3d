@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:18:11 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/19 17:07:17 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:57:25 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,5 @@ t_errcode	read_cubfile(char *cubfile, t_cub *cub)
 	e = check_map_invalid_chars(cub);
 	if (e == ERR_OK)
 		e = check_map_closed(cub);
-	return (my_perror("Error in cub map."), e);
-}
-
-void read_cubfile_wrapper(char *cubfile, t_cub *cub)
-{
-	t_errcode	e;
-
-	e = read_cubfile(cubfile, cub);
-	if (e != ERR_OK)
-		my_perrorcode_exit(e, NULL);
+	return (e);
 }

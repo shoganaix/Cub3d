@@ -6,11 +6,21 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:53 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/19 20:15:44 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+
+void	read_cubfile_wrapper(char *cubfile, t_cub *cub)
+{
+	t_errcode	e;
+
+	e = read_cubfile(cubfile, cub);
+	if (e != ERR_OK)
+		my_perrorcode_exit(e, "Error in cub map.");
+}
 
 /**
  * PROGRAM PARTS:
@@ -29,6 +39,12 @@ int	main(int argc, char *argv[])
 	check_args(argc, argv);
 	read_cubfile_wrapper(argv[1], &cub);
 	init_game(&game, &cub);
+	ft_printf("%c\n", game.world.map[2][1]);
+	ft_printf("%c\n", game.world.map[3][0]);
+	ft_printf("%c\n", game.world.map[1][1]);
+	ft_printf("%c\n", game.world.map[0][4]);
+	ft_printf("%c\n", game.world.map[1][0]);
+
 	draw_game(&game);
 	// paint_img(game, img1, 0, 0);
 
