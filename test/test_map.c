@@ -308,7 +308,7 @@ void test_check_cub_map_space_after0()
 	printf("check_cub - space with zero passed 🌱\n");
 }
 
-void	test_destroy_game()
+void	test_destroy_game_bzero()
 {
 	t_game game;
 	ft_bzero(&game, sizeof(t_game));
@@ -320,34 +320,34 @@ void	test_destroy_game()
 
 int main()
 {
-	// test_next_word_f();
-	// test_next_word_l();
+	test_next_word_f();
+	test_next_word_l();
 
 
-	// test_read_texture_line_ok();
-	// test_read_texture_line_sp_begin();
-	// test_read_texture_line_more_words();
-	// test_read_texture_line_sp_end();
-	// test_read_texture_line_notok();
-	// test_read_texture_line_filled();
+	test_read_texture_line_ok();
+	test_read_texture_line_sp_begin();
+	test_read_texture_line_more_words();
+	test_read_texture_line_sp_end();
+	test_read_texture_line_notok();
+	test_read_texture_line_filled();
 
-	// test_check_color_ok();
-	// test_check_color_sp();
-	// test_check_color_wrong();
-	// test_check_color_more_colors();
-	// test_check_color_no_comma();
-	// test_check_color_chars_in_color();
-	// test_check_color_nl();
-	// test_read_color_line_filled();
+	test_check_color_ok();
+	test_check_color_sp();
+	test_check_color_wrong();
+	test_check_color_more_colors();
+	test_check_color_no_comma();
+	test_check_color_chars_in_color();
+	test_check_color_nl();
+	test_read_color_line_filled();
 
-	// test_check_cub_ok_input();
-	// test_check_cub_map_bf_info();
-	// test_check_cub_map_invalid_char();
-	// test_check_cub_map_moret1player();
-	// test_check_cub_map_noplayer();
-	// test_check_cub_map_space_after0();
+	test_check_cub_ok_input();
+	test_check_cub_map_bf_info();
+	test_check_cub_map_invalid_char();
+	test_check_cub_map_moret1player();
+	test_check_cub_map_noplayer();
+	test_check_cub_map_space_after0();
 	
-	// test_show_cub_random();
+	test_show_cub_random();
 
-	test_destroy_game();
+	test_destroy_game_bzero();
 }

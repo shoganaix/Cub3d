@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/19 16:46:48 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:07:46 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_card		char_to_cardinal(char c);
 
 t_bool		can_open(const char *file_name);
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);
+void		read_cubfile_wrapper(char *cubfile, t_cub *cub);
 t_errcode	check_cub_info(int fd_in, t_info *info, char **line);
 t_errcode	check_texture(char *line, t_info *info, t_card cp);
 t_errcode	check_color(char *line, char *item, t_color *color);
