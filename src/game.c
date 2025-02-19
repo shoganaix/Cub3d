@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/18 14:24:29 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:30:02 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_world(t_game *game)
 	}
 }
 /**
+ * init game draws background (ceiling and floor) +
  * added mlx_put_image_to_window
  */
 
