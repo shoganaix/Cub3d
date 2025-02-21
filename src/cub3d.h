@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/21 15:00:29 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:02:26 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ typedef struct s_world
 	int		pl_point[2];		// pixels [x][y]
 	int		pl_angle;
 
-	int		ray_angle;
+	float	ray_angle;
 	int		dist_to_plane;
 
 	void	*tx_imgs[4];	// texture images
@@ -159,8 +159,10 @@ char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
 t_card		char_to_cardinal(char c);
 void		assign_point(int dst[2], int src[2]);
+void		assign_point_ints(int dst[2], int x, int y);
 int			grid_row(int point[2]);
 int			grid_column(int point[2]);
+t_bool		is_inside_grid(char **grid, int r, int c, int grid_nrows);
 
 t_bool		can_open(const char *file_name);
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);
@@ -179,11 +181,11 @@ void		destroy_game(t_game *game);
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
 void		draw_game(t_game *game);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
-void		get_ray_collides_wall(t_world *world, int angle, int point[2]);
+void		get_ray_collides_wall(t_world *world, float angle, int point[2]);
 
-float		ft_tan(int degrees);
-float		ft_sin(int degrees);
-float		ft_cos(int degrees);
+float		ft_tan(float degrees);
+float		ft_sin(float degrees);
+float		ft_cos(float degrees);
 /* EVENT */
 # define EVENT_KEYPRESS		2
 # define EVENT_KEYRELEASE	3

@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/21 14:50:29 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:53:35 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void	assign_point(int dst[2], int src[2])
 	dst[Y] = src[Y];
 }
 
+void	assign_point_ints(int dst[2], int x, int y)
+{
+	dst[X] = x;
+	dst[Y] = y;
+}
+
 int	grid_row(int point[2])
 {
 	return (point[Y] / CUB_SIZE);
@@ -69,3 +75,5 @@ int	grid_column(int point[2])
 {
 	return (point[X] / CUB_SIZE);
 }
+
+

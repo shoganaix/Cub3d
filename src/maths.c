@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:17:28 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/21 14:29:31 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:02:03 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * degrees
  */
-float	ft_tan(int degrees)
+float	ft_tan(float degrees)
 {
 	float	rad;
 
@@ -26,7 +26,7 @@ float	ft_tan(int degrees)
 /**
  * degrees
  */
-float	ft_sin(int degrees)
+float	ft_sin(float degrees)
 {
 	float	rad;
 
@@ -37,7 +37,7 @@ float	ft_sin(int degrees)
 /**
  * degrees
  */
-float	ft_cos(int degrees)
+float	ft_cos(float degrees)
 {
 	float	rad;
 
