@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/18 13:47:44 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:50:29 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,20 @@ t_card	char_to_cardinal(char c)
 		return (EA);
 	my_perror_exit("Unexpected cardinal 3");
 	return (-1);
+}
+
+void	assign_point(int dst[2], int src[2])
+{
+	dst[X] = src[X];
+	dst[Y] = src[Y];
+}
+
+int	grid_row(int point[2])
+{
+	return (point[Y] / CUB_SIZE);
+}
+
+int	grid_column(int point[2])
+{
+	return (point[X] / CUB_SIZE);
 }

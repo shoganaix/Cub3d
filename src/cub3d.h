@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/19 18:52:08 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:00:29 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@
 # define WIN_W		        320			// viewport width (pixels)
 # define CUB_SIZE           64			// cubes side in pixels
 # define FOV           		60			// field of view in degrees
+# define R           		0			// row
+# define C           		1			// column
+# define X           		0			// x-axis
+# define Y           		1			// y-axis
+# define M_PI           	3.14159265358979323846  /* pi */
+# define INT_MAX			2147483647
 
 typedef struct s_color
 {
@@ -85,7 +91,7 @@ typedef struct s_map
 	char	**map;
 	int		height;
 	int		width;
-	int		player_pos[2];
+	int		player_pos[2];		// player pos [r][c]
 	t_card	player_or;			// orientation
 }	t_map;
 
@@ -106,7 +112,7 @@ typedef struct s_world
 	int		map_height;		// grid height
 
 	int		pl_height;
-	int		pl_pos[2];		// pixels
+	int		pl_point[2];		// pixels [x][y]
 	int		pl_angle;
 
 	int		ray_angle;
@@ -152,6 +158,9 @@ void		show_info(t_info info);
 char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
 t_card		char_to_cardinal(char c);
+void		assign_point(int dst[2], int src[2]);
+int			grid_row(int point[2]);
+int			grid_column(int point[2]);
 
 t_bool		can_open(const char *file_name);
 t_errcode	read_cubfile(char *cubfile, t_cub *cub);
@@ -170,7 +179,11 @@ void		destroy_game(t_game *game);
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
 void		draw_game(t_game *game);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
+void		get_ray_collides_wall(t_world *world, int angle, int point[2]);
 
+float		ft_tan(int degrees);
+float		ft_sin(int degrees);
+float		ft_cos(int degrees);
 /* EVENT */
 # define EVENT_KEYPRESS		2
 # define EVENT_KEYRELEASE	3

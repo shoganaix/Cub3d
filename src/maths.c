@@ -1,50 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
+/*   maths.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 18:35:45 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/21 13:16:23 by macastro         ###   ########.fr       */
+/*   Created: 2025/02/21 14:17:28 by macastro          #+#    #+#             */
+/*   Updated: 2025/02/21 14:29:31 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "cub3d.h"
 
-void	ft_putarr_ints(int *ints, int size)
+/**
+ * degrees
+ */
+float	ft_tan(int degrees)
 {
-	int	i;
+	float	rad;
 
-	i = 0;
-	while (i < size)
-	{
-		ft_printf("%i\n", ints[i]);
-		i++;
-	}
+	rad = degrees * M_PI / 180;
+	return (tan(rad));
 }
 
-void	ft_putarr_str(char **words)
+/**
+ * degrees
+ */
+float	ft_sin(int degrees)
 {
-	int	i;
+	float	rad;
 
-	i = 0;
-	while (words[i])
-	{
-		ft_printf("%s", words[i]);
-		i++;
-	}
-	ft_printf("\n");
+	rad = degrees * M_PI / 180;
+	return (sin(rad));
 }
 
-void	ft_putarr_str_nl(char **words)
+/**
+ * degrees
+ */
+float	ft_cos(int degrees)
 {
-	int	i;
+	float	rad;
 
-	i = 0;
-	while (words[i])
-	{
-		ft_printf("%s\n", words[i]);
-		i++;
-	}
+	rad = degrees * M_PI / 180;
+	return (cos(rad));
 }

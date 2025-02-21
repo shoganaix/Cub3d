@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:33:50 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/03 15:09:04 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:12:52 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int		ft_printf(const char *format, ...);
 
 void	ft_putarr_ints(int *ints, int size);
 void	ft_putarr_str(char **words);
+void	ft_putarr_str_nl(char **words);
 
 /**
  * list

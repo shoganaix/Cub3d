@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/19 20:26:21 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:00:02 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	init_game(t_game *game, t_cub *cub)
 	game->world.ceiling = cub->info.ceiling;
 	game->world.floor = cub->info.floor;
 	game->world.pl_height = CUB_SIZE / 2;
-	game->world.pl_pos[0] = cub->smap.player_pos[0] * CUB_SIZE + CUB_SIZE / 2;
-	game->world.pl_pos[1] = cub->smap.player_pos[1] * CUB_SIZE + CUB_SIZE / 2;
+	game->world.pl_point[0] = cub->smap.player_pos[1] * CUB_SIZE + CUB_SIZE / 2;
+	game->world.pl_point[1] = cub->smap.player_pos[0] * CUB_SIZE + CUB_SIZE / 2;
 	game->world.pl_angle = cardinal_to_angle(cub->smap.player_or);
 	game->world.ray_angle = WIN_W / FOV;
-	game->world.dist_to_plane = WIN_W / 2 / tan(FOV / 2);
+	game->world.dist_to_plane = WIN_W / 2 / ft_tan(FOV / 2);
 	
 	init_game_textures(game, cub);
 	destroy_cub(cub);
@@ -79,122 +79,26 @@ void	destroy_game(t_game *game)
 	// destroy: img, win, mlx
 }
 
-t_bool	pos_is_wall(int pos[2], t_world *world)
-{
-	int	grid_pos[2];
-
-	grid_pos[0] = floor(pos[0] / CUB_SIZE);
-	grid_pos[1] = floor(pos[1] / CUB_SIZE);
-	debug_int("grid 0", grid_pos[0]);
-	debug_int("grid 1", grid_pos[1]);
-	return (world->map[grid_pos[1]][grid_pos[0]] == '1');
-}
-void	ray_collides_wall_vert(t_world *world, int angle, int col_point[2])
-{
-	int		a[2];
-	int		y_inc;
-	int		x_inc;
-
-	y_inc = CUB_SIZE * tan(angle);
-	while (TRUE)
-	{
-		if (90 < angle && angle < 270) // ==?
-		{
-			a[0] = floor(world->pl_pos[0] / CUB_SIZE) * CUB_SIZE - 1;
-			x_inc = -1 * CUB_SIZE;
-		}
-		else
-		{
-			a[0] = floor(world->pl_pos[0] / CUB_SIZE) * CUB_SIZE + 64;
-			x_inc = CUB_SIZE;
-		}
-		a[1] = world->pl_pos[1] + (world->pl_pos[0] - a[0]) * tan(angle);
-		if (pos_is_wall(a, world))
-			break ;
-		a[0] += x_inc;
-		a[1] += y_inc;
-	}
-	col_point[0] = a[0];
-	col_point[1] = a[1];
-}
-
-void	ray_collides_wall_hori(t_world *world, int angle, int col_point[2])
-{
-	int		a[2];
-	int		y_inc;
-	int		x_inc;
-
-	x_inc = CUB_SIZE / tan(angle);
-	while (TRUE)
-	{
-		if (0 < angle && angle < 180) // ==?
-		{
-			a[1] = floor(world->pl_pos[1] / CUB_SIZE) * CUB_SIZE - 1;
-			y_inc = -1 * CUB_SIZE;
-		}
-		else
-		{
-			a[1] = floor(world->pl_pos[1] / CUB_SIZE) * CUB_SIZE + 64;
-			y_inc = CUB_SIZE;
-		}
-		a[0] = world->pl_pos[0] + (world->pl_pos[1] - a[1])/tan(angle);
-		if (pos_is_wall(a, world))
-			break ;
-		a[0] += x_inc;
-		a[1] += y_inc;
-	}
-	col_point[0] = a[0];
-	col_point[1] = a[1];
-}
-
-int	dist_between_points(int a[2], int b[2])
-{
-	return (floor(sqrt(pow(a[0] - b[0], 2) + pow(a[1] - b[1], 2))));
-}
-
-void	get_ray_collides_wall(t_world *world, int angle, int point[2])
-{
-	int	vert_collision[2];
-	int	hori_collision[2];
-	int	dh;
-	int	dv;
-
-	debug("v--------------");
-	ray_collides_wall_vert(world, angle, vert_collision);
-	debug("h----------------");
-	ray_collides_wall_hori(world, angle, hori_collision);
-
-	// point =  el mas cercano al jugador
-	dh = dist_between_points(world->pl_pos, hori_collision);
-	dv = dist_between_points(world->pl_pos, vert_collision);
-	if (dh <= dv)
-	{
-		point[0] = hori_collision[0];
-		point[1] = hori_collision[1];
-	}
-	else
-	{
-		point[0] = vert_collision[0];
-		point[1] = vert_collision[1];
-	}
-}
-
 void	draw_game_on_img(t_game *game)
 {
-	int angle;
+	int	angle;
 	int	i;
 	int	ray_collides_wall[2];
 
 	angle = game->world.pl_angle - FOV / 2;
+	ft_bzero(&ray_collides_wall, sizeof(int) * 2);
 	i = 0;
 	while (i < WIN_W)
 	{
 		debug("************");
-		debug_int("**player 0", game->world.pl_pos[0]);
-		debug_int("**player 1", game->world.pl_pos[1]);
-		debug_int("**angle", angle);
+		debug_int("🌸angle", angle);
+		debug_int("before collisionX", ray_collides_wall[0]);
+		debug_int("before collisionY", ray_collides_wall[1]);
 		get_ray_collides_wall(&game->world, angle, ray_collides_wall); // needs pl_pos and map
-
+		debug_int("after collisionX", ray_collides_wall[0]);
+		debug_int("after collisionY", ray_collides_wall[1]);
+		debug_int("after collisionR", grid_row(ray_collides_wall));
+		debug_int("after collisionC", grid_column(ray_collides_wall));
 		// ...
 		angle += game->world.ray_angle;
 		i++;
