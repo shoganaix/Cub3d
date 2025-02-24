@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+         #
+#    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/02/21 15:04:01 by macastro         ###   ########.fr        #
+#    Updated: 2025/02/24 11:24:22 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRCFILES = src/hooks.c \
 		src/info.c \
 		src/info2.c \
 		src/utils.c \
+		src/utils2.c \
 		src/game.c \
 		src/maths.c \
 		src/collision.c \

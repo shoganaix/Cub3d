@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/21 20:21:04 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:48:21 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	init_game(t_game *game, t_cub *cub)
 	game->world.ray_angle = (1.0 * FOV) / WIN_W;
 	printf("angle inc %f\n", game->world.ray_angle);
 	game->world.dist_to_plane = WIN_W / 2 / ft_tan(FOV / 2);
-	
 	init_game_textures(game, cub);
 	destroy_cub(cub);
 }
@@ -89,18 +88,18 @@ void	draw_game_on_img(t_game *game)
 	angle = game->world.pl_angle - FOV / 2;
 	ft_bzero(&ray_collides_wall, sizeof(int) * 2);
 	i = 0;
-	printf("assert angle_inc * W: %f, vs FOV: %i\n", game->world.ray_angle * WIN_W, FOV);
+	printf("assert angle_inc * W: %f, vs FOV: %i\n", game->world.ray_angle * WIN_W, FOV); //
 	while (i < WIN_W) // 13 - de 30 en 30, 13 vueltas // WIN_W
 	{
 		debug("************");
 		debug_int("🌸angle", angle);
-		// debug_int("before collisionX", ray_collides_wall[0]);
-		// debug_int("before collisionY", ray_collides_wall[1]);
+		// debug_int("before collisionX", ray_collides_wall[0]); //
+		// debug_int("before collisionY", ray_collides_wall[1]); //
 		get_ray_collides_wall(&game->world, angle, ray_collides_wall); // needs pl_pos and map
-		// debug_int("after collisionX", ray_collides_wall[0]);
-		// debug_int("after collisionY", ray_collides_wall[1]);
-		debug_int("after collisionR", grid_row(ray_collides_wall));
-		debug_int("after collisionC", grid_column(ray_collides_wall));
+		// debug_int("after collisionX", ray_collides_wall[0]); //
+		// debug_int("after collisionY", ray_collides_wall[1]); //
+		debug_int("after collisionR", grid_row(ray_collides_wall)); //
+		debug_int("after collisionC", grid_column(ray_collides_wall)); //
 		// ...
 		angle += game->world.ray_angle; // 30 deg
 		if (angle > 360)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/21 20:02:26 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:31:58 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,14 +110,11 @@ typedef struct s_world
 
 	char	**map;			// grid
 	int		map_height;		// grid height
-
 	int		pl_height;
 	int		pl_point[2];		// pixels [x][y]
 	int		pl_angle;
-
 	float	ray_angle;
 	int		dist_to_plane;
-
 	void	*tx_imgs[4];	// texture images
 }	t_world;
 
@@ -182,6 +179,8 @@ t_image		new_empty_img(void *mlx, int width_px, int height_px);
 void		draw_game(t_game *game);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
 void		get_ray_collides_wall(t_world *world, float angle, int point[2]);
+t_bool		pos_is_wall(int point[2], t_world *world);
+int			dist_between_points(int a[2], int b[2]);
 
 float		ft_tan(float degrees);
 float		ft_sin(float degrees);

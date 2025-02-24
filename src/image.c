@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/18 14:21:59 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:27:48 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	img_set_pixel_color(t_image *img, int pixel, t_color color)
 
 	vals = img->bits_per_pixel / 8;
 	alpha = 1;
-	//color = get_screen_color(img, color);
 	pixel_in_buffer = &img->addr[pixel * vals];
 	if (img->endian == 1)
 	{
@@ -84,7 +83,6 @@ t_image	new_empty_img(void *mlx, int width_px, int height_px)
 {
 	t_image	img;
 	int		bytes_per_px;
-
 
 	img.mlximg = mlx_new_image(mlx, width_px, height_px);
 	img.addr = mlx_get_data_addr(img.mlximg,

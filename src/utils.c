@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/21 17:53:35 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:24:11 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,3 @@ void	assign_point_ints(int dst[2], int x, int y)
 	dst[X] = x;
 	dst[Y] = y;
 }
-
-int	grid_row(int point[2])
-{
-	return (point[Y] / CUB_SIZE);
-}
-
-int	grid_column(int point[2])
-{
-	return (point[X] / CUB_SIZE);
-}
-
-

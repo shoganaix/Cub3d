@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/21 19:52:25 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:26:18 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_errcode	check_map_invalid_chars(t_cub *cub)
 
 t_bool	is_inside_grid(char **grid, int r, int c, int grid_nrows)
 {
-	//ft_printf("is_inside_grid - r:%i C:%i\n", r, c);
 	if (r < 0 || c < 0 || r > grid_nrows - 1
 		|| grid[r] == NULL
 		|| c > (int) ft_strlen(grid[r])
@@ -113,28 +112,6 @@ static int	apply_flood_fill(char **map_copy, int i, int j, int map_height)
 		+ apply_flood_fill(map_copy, i + 1, j, map_height));
 }
 
-/**
- * returns NULL if memory allocation fails.
- */
-char	**copy_map_arr(t_map m)
-{
-	char	**map_copy;
-	int		i;
-
-	map_copy = (char **)ft_calloc((m.height + 1), sizeof(char *));
-	if (map_copy == NULL)
-		return (NULL);
-	i = 0;
-	while (i < m.height)
-	{
-		map_copy[i] = ft_strdup(m.map[i]);
-		if (map_copy[i] == NULL)
-			return (ft_free_arrstr(map_copy), NULL);
-		i++;
-	}
-	return (map_copy);
-}
-
 t_errcode	check_map_closed(t_cub *cub)
 {
 	char	**map_copy;
@@ -146,9 +123,6 @@ t_errcode	check_map_closed(t_cub *cub)
 	map_copy[cub->smap.player_pos[0]][cub->smap.player_pos[1]] = '0';
 	flood = apply_flood_fill(map_copy, cub->smap.player_pos[0],
 			cub->smap.player_pos[1], cub->smap.height);
-	//debug_int("flood", flood); //
-	//ft_putarr_str(map_copy); //
-	//debug_int("flood", flood); //
 	ft_free_arrstr(map_copy);
 	if (flood > 0)
 		return (destroy_cub(cub), ERR_CUBNOTCLOSED);

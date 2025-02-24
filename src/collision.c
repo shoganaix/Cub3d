@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:59:52 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/21 20:20:01 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:56:21 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	assert_directions(float angle, int x_inc, int y_inc)
 		err = TRUE;
 	if (err)
 	{
-		printf("INFO. angle:%f x_inc:%i y_inc:%i\n", angle, x_inc, y_inc);
+		printf("INFO. angle:%f x_inc:%i y_inc:%i\n", angle, x_inc, y_inc); //
 		my_perror_exit("assert_directions failed");
 	}
 }
@@ -42,10 +42,9 @@ t_bool	pos_is_wall(int point[2], t_world *world)
 
 	grid_pos[R] = grid_row(point);
 	grid_pos[C] = grid_column(point);
-	//ft_printf("wall? point x:%i y:%i\n", point[X], point[Y]);
-	//ft_printf("wall? grid r:%i c:%i\n", grid_pos[R], grid_pos[C]);
 	return (world->map[grid_pos[R]][grid_pos[C]] == '1');
 }
+
 
 t_bool	ray_collides_wall_vert(t_world *world, float angle, int col_point[2])
 {
@@ -53,7 +52,6 @@ t_bool	ray_collides_wall_vert(t_world *world, float angle, int col_point[2])
 	int		y_inc;
 	int		x_inc;
 
-	debug("v----------------"); //
 	if (angle == 90 || angle == 270)
 		return (FALSE);
 	x_inc = CUB_SIZE;
@@ -86,7 +84,6 @@ t_bool	ray_collides_wall_hori(t_world *world, float angle, int col_point[2])
 	int		y_inc;
 	int		x_inc;
 
-	debug("h--------------"); //
 	if (angle == 0 || angle == 180)
 		return (FALSE);
 	x_inc = CUB_SIZE / ft_tan(angle);
@@ -106,17 +103,11 @@ t_bool	ray_collides_wall_hori(t_world *world, float angle, int col_point[2])
 	while (is_inside_grid(world->map, grid_row(p), grid_column(p),
 			world->map_height))
 	{
-		//debug("----hori"); // 
 		if (pos_is_wall(p, world))
 			return (assign_point(col_point, p), TRUE);
 		assign_point_ints(p, p[X] + x_inc, p[Y] + y_inc);
 	}
 	return (FALSE);
-}
-
-int	dist_between_points(int a[2], int b[2])
-{
-	return (floor(sqrt(pow(a[0] - b[0], 2) + pow(a[1] - b[1], 2))));
 }
 
 void	get_ray_collides_wall(t_world *world, float angle, int coll_point[2])

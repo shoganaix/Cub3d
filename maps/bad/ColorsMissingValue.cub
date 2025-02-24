@@ -1,0 +1,21 @@
+NO ./img/teapot.xpm
+SO ./img/teapot.xpm
+WE ./img/teapot.xpm
+EA ./img/teapot.xpm
+
+C 200,200,200
+F 20,20
+
+11111
+10001
+10S01
+10001
+10001
+10001
+11001
+10001
+10001
+10001
+10001
+10001
+11111
