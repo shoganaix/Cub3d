@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/24 11:24:11 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:11:59 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ t_card	char_to_cardinal(char c)
 	return (-1);
 }
 
-void	assign_point(int dst[2], int src[2])
+t_card	get_cardinal(int col_point[2])
 {
-	dst[X] = src[X];
-	dst[Y] = src[Y];
+	if (col_point[X] % CUB_SIZE == 0)
+		return (WE);
+	if (col_point[X] % CUB_SIZE == 63)
+		return (EA);
+	if (col_point[Y] % CUB_SIZE == 0)
+		return (NO);
+	if (col_point[Y] % CUB_SIZE == 63)
+		return (SO);
+	return (0);
 }
 
-void	assign_point_ints(int dst[2], int x, int y)
-{
-	dst[X] = x;
-	dst[Y] = y;
-}

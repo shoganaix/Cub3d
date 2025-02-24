@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 11:31:58 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:12:46 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ typedef struct s_image
 {
 	void	*mlximg;
 	char	*addr;
+	int		height;
+	int		width;
 	int		bits_per_pixel;
 	int		line_size;		// bytes
 	int		endian;
@@ -115,7 +117,7 @@ typedef struct s_world
 	int		pl_angle;
 	float	ray_angle;
 	int		dist_to_plane;
-	void	*tx_imgs[4];	// texture images
+	t_image	tx_imgs[4];	// texture images
 }	t_world;
 
 /* game */
@@ -155,6 +157,7 @@ void		show_info(t_info info);
 char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
 t_card		char_to_cardinal(char c);
+t_card		get_cardinal(int col_point[2]);
 void		assign_point(int dst[2], int src[2]);
 void		assign_point_ints(int dst[2], int x, int y);
 int			grid_row(int point[2]);
@@ -178,9 +181,13 @@ void		destroy_game(t_game *game);
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
 void		draw_game(t_game *game);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
+t_image		read_image(t_game *game, char *img_path);
 void		get_ray_collides_wall(t_world *world, float angle, int point[2]);
 t_bool		pos_is_wall(int point[2], t_world *world);
 int			dist_between_points(int a[2], int b[2]);
+void		assert_directions(float angle, int x_inc, int y_inc);
+
+void		img_set_pixel_color(t_image *img, int pixel, t_color color);
 
 float		ft_tan(float degrees);
 float		ft_sin(float degrees);

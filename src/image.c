@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 11:27:48 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:27:52 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,15 @@ void	paint_img(t_game game, char *img_path, int posX, int posY)
 			&img_width, &img_height);
 	mlx_put_image_to_window(game.mlx, game.win, img.mlximg, posX, posY);
 	mlx_destroy_image(game.mlx, img.mlximg);
+}
+
+t_image	read_image(t_game *game, char *img_path)
+{
+	t_image	img;
+
+	img.mlximg = mlx_xpm_file_to_image(game->mlx, img_path,
+			&img.width, &img.height);
+	return (img);
 }
 
 /**

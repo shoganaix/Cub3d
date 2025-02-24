@@ -1,7 +1,7 @@
-NO ./img/teapot.xpm
-SO ./img/teapot.xpm
-WE ./img/teapot.xpm
-EA ./img/teapot.xpm
+NO ./img/xpm/teapot.xpm
+SO ./img/xpm/teapot.xpm
+WE ./img/xpm/teapot.xpm
+EA ./img/xpm/teapot.xpm
 
 C 200,200,200
 F 20,20

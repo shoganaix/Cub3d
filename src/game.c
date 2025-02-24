@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/24 11:48:21 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:42:50 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 void	init_game_textures(t_game *game, t_cub *cub)
 {
 	int		i;
-	int		w;
-	int		h;
 	char	*imgpath;
 
 	i = 0;
@@ -26,9 +24,11 @@ void	init_game_textures(t_game *game, t_cub *cub)
 		if (!can_open(imgpath))
 			return (destroy_cub(cub), destroy_game(game),
 				my_perror_exit("textures files not found"));
-		game->world.tx_imgs[i] = mlx_xpm_file_to_image(game->mlx,
-				imgpath, &w, &h);
-		if (game->world.tx_imgs[i] == NULL)
+		game->world.tx_imgs[i] = read_image(game, imgpath);
+		if (game->world.tx_imgs[i].height != game->world.tx_imgs[i].width)
+			return (destroy_cub(cub), destroy_game(game),
+				my_perror_exit("xpm_file is not a square"));
+		if (game->world.tx_imgs[i].mlximg == NULL)
 			return (destroy_cub(cub), destroy_game(game),
 				my_perror_exit("mlx_xpm_file_to_image failed"));
 		i++;
@@ -68,8 +68,8 @@ void	destroy_game(t_game *game)
 	i = 0;
 	while (i < NUM_CARD)
 	{
-		if (game->world.tx_imgs[i] != NULL)
-			mlx_destroy_image(game->mlx, game->world.tx_imgs[i]);
+		if (game->world.tx_imgs[i].mlximg != NULL)
+			mlx_destroy_image(game->mlx, game->world.tx_imgs[i].mlximg);
 		i++;
 	}
 	if (game->img.mlximg)
@@ -79,29 +79,118 @@ void	destroy_game(t_game *game)
 	// destroy: img, win, mlx
 }
 
+/**
+ * using angle and collision point, 
+ * fills pts (2 points) that are the upper and bottom point of the wall slice
+ * 
+ * beta
+ * BETA is the angle of the ray that is being cast relative to the viewing angle.
+ * On the figure above, the viewing angle (ALPHA) is 90 degrees because 
+ * the player is facing straight upward.
+ * Because we have 60 degrees field of view, 
+ * BETA is 30 degrees for the leftmost ray
+ * and it is -30 degrees for the rightmost ray.
+ */
+void	get_proj_points(t_world *world, float angle,
+	int col_point[2], int pts[2][2])
+{
+	const int	dist_to_plane = (WIN_W / 2) / tan(FOV / 2);
+	int			proj_wall_height;
+	int			real_ray_len;
+
+	if (world->pl_angle >= angle)
+		real_ray_len = dist_between_points(world->pl_point, col_point)
+			* ft_cos(world->pl_angle - angle);
+	else
+		real_ray_len = dist_between_points(world->pl_point, col_point)
+			* ft_cos(angle - world->pl_angle);
+	proj_wall_height = CUB_SIZE * dist_to_plane / real_ray_len;
+	pts[0][Y] = WIN_H / 2 - proj_wall_height / 2;
+	pts[1][Y] = WIN_H - pts[0][Y];
+}
+
+int	get_offset(t_image tx_img[4], t_card cardinal, int col_point[2])
+{
+	int	offset;
+
+	if (cardinal == NO || cardinal == SO)
+		offset = col_point[X] % tx_img[cardinal].height;
+	else
+		offset = col_point[Y] % tx_img[cardinal].height;
+	return (offset);
+}
+
+t_color	read_pixel_from_image(t_image img, int offset, int cube_height)
+{
+	int	tx_height;
+	int	pixel;
+	int	vals;
+	char	*pixel_in_buffer;
+	t_color	color;
+
+
+	tx_height = cube_height * img.height / CUB_SIZE;
+	img.addr = mlx_get_data_addr(img.mlximg,
+			&img.bits_per_pixel, &img.line_size, &img.endian);
+	if (img.bits_per_pixel % 8 != 0)
+		my_perror_exit("bit per pixel failed");
+	vals = img.bits_per_pixel / 8;
+	pixel = tx_height * img.height + offset;
+	pixel_in_buffer = &img.addr[pixel * vals];
+	if (img.endian == 1)
+	{
+		//alpha = pixel_in_buffer[vals - 4];
+		color.r = pixel_in_buffer[vals - 3];
+		color.g = pixel_in_buffer[vals - 2];
+		color.b = pixel_in_buffer[vals - 1];
+	}
+	else
+	{
+		color.b = pixel_in_buffer[0];
+		color.g = pixel_in_buffer[1];
+		color.r = pixel_in_buffer[2];
+		// alpha = pixel_in_buffer[3];
+	}
+	return (color);
+}
+
+void	draw_slice(t_game *game, int p_wall[2][2], int offset)
+{
+	int		i;
+	int		pixel_to_paint;
+	t_color	color;
+
+	i = p_wall[0][Y];
+	while (i < p_wall[1][Y])
+	{
+		pixel_to_paint = i * WIN_W + p_wall[0][X];
+		color = read_pixel_from_image(game->img, offset, i);
+		img_set_pixel_color(&game->img, pixel_to_paint, color);
+		i++;
+	}
+}
+
 void	draw_game_on_img(t_game *game)
 {
-	float	angle;
-	int		i;
-	int		ray_collides_wall[2];
+	float		angle;
+	int			i;
+	int			ray_collides_wall[2];
+	int			p_wall[2][2];
 
-	angle = game->world.pl_angle - FOV / 2;
 	ft_bzero(&ray_collides_wall, sizeof(int) * 2);
+	angle = game->world.pl_angle - FOV / 2;
 	i = 0;
-	printf("assert angle_inc * W: %f, vs FOV: %i\n", game->world.ray_angle * WIN_W, FOV); //
+	//printf("assert angle_inc * W: %f, vs FOV: %i\n", game->world.ray_angle * WIN_W, FOV); //
 	while (i < WIN_W) // 13 - de 30 en 30, 13 vueltas // WIN_W
 	{
-		debug("************");
-		debug_int("🌸angle", angle);
-		// debug_int("before collisionX", ray_collides_wall[0]); //
-		// debug_int("before collisionY", ray_collides_wall[1]); //
-		get_ray_collides_wall(&game->world, angle, ray_collides_wall); // needs pl_pos and map
-		// debug_int("after collisionX", ray_collides_wall[0]); //
-		// debug_int("after collisionY", ray_collides_wall[1]); //
-		debug_int("after collisionR", grid_row(ray_collides_wall)); //
-		debug_int("after collisionC", grid_column(ray_collides_wall)); //
-		// ...
-		angle += game->world.ray_angle; // 30 deg
+		debug("loop");
+		get_ray_collides_wall(&game->world, angle, ray_collides_wall);
+		get_proj_points(&game->world, angle, ray_collides_wall, p_wall);
+		assign_point_ints(p_wall[0], WIN_W - i - 1, p_wall[0][Y]);
+		assign_point_ints(p_wall[1], WIN_W - i - 1, p_wall[1][Y]);
+		draw_slice(game, p_wall, get_offset(game->world.tx_imgs,
+				get_cardinal(ray_collides_wall), ray_collides_wall));
+		angle += game->world.ray_angle;
 		if (angle > 360)
 			angle -= 360;
 		i++;
