@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/24 17:42:50 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:28:12 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void	get_proj_points(t_world *world, float angle,
 	proj_wall_height = CUB_SIZE * dist_to_plane / real_ray_len;
 	pts[0][Y] = WIN_H / 2 - proj_wall_height / 2;
 	pts[1][Y] = WIN_H - pts[0][Y];
+	//printf("pts[0][Y]: %d, pts[1][Y]: %d\n", pts[0][Y], pts[1][Y]);
 }
 
 int	get_offset(t_image tx_img[4], t_card cardinal, int col_point[2])
@@ -118,92 +119,4 @@ int	get_offset(t_image tx_img[4], t_card cardinal, int col_point[2])
 	else
 		offset = col_point[Y] % tx_img[cardinal].height;
 	return (offset);
-}
-
-t_color	read_pixel_from_image(t_image img, int offset, int cube_height)
-{
-	int	tx_height;
-	int	pixel;
-	int	vals;
-	char	*pixel_in_buffer;
-	t_color	color;
-
-
-	tx_height = cube_height * img.height / CUB_SIZE;
-	img.addr = mlx_get_data_addr(img.mlximg,
-			&img.bits_per_pixel, &img.line_size, &img.endian);
-	if (img.bits_per_pixel % 8 != 0)
-		my_perror_exit("bit per pixel failed");
-	vals = img.bits_per_pixel / 8;
-	pixel = tx_height * img.height + offset;
-	pixel_in_buffer = &img.addr[pixel * vals];
-	if (img.endian == 1)
-	{
-		//alpha = pixel_in_buffer[vals - 4];
-		color.r = pixel_in_buffer[vals - 3];
-		color.g = pixel_in_buffer[vals - 2];
-		color.b = pixel_in_buffer[vals - 1];
-	}
-	else
-	{
-		color.b = pixel_in_buffer[0];
-		color.g = pixel_in_buffer[1];
-		color.r = pixel_in_buffer[2];
-		// alpha = pixel_in_buffer[3];
-	}
-	return (color);
-}
-
-void	draw_slice(t_game *game, int p_wall[2][2], int offset)
-{
-	int		i;
-	int		pixel_to_paint;
-	t_color	color;
-
-	i = p_wall[0][Y];
-	while (i < p_wall[1][Y])
-	{
-		pixel_to_paint = i * WIN_W + p_wall[0][X];
-		color = read_pixel_from_image(game->img, offset, i);
-		img_set_pixel_color(&game->img, pixel_to_paint, color);
-		i++;
-	}
-}
-
-void	draw_game_on_img(t_game *game)
-{
-	float		angle;
-	int			i;
-	int			ray_collides_wall[2];
-	int			p_wall[2][2];
-
-	ft_bzero(&ray_collides_wall, sizeof(int) * 2);
-	angle = game->world.pl_angle - FOV / 2;
-	i = 0;
-	//printf("assert angle_inc * W: %f, vs FOV: %i\n", game->world.ray_angle * WIN_W, FOV); //
-	while (i < WIN_W) // 13 - de 30 en 30, 13 vueltas // WIN_W
-	{
-		debug("loop");
-		get_ray_collides_wall(&game->world, angle, ray_collides_wall);
-		get_proj_points(&game->world, angle, ray_collides_wall, p_wall);
-		assign_point_ints(p_wall[0], WIN_W - i - 1, p_wall[0][Y]);
-		assign_point_ints(p_wall[1], WIN_W - i - 1, p_wall[1][Y]);
-		draw_slice(game, p_wall, get_offset(game->world.tx_imgs,
-				get_cardinal(ray_collides_wall), ray_collides_wall));
-		angle += game->world.ray_angle;
-		if (angle > 360)
-			angle -= 360;
-		i++;
-	}
-}
-
-/**
- * init game draws background (ceiling and floor) +
- * added mlx_put_image_to_window
- */
-void	draw_game(t_game *game)
-{
-	draw_bg_on_img(game->world.ceiling, game->world.floor, &game->img);
-	draw_game_on_img(game);
-	mlx_put_image_to_window(game->mlx, game->win, game->img.mlximg, 0, 0);
 }

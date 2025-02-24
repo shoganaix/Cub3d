@@ -6,7 +6,7 @@
 #    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/02/24 11:24:22 by msoriano         ###   ########.fr        #
+#    Updated: 2025/02/24 18:18:08 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CFLAGS = -Wall -Wextra -Werror
 # common
 SRCFILES = src/hooks.c \
 		src/image.c \
+		src/image2.c \
 		src/map.c \
 		src/cubfile.c \
 		src/parse.c \
@@ -29,6 +30,8 @@ SRCFILES = src/hooks.c \
 		src/info2.c \
 		src/utils.c \
 		src/utils2.c \
+		src/cardinal.c \
+		src/draw.c \
 		src/game.c \
 		src/maths.c \
 		src/collision.c \

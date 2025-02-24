@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:59:52 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/24 14:38:22 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:02:27 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 t_bool	pos_is_wall(int point[2], t_world *world)
 {
@@ -24,7 +23,6 @@ t_bool	pos_is_wall(int point[2], t_world *world)
 
 t_bool	ray_wall_loop(int p[2], int inc[2], t_world *world, int col_point[2])
 {
-
 	while (is_inside_grid(world->map, grid_row(p), grid_column(p),
 			world->map_height))
 	{

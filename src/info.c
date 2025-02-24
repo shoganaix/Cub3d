@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/19 15:17:33 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:08:43 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,26 @@ void	show_info(t_info info)
 	printf("\tceiling %i %i %i\n",
 		info.ceiling.r, info.ceiling.g, info.ceiling.b);
 	printf("\tfloor %i %i %i\n", info.floor.r, info.floor.g, info.floor.b);
+}
+
+/**
+ * returns NULL if memory allocation fails.
+ */
+char	**copy_map_arr(t_map m)
+{
+	char	**map_copy;
+	int		i;
+
+	map_copy = (char **)ft_calloc((m.height + 1), sizeof(char *));
+	if (map_copy == NULL)
+		return (NULL);
+	i = 0;
+	while (i < m.height)
+	{
+		map_copy[i] = ft_strdup(m.map[i]);
+		if (map_copy[i] == NULL)
+			return (ft_free_arrstr(map_copy), NULL);
+		i++;
+	}
+	return (map_copy);
 }

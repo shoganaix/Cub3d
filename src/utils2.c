@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:23:33 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 17:06:20 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/24 18:18:09 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	dist_between_points(int a[2], int b[2])
-{
-	return (floor(sqrt(pow(a[0] - b[0], 2) + pow(a[1] - b[1], 2))));
-}
-
-int	grid_row(int point[2])
-{
-	return (point[Y] / CUB_SIZE);
-}
-
-int	grid_column(int point[2])
-{
-	return (point[X] / CUB_SIZE);
-}
-
-void	assign_point(int dst[2], int src[2])
-{
-	dst[X] = src[X];
-	dst[Y] = src[Y];
-}
-
-void	assign_point_ints(int dst[2], int x, int y)
-{
-	dst[X] = x;
-	dst[Y] = y;
-}
 
 /**
  * assert - optional
@@ -61,26 +34,4 @@ void	assert_directions(float angle, int x_inc, int y_inc)
 		printf("INFO. angle:%f x_inc:%i y_inc:%i\n", angle, x_inc, y_inc); //
 		my_perror_exit("assert_directions failed");
 	}
-}
-
-/**
- * returns NULL if memory allocation fails.
- */
-char	**copy_map_arr(t_map m)
-{
-	char	**map_copy;
-	int		i;
-
-	map_copy = (char **)ft_calloc((m.height + 1), sizeof(char *));
-	if (map_copy == NULL)
-		return (NULL);
-	i = 0;
-	while (i < m.height)
-	{
-		map_copy[i] = ft_strdup(m.map[i]);
-		if (map_copy[i] == NULL)
-			return (ft_free_arrstr(map_copy), NULL);
-		i++;
-	}
-	return (map_copy);
 }
