@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:54:43 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 15:18:49 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:13:36 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,39 +76,54 @@ void	draw_game_on_img(t_game *game)
 	}
 }
 
-void	draw_minimap(t_game *game)
+void	color_cell(t_game *game, int r, int c, t_image *map_img)
+{
+	const int	width = game->world.map_width * CELL_SIZE;
+	int			pixel;
+	int			i;
+	int			j;
+
+	i = r;
+	while (i < r + CELL_SIZE)
+	{
+		j = c;
+		while (j < c + CELL_SIZE)
+		{
+			pixel = ((r + i) * width + (c + j));
+			if (game->world.map[r/CELL_SIZE][c/CELL_SIZE] == '1')
+				img_set_pixel_color(map_img, pixel,
+					(t_color){.r = 0, .g = 0, .b = 0});
+
+			else if (game->world.map[r/CELL_SIZE][c/CELL_SIZE] == '0')
+				img_set_pixel_color(map_img, pixel,
+					(t_color){.r = 255, .g = 255, .b = 255});
+
+			j++;
+		}
+		i++;
+	}
+}
+
+t_image	get_minimap(t_game *game)
 {
 	int			r;
 	int			c;
 	t_image		map_img;
-	int			pixel;
 
-	map_img = new_empty_img(game->mlx, game->world.map_width,
-			game->world.map_height);
-	debug_int("game->world.map_width", game->world.map_width);
-	debug_int("game->world.map_height", game->world.map_height);
+	map_img = new_empty_img(game->mlx, game->world.map_width * CELL_SIZE,
+			game->world.map_height * CELL_SIZE);
 	r = 0;
 	while (r < game->world.map_height)
 	{
 		c = 0;
 		while ((size_t)c < ft_strlen(game->world.map[r]))
 		{
-			debug_int("r", r);
-			debug_int("c", c);
-			pixel = r * game->world.map_height + c;
-			if (game->world.map[r][c] == '1')
-				img_set_pixel_color(&map_img, pixel, (t_color)
-				{.r = 0, .g = 0, .b = 0});
-			else if (game->world.map[r][c] == '0')
-				img_set_pixel_color(&map_img, pixel, (t_color)
-				{.r = 255, .g = 255, .b = 255});
+			color_cell(game, r * CELL_SIZE, c * CELL_SIZE, &map_img);
 			c++;
 		}
 		r++;
 	}
-	debug("llego");
-	mlx_put_image_to_window(game->mlx, game->win, map_img.mlximg, 0, 0);
-	debug("llegox3");
+	return (map_img);
 }
 
 
@@ -123,6 +138,6 @@ void	draw_game(t_game *game)
 	printf("Player C:%i inside cell: %i\n", grid_column(game->world.pl_point), game->world.pl_point[Y] % CUB_SIZE);
 	draw_game_on_img(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.mlximg, 0, 0);
-	//draw_minimap(game);
+	mlx_put_image_to_window(game->mlx, game->win, game->minimap.mlximg, 0, 0);
 	debug ("-----------Hey! I get here!"); //
 }

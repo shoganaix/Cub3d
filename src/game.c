@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/25 15:02:27 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:12:50 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_game(t_game *game, t_cub *cub)
 	game->world.ray_angle = (1.0 * FOV) / WIN_W;
 	game->world.dist_to_plane = WIN_W / 2 / ft_tan(FOV / 2);
 	init_game_textures(game, cub);
+	game->minimap = get_minimap(game);
 	destroy_cub(cub);
 }
 
@@ -72,6 +73,8 @@ void	destroy_game(t_game *game)
 			mlx_destroy_image(game->mlx, game->world.tx_imgs[i].mlximg);
 		i++;
 	}
+	if (game->minimap.mlximg)
+		mlx_destroy_image(game->mlx, game->minimap.mlximg);
 	if (game->img.mlximg)
 		mlx_destroy_image(game->mlx, game->img.mlximg);
 	if (game->win)

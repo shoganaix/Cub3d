@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 15:17:52 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:12:19 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define WIN_H		        1080		// viewport height (pixels)
 # define WIN_W		        1920		// viewport width (pixels)
 # define CUB_SIZE           64			// cubes side in pixels
+# define CELL_SIZE          16			// minimap cells in pixels
 # define FOV           		60			// field of view in degrees
 # define R           		0			// row
 # define C           		1			// column
@@ -137,6 +138,7 @@ typedef struct s_game
 	void	*win;
 	t_image	img;
 	t_world	world;
+	t_image	minimap;
 }	t_game;
 
 //Hooks
@@ -203,6 +205,8 @@ void		assert_directions(float angle, int x_inc, int y_inc);
 int			get_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
 void		get_proj_points(t_world *world, float angle, int col_point[2],
 				int pts[2][2]);
+t_image		get_minimap(t_game *game);
+
 
 //Image and Draw
 t_image		new_empty_img(void *mlx, int width_px, int height_px);

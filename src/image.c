@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 13:08:37 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:59:10 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	img_set_pixel_color(t_image *img, int pixel, t_color color)
 	vals = img->bits_per_pixel / 8;
 	alpha = 1;
     // fprintf(stderr, "Pixel %i\n", pixel);
-    // fprintf(stderr, "Pixel * vals %i\n", pixel *  vals);
-    // fprintf(stderr, "img W*H %i\n", WIN_H * WIN_W);
+    //fprintf(stderr, "Pixel * vals %i\n", pixel *  vals);
+    //fprintf(stderr, "img W*H %i\n", WIN_H * WIN_W); //2073600
 	pixel_in_buffer = &img->addr[pixel * vals];
 	if (img->endian == 1)
 	{
