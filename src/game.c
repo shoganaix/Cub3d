@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/24 18:28:12 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:25:36 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	init_game(t_game *game, t_cub *cub)
 	game->world.pl_point[1] = cub->smap.player_pos[0] * CUB_SIZE + CUB_SIZE / 2;
 	game->world.pl_angle = cardinal_to_angle(cub->smap.player_or);
 	game->world.ray_angle = (1.0 * FOV) / WIN_W;
-	printf("angle inc %f\n", game->world.ray_angle);
 	game->world.dist_to_plane = WIN_W / 2 / ft_tan(FOV / 2);
 	init_game_textures(game, cub);
 	destroy_cub(cub);
@@ -94,7 +93,7 @@ void	destroy_game(t_game *game)
 void	get_proj_points(t_world *world, float angle,
 	int col_point[2], int pts[2][2])
 {
-	const int	dist_to_plane = (WIN_W / 2) / tan(FOV / 2);
+	const int	dist_to_plane = (WIN_W / 2) / ft_tan(FOV / 2);
 	int			proj_wall_height;
 	int			real_ray_len;
 
@@ -105,9 +104,9 @@ void	get_proj_points(t_world *world, float angle,
 		real_ray_len = dist_between_points(world->pl_point, col_point)
 			* ft_cos(angle - world->pl_angle);
 	proj_wall_height = CUB_SIZE * dist_to_plane / real_ray_len;
+	//debug_int("proj_wall_height", proj_wall_height);
 	pts[0][Y] = WIN_H / 2 - proj_wall_height / 2;
 	pts[1][Y] = WIN_H - pts[0][Y];
-	//printf("pts[0][Y]: %d, pts[1][Y]: %d\n", pts[0][Y], pts[1][Y]);
 }
 
 int	get_offset(t_image tx_img[4], t_card cardinal, int col_point[2])

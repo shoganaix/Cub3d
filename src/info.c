@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/24 18:08:43 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:45:01 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ void	show_info(t_info info)
 	while (i < NUM_CARD)
 	{
 		if (info.tx_paths[i])
-			printf("\t%i texture: %s\n", i, info.tx_paths[i]);
+			ft_printf("\t%i texture: %s\n", i, info.tx_paths[i]);
 		else
-			printf("\t%i texture: NULL\n", i);
+			ft_printf("\t%i texture: NULL\n", i);
 		i++;
 	}
-	printf("\tceiling %i %i %i\n",
+	ft_printf("\tceiling %i %i %i\n",
 		info.ceiling.r, info.ceiling.g, info.ceiling.b);
-	printf("\tfloor %i %i %i\n", info.floor.r, info.floor.g, info.floor.b);
+	ft_printf("\tfloor %i %i %i\n", info.floor.r, info.floor.g, info.floor.b);
 }
 
 /**

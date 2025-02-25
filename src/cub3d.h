@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 18:37:09 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:57:33 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 /* WINDOW */
 # define WIN_NAME           ".:++### CUB3D ###++:."
-# define WIN_H		        200			// viewport height (pixels)
-# define WIN_W		        320			// viewport width (pixels)
+# define WIN_H		        2000			// viewport height (pixels)
+# define WIN_W		        1800			// viewport width (pixels)
 # define CUB_SIZE           64			// cubes side in pixels
 # define FOV           		60			// field of view in degrees
 # define R           		0			// row
@@ -52,6 +52,14 @@ typedef enum e_card
 	EA,
 	NUM_CARD
 }	t_card;
+
+typedef enum e_moves
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+}	t_moves;
 
 typedef enum e_errcode
 {
@@ -187,6 +195,7 @@ void		init_game(t_game *game, t_cub *cub);
 void		destroy_game(t_game *game);
 void		get_ray_collides_wall(t_world *world, float angle, int point[2]);
 t_bool		pos_is_wall(int point[2], t_world *world);
+t_bool		too_near_wall(int point[2], t_world *world);
 int			dist_between_points(int a[2], int b[2]);
 void		assert_directions(float angle, int x_inc, int y_inc);
 int			get_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
@@ -198,7 +207,8 @@ t_image		new_empty_img(void *mlx, int width_px, int height_px);
 t_image		read_image(t_game *game, char *img_path);
 t_color		read_pixel_from_image(t_image img, int offset, int cube_height);
 void		img_set_pixel_color(t_image *img, int pixel, t_color color);
-void		draw_slice(t_game *game, int p_wall[2][2], int offset);
+void		draw_slice(t_game *game, int p_wall[2][2], t_card cardinal,
+				int offset);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
 void		draw_game(t_game *game);
 void		paint_img(t_game game, char *img_path, int posX, int posY);

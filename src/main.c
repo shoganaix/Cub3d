@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 17:54:00 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:46:16 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int	main(int argc, char *argv[])
 	read_cubfile_wrapper(argv[1], &cub);
 	init_game(&game, &cub);
 	ft_putarr_str(game.world.map); //
-	debug_int("**player x", game.world.pl_point[0]);
-	debug_int("**player y", game.world.pl_point[1]);
 	draw_game(&game);
 	mlx_hook(game.win, EVENT_KEYPRESS, 1L << 0, key_press_hndlr, &game);
 	mlx_hook(game.win, EVENT_CLOSEWINDOW, 0, close_window, &game);

@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:54:43 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 18:44:30 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 13:24:51 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,30 @@
  * El problema esta en que no entra en el bucle porque nuestro
  * 	p_wall[0][Y] (la i) > p_wall[1][Y]
  */
-void	draw_slice(t_game *game, int p_wall[2][2], int offset)
+void	draw_slice(t_game *game, int p_wall[2][2], t_card cardinal, int offset)
 {
 	int		i;
 	int		pixel_to_paint;
 	t_color	color;
 
+		// printf("i INIT: %d\n", p_wall[0][Y]); //
+		// printf("i FIN: %d\n", p_wall[1][Y]); //
+
+		
 	i = p_wall[0][Y];
-	printf("Nuestra altura es: %d\n", p_wall[1][Y]); //
-	printf("Nuestra i es: %d\n", p_wall[0][Y]); //
-	printf("Entra en el Bucle si: %d\n", i < p_wall[1][Y]); //
 	while (i < p_wall[1][Y])
 	{
 		pixel_to_paint = i * WIN_W + p_wall[0][X];
-		color = read_pixel_from_image(game->img, offset, i);
-		printf("Color: R=%d, G=%d, B=%d\n", color.r, color.g, color.b); //
+		// printf("p_wall[0][X]: %i", p_wall[0][X]);
+		// printf("Nuestra i es: %i", i);
+		if (i < 0 || i >= WIN_H)
+		{
+			//my_perror("Height fuera de rango.");
+			i ++;
+			continue;
+		}
+		color = read_pixel_from_image(game->world.tx_imgs[cardinal], offset, i);
+		//printf("Color: R=%i, G=%i, B=%i\n", color.r, color.g, color.b); //
 		img_set_pixel_color(&game->img, pixel_to_paint, color);
 		i++;
 	}
@@ -49,11 +58,16 @@ void	draw_game_on_img(t_game *game)
 	i = 0;
 	while (i < WIN_W)
 	{
+		//printf("angle %f\n", angle);
 		get_ray_collides_wall(&game->world, angle, ray_collides_wall);
 		get_proj_points(&game->world, angle, ray_collides_wall, p_wall);
 		assign_point_ints(p_wall[0], WIN_W - i - 1, p_wall[0][Y]);
 		assign_point_ints(p_wall[1], WIN_W - i - 1, p_wall[1][Y]);
-		draw_slice(game, p_wall, get_offset(game->world.tx_imgs,
+		// debug_int("PWALL[0] EN Y", p_wall[0][Y]); //
+		// debug_int("PWALL[1] EN Y", p_wall[1][Y]); //
+
+		draw_slice(game, p_wall, get_cardinal(ray_collides_wall),
+			get_offset(game->world.tx_imgs,
 				get_cardinal(ray_collides_wall), ray_collides_wall));
 		angle += game->world.ray_angle;
 		if (angle > 360)
@@ -69,6 +83,8 @@ void	draw_game_on_img(t_game *game)
 void	draw_game(t_game *game)
 {
 	draw_bg_on_img(game->world.ceiling, game->world.floor, &game->img);
+	printf("Player R:%i inside cell: %i\n", grid_row(game->world.pl_point), game->world.pl_point[X] % CUB_SIZE);
+	printf("Player C:%i inside cell: %i\n", grid_column(game->world.pl_point), game->world.pl_point[Y] % CUB_SIZE);
 	draw_game_on_img(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.mlximg, 0, 0);
 	debug ("-----------Hey! I get here!"); //
