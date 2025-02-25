@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 15:59:10 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:25:50 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,25 @@ t_image	read_image(t_game *game, char *img_path)
  * LIL ENDIAN
  * color 0xrrggbb -> 0xBBGGRRAA..
 */
-void	img_set_pixel_color(t_image *img, int pixel, t_color color)
+void	img_set_pixel_color(t_image *img, int pixel, t_color color, int alpha)
 {
 	char	*pixel_in_buffer;
-	int		alpha;
+	int		new_alpha;
 	int		vals;
 
 	vals = img->bits_per_pixel / 8;
-	alpha = 1;
+	if (alpha != 1)
+		new_alpha = 200;
+	else
+		new_alpha = 1;
+
     // fprintf(stderr, "Pixel %i\n", pixel);
     //fprintf(stderr, "Pixel * vals %i\n", pixel *  vals);
     //fprintf(stderr, "img W*H %i\n", WIN_H * WIN_W); //2073600
 	pixel_in_buffer = &img->addr[pixel * vals];
 	if (img->endian == 1)
 	{
-		pixel_in_buffer[vals - 4] = alpha;
+		pixel_in_buffer[vals - 4] = new_alpha;
 		pixel_in_buffer[vals - 3] = color.r;
 		pixel_in_buffer[vals - 2] = color.g;
 		pixel_in_buffer[vals - 1] = color.b;
@@ -64,7 +68,7 @@ void	img_set_pixel_color(t_image *img, int pixel, t_color color)
 		pixel_in_buffer[0] = color.b;
 		pixel_in_buffer[1] = color.g;
 		pixel_in_buffer[2] = color.r;
-		pixel_in_buffer[3] = alpha;
+		pixel_in_buffer[3] = new_alpha;
 	}
 }
 
@@ -82,9 +86,9 @@ void	draw_bg_on_img(t_color color_ceiling, t_color color_floor, t_image *img)
 		{
 			pixel = i * WIN_W + j;
 			if (i < WIN_H / 2)
-				img_set_pixel_color(img, pixel, color_ceiling);
+				img_set_pixel_color(img, pixel, color_ceiling, 1);
 			else
-				img_set_pixel_color(img, pixel, color_floor);
+				img_set_pixel_color(img, pixel, color_floor, 1);
 			j++;
 		}
 		i++;
@@ -104,5 +108,7 @@ t_image	new_empty_img(void *mlx, int width_px, int height_px)
 	bytes_per_px = img.bits_per_pixel / 8;
 	// img.chpp = bytes_per_px;
 	// img.mlx = mlx;
+	img.height = height_px;
+	img.width = width_px;
 	return (img);
 }

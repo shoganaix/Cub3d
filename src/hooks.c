@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 16:18:25 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:29:01 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	rotate_player(t_game *game, t_moves move)
 
 void	move_player(t_game *game, t_moves move)
 {
-	const int	step_size =  CUB_SIZE/ 2;
-	int	next_point[2];
+	const int	step_size = CUB_SIZE / 2;
+	int			next_point[2];
 
-	debug("MOVE");
+	//debug("MOVE");
 	assign_point(next_point, game->world.pl_point);
 	if (move == LEFT)
 		next_point[X] -= step_size;
@@ -44,17 +44,17 @@ void	move_player(t_game *game, t_moves move)
 		next_point[Y] -= step_size;
 	if (move == DOWN)
 		next_point[Y] += step_size;
-	printf("next_point to New Player R:%i inside cell: %i\n", grid_row(next_point), next_point[X] % CUB_SIZE);
-	printf("next_point to New Player C:%i inside cell: %i\n", grid_column(next_point), next_point[Y] % CUB_SIZE);
+	// printf("next_point R:%i inside celly: %i\n", grid_row(next_point), next_point[X] % CUB_SIZE);
+	// printf("next_point C:%i inside cellx: %i\n", grid_column(next_point), next_point[Y] % CUB_SIZE);
 	if (!is_inside_grid(game->world.map, grid_row(next_point),
 			grid_column(next_point), game->world.map_height)
 		|| pos_is_wall(next_point, &game->world)
 		|| too_near_wall(next_point, &game->world))
 		{
-			debug("MOVE NOT DONE");
+			debug("MOVE ❌");
 			return ;
 		}
-	debug("MOVE DONE");
+	debug("MOVE ✅");
 	assign_point(game->world.pl_point, next_point);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/25 16:12:50 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:08:32 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,18 +45,19 @@ void	init_game(t_game *game, t_cub *cub)
 	if (game->world.map == NULL)
 		return (destroy_cub(cub), destroy_game(game),
 			my_perrorcode_exit(ERR_MEM, NULL));
+	game->world.map[cub->smap.player_pos[R]][cub->smap.player_pos[C]] = '0';
 	game->world.map_height = cub->smap.height;
 	game->world.map_width = cub->smap.width;
 	game->world.ceiling = cub->info.ceiling;
 	game->world.floor = cub->info.floor;
 	game->world.pl_height = CUB_SIZE / 2;
-	game->world.pl_point[0] = cub->smap.player_pos[1] * CUB_SIZE + CUB_SIZE / 2;
-	game->world.pl_point[1] = cub->smap.player_pos[0] * CUB_SIZE + CUB_SIZE / 2;
+	game->world.pl_point[X] = cub->smap.player_pos[C] * CUB_SIZE + CUB_SIZE / 2;
+	game->world.pl_point[Y] = cub->smap.player_pos[R] * CUB_SIZE + CUB_SIZE / 2;
 	game->world.pl_angle = cardinal_to_angle(cub->smap.player_or);
 	game->world.ray_angle = (1.0 * FOV) / WIN_W;
 	game->world.dist_to_plane = WIN_W / 2 / ft_tan(FOV / 2);
 	init_game_textures(game, cub);
-	game->minimap = get_minimap(game);
+	init_minimap(game);
 	destroy_cub(cub);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 16:12:19 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:12:13 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define WIN_H		        1080		// viewport height (pixels)
 # define WIN_W		        1920		// viewport width (pixels)
 # define CUB_SIZE           64			// cubes side in pixels
-# define CELL_SIZE          16			// minimap cells in pixels
+# define MM_CELL          16			// minimap cells in pixels
 # define FOV           		60			// field of view in degrees
 # define R           		0			// row
 # define C           		1			// column
@@ -139,6 +139,8 @@ typedef struct s_game
 	t_image	img;
 	t_world	world;
 	t_image	minimap;
+	t_image	minimap_player;
+
 }	t_game;
 
 //Hooks
@@ -205,14 +207,13 @@ void		assert_directions(float angle, int x_inc, int y_inc);
 int			get_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
 void		get_proj_points(t_world *world, float angle, int col_point[2],
 				int pts[2][2]);
-t_image		get_minimap(t_game *game);
-
+void		init_minimap(t_game *game);
 
 //Image and Draw
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
 t_image		read_image(t_game *game, char *img_path);
 t_color		read_pixel_from_image(t_image img, int offset, int cube_height);
-void		img_set_pixel_color(t_image *img, int pixel, t_color color);
+void		img_set_pixel_color(t_image *img, int pixel, t_color color, int alpha);
 void		draw_slice(t_game *game, int p_wall[2][2], t_card cardinal,
 				int offset);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
