@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/25 13:25:36 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:02:27 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	init_game(t_game *game, t_cub *cub)
 		return (destroy_cub(cub), destroy_game(game),
 			my_perrorcode_exit(ERR_MEM, NULL));
 	game->world.map_height = cub->smap.height;
+	game->world.map_width = cub->smap.width;
 	game->world.ceiling = cub->info.ceiling;
 	game->world.floor = cub->info.floor;
 	game->world.pl_height = CUB_SIZE / 2;

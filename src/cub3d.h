@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 13:57:33 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:17:52 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 /* WINDOW */
 # define WIN_NAME           ".:++### CUB3D ###++:."
-# define WIN_H		        2000			// viewport height (pixels)
-# define WIN_W		        1800			// viewport width (pixels)
+# define WIN_H		        1080		// viewport height (pixels)
+# define WIN_W		        1920		// viewport width (pixels)
 # define CUB_SIZE           64			// cubes side in pixels
 # define FOV           		60			// field of view in degrees
 # define R           		0			// row
@@ -36,6 +36,7 @@
 # define Y           		1			// y-axis
 # define M_PI           	3.14159265358979323846  /* pi */
 # define INT_MAX			2147483647
+
 
 typedef struct s_color
 {
@@ -120,6 +121,7 @@ typedef struct s_world
 
 	char	**map;			// grid
 	int		map_height;		// grid height
+	int		map_width;		// grid max width
 	int		pl_height;
 	int		pl_point[2];		// pixels [x][y]
 	int		pl_angle;

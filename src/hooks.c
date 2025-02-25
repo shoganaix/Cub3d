@@ -6,13 +6,23 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 13:59:18 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:53:45 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	move_player(t_game *game, t_moves move)
+void	rotate_player(t_game *game, t_moves move)
+{
+	const int	angle_inc =  FOV / 4;
+
+	debug("ROTATE");
+	if (move == LEFT)
+		game->world.pl_angle += angle_inc;
+	if (move == RIGHT)
+		game->world.pl_angle -= angle_inc;
+	debug("ROTATE DONE");
+}
 
 
 void	move_player(t_game *game, t_moves move)
@@ -74,9 +84,15 @@ int	key_press_hndlr(int keycode, void *param)
 		move_player(game, RIGHT);
 	}
 	if (keycode == KEY_LEFT)
+	{
 		debug("pressed <-");
+		rotate_player(game, LEFT);
+	}
 	if (keycode == KEY_RIGHT)
+	{
 		debug("pressed ->");
+		rotate_player(game, RIGHT);
+	}
 	draw_game(game);
 	return (0);
 }

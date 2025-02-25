@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 12:46:16 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:56:36 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ int	main(int argc, char *argv[])
 	init_game(&game, &cub);
 	ft_putarr_str(game.world.map); //
 	draw_game(&game);
-	mlx_hook(game.win, EVENT_KEYPRESS, 1L << 0, key_press_hndlr, &game);
+	//mlx_hook(game.win, EVENT_KEYPRESS, 1L << 0, key_press_hndlr, &game);
+	mlx_key_hook(game.win, key_press_hndlr, &game);
 	mlx_hook(game.win, EVENT_CLOSEWINDOW, 0, close_window, &game);
 	mlx_loop(game.mlx);
 	return (0);
