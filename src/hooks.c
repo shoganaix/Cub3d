@@ -6,7 +6,7 @@
 /*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 14:53:45 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:18:25 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	rotate_player(t_game *game, t_moves move)
 		game->world.pl_angle += angle_inc;
 	if (move == RIGHT)
 		game->world.pl_angle -= angle_inc;
+	if (game->world.pl_angle > 360)
+		game->world.pl_angle -= 360;
+	if (game->world.pl_angle < 0)
+		game->world.pl_angle += 360;
 	debug("ROTATE DONE");
 }
 
