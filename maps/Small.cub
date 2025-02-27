@@ -1,10 +1,10 @@
-NO ./img/xpm/teapot.xpm
-SO ./img/xpm/teapot.xpm
-WE ./img/xpm/teapot.xpm
-EA ./img/xpm/teapot.xpm
+NO ./img/xpm/128/square_1.xpm
+SO ./img/xpm/128/square_2.xpm
+WE ./img/xpm/128/square_5.xpm
+EA ./img/xpm/128/square_4.xpm
 
-F 220,100,0
-C 225,30,0
+F 180,180,180
+C 53,53,53
 
 11111
 10001

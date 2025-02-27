@@ -1,10 +1,10 @@
-NO ./img/xpm/512/tile_1.xpm
-SO ./img/xpm/512/tile_2.xpm
-WE ./img/xpm/512/tile_1.xpm
-EA ./img/xpm/512/tile_2.xpm
+NO ./img/xpm/foliage(256)/foliage_1.xpm
+SO ./img/xpm/foliage(256)/foliage_2.xpm
+WE ./img/xpm/foliage(256)/foliage_3.xpm
+EA ./img/xpm/foliage(256)/foliage_4.xpm
 
-F 58,61,56
-C 115,191,249
+F 74,100,64
+C 53,53,53
 
         1111111111111111111111111
         1000000000110000000000001

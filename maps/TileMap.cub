@@ -1,10 +1,10 @@
-NO ./img/xpm/512/tile_1.xpm
-SO ./img/xpm/512/tile_2.xpm
-WE ./img/xpm/512/tile_1.xpm
-EA ./img/xpm/512/tile_2.xpm
+NO ./img/xpm/128/square_1.xpm
+SO ./img/xpm/128/square_2.xpm
+WE ./img/xpm/128/square_5.xpm
+EA ./img/xpm/128/square_4.xpm
 
-F 58,61,56
-C 115,191,249
+F 180,180,180
+C 0,0,0
 
         1111111111111111111111111
         1000000000110000000000001

@@ -6,7 +6,7 @@
 #    By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/03 11:17:31 by msoriano          #+#    #+#              #
-#    Updated: 2025/02/24 18:18:08 by msoriano         ###   ########.fr        #
+#    Updated: 2025/02/27 16:44:33 by msoriano         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ SRCFILES = src/hooks.c \
 		src/game.c \
 		src/maths.c \
 		src/collision.c \
+		src/raycast.c \
+		src/minimap.c \
 		src/debug.c
 
 TEST_SRC = test/test_map.c 

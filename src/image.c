@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 17:25:50 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:40:38 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,6 @@ void	img_set_pixel_color(t_image *img, int pixel, t_color color, int alpha)
 		new_alpha = 200;
 	else
 		new_alpha = 1;
-
-    // fprintf(stderr, "Pixel %i\n", pixel);
-    //fprintf(stderr, "Pixel * vals %i\n", pixel *  vals);
-    //fprintf(stderr, "img W*H %i\n", WIN_H * WIN_W); //2073600
 	pixel_in_buffer = &img->addr[pixel * vals];
 	if (img->endian == 1)
 	{

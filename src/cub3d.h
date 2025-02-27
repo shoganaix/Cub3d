@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 17:12:13 by macastro         ###   ########.fr       */
+/*   Updated: 2025/02/27 16:46:39 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,21 @@
 # include "../mlx_linux/mlx.h"
 # include "../libft/include/libft.h"
 
-# define DEBUG				1 			// debug flag
+# define DEBUG				1 						// debug flag
 
 /* WINDOW */
 # define WIN_NAME           ".:++### CUB3D ###++:."
-# define WIN_H		        1080		// viewport height (pixels)
-# define WIN_W		        1920		// viewport width (pixels)
-# define CUB_SIZE           64			// cubes side in pixels
-# define MM_CELL          16			// minimap cells in pixels
-# define FOV           		60			// field of view in degrees
-# define R           		0			// row
-# define C           		1			// column
-# define X           		0			// x-axis
-# define Y           		1			// y-axis
+# define WIN_H		        1080					// viewport height (pixels)
+# define WIN_W		        1920					// viewport width (pixels)
+# define CUB_SIZE           64						// cubes side in pixels
+# define MM_CELL          	16						// minimap cells in pixels
+# define FOV           		70						// field of view in degrees
+# define R           		0						// row
+# define C           		1						// column
+# define X           		0						// x-axis
+# define Y           		1						// y-axis
 # define M_PI           	3.14159265358979323846  /* pi */
 # define INT_MAX			2147483647
-
 
 typedef struct s_color
 {
@@ -196,10 +195,14 @@ t_bool		is_inside_grid(char **grid, int r, int c, int grid_nrows);
 char		**copy_map_arr(t_map m);
 void		finish_gnl(int fd_in, char **line);
 
-//Game and Raycast
+//Game
 void		init_game(t_game *game, t_cub *cub);
 void		destroy_game(t_game *game);
+
+//Collision & Raycast
 void		get_ray_collides_wall(t_world *world, float angle, int point[2]);
+t_bool		ray_wall_loop(int p[2], int inc[2], t_world *world,
+				int col_point[2]);
 t_bool		pos_is_wall(int point[2], t_world *world);
 t_bool		too_near_wall(int point[2], t_world *world);
 int			dist_between_points(int a[2], int b[2]);
@@ -207,13 +210,19 @@ void		assert_directions(float angle, int x_inc, int y_inc);
 int			get_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
 void		get_proj_points(t_world *world, float angle, int col_point[2],
 				int pts[2][2]);
+
+//Minimap
+void		draw_minimap_player(t_game *game);
 void		init_minimap(t_game *game);
+void		set_minimap_cell(t_game *game, int r, int c, t_color color);
+void		set_minimap_player(t_game *game, t_color color);
 
 //Image and Draw
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
 t_image		read_image(t_game *game, char *img_path);
 t_color		read_pixel_from_image(t_image img, int offset, int cube_height);
-void		img_set_pixel_color(t_image *img, int pixel, t_color color, int alpha);
+void		img_set_pixel_color(t_image *img, int pixel,
+				t_color color, int alpha);
 void		draw_slice(t_game *game, int p_wall[2][2], t_card cardinal,
 				int offset);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
