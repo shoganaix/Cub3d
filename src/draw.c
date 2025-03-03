@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:54:43 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/27 16:50:57 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:29:11 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ void	draw_game_on_img(t_game *game)
 		draw_slice(game, p_wall, get_cardinal(ray_collides_wall),
 			get_offset(game->world.tx_imgs,
 				get_cardinal(ray_collides_wall), ray_collides_wall));
-		angle += game->world.ray_angle;
-		if (angle > 360)
-			angle -= 360;
+		angle = sum_degrees(angle, game->world.ray_angle);
 		i++;
 	}
 }

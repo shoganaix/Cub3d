@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:23:33 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/25 12:45:10 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:28:02 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,14 @@ void	assert_directions(float angle, int x_inc, int y_inc)
 		printf("INFO. angle:%f x_inc:%i y_inc:%i\n", angle, x_inc, y_inc); //
 		my_perror_exit("assert_directions failed");
 	}
+}
+
+float	sum_degrees(float deg1, float deg2)
+{
+	deg1 += deg2;
+	if (deg1 > 360)
+		deg1 -= 360;
+	if (deg1 < 0)
+		deg1 += 360;
+	return (deg1);
 }

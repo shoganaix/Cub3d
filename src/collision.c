@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:59:52 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/27 16:35:07 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:51:53 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_bool	check_wall_collision(int point[2], int offset_x, int offset_y,
 
 t_bool	too_near_wall(int point[2], t_world *world)
 {
-	const int	min_dist = CUB_SIZE / 2;
+	const int	min_dist = CUB_SIZE / 4;
 	int			grid_pos[2];
 	int			cell_pos[2];
 

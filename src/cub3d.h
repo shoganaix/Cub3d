@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/27 16:46:39 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/03 11:55:54 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef enum e_card
 
 typedef enum e_moves
 {
-	UP,
-	DOWN,
+	FORW,
+	BACKW,
 	LEFT,
 	RIGHT,
 }	t_moves;
@@ -124,7 +124,7 @@ typedef struct s_world
 	int		map_width;		// grid max width
 	int		pl_height;
 	int		pl_point[2];		// pixels [x][y]
-	int		pl_angle;
+	float	pl_angle;
 	float	ray_angle;
 	int		dist_to_plane;
 	t_image	tx_imgs[4];	// texture images
@@ -179,6 +179,7 @@ void		assign_point(int dst[2], int src[2]);
 void		assign_point_ints(int dst[2], int x, int y);
 int			grid_row(int point[2]);
 int			grid_column(int point[2]);
+float		sum_degrees(float deg1, float deg2);
 
 //Parsing (Args, info & map)
 void		check_args(int argn, char *args[]);
