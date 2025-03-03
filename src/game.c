@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/03 13:13:42 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:01:59 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,12 @@ void	destroy_game(t_game *game)
 
 /**
  * using ray_angle and collision point, 
- * fills wall_pts (2 points) that are the upper and bottom point of the wall slice
+ * fills wall_pts (2 points) that are the upper 
+ * and bottom point of the wall slice
  * 
  * beta
- * BETA is the angle of the ray that is being cast relative to the viewing angle (ray angle).
+ * BETA is the angle of the ray that is being cast relative 
+ * to the viewing angle (ray angle).
  * On the figure above, the viewing angle (ALPHA) is 90 degrees because 
  * the player is facing straight upward.
  * Because we have 60 degrees field of view, 
@@ -118,13 +120,15 @@ void	get_projwall_pts_y(t_world *world, float ray_angle,
  * north/south wall -> use X axis
  * east/west wall -> use Y axis
  */
-int	get_offset(t_image tx_img[4], t_card wall, int col_point[2])
+int	get_cube_offset(t_image tx_img[4], t_card wall, int col_point[2])
 {
 	int	offset;
 
+	(void)tx_img; //
+
 	if (wall == NO || wall == SO)
-		offset = col_point[X] % tx_img[wall].height;
+		offset = col_point[X] % CUB_SIZE;
 	else
-		offset = col_point[Y] % tx_img[wall].height;
+		offset = col_point[Y] % CUB_SIZE;
 	return (offset);
 }

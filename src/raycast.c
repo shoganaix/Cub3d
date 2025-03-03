@@ -6,16 +6,28 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:34:09 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 13:07:47 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:31:20 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+t_bool	ray_wall_loop(int p[2], float inc[2], t_world *world, int col_point[2])
+{
+	while (is_inside_grid(world->map, grid_row(p), grid_column(p),
+			world->map_height))
+	{
+		if (pos_is_wall(p, world))
+			return (assign_point(col_point, p), TRUE);
+		assign_point_ints(p, p[X] + inc[X], p[Y] + inc[Y]);
+	}
+	return (FALSE);
+}
+
 t_bool	ray_collides_wall_vert(t_world *world, float angle, int col_point[2])
 {
 	int		p[2];
-	int		inc[2];
+	float	inc[2];
 
 	if (angle == 90 || angle == 270)
 		return (FALSE);
@@ -39,7 +51,7 @@ t_bool	ray_collides_wall_vert(t_world *world, float angle, int col_point[2])
 t_bool	ray_collides_wall_hori(t_world *world, float angle, int col_point[2])
 {
 	int		p[2];
-	int		inc[2];
+	float	inc[2];
 
 	if (angle == 0 || angle == 180)
 		return (FALSE);
@@ -77,6 +89,7 @@ void	get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
 	float	dh;
 	float	dv;
 
+	ft_bzero(coll_point, 2 * sizeof(int));
 	dh = 1.0 * INT_MAX;
 	dv = 1.0 * INT_MAX;
 	if (ray_collides_wall_hori(world, ray, hori_collision))
@@ -84,20 +97,14 @@ void	get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
 	if (ray_collides_wall_vert(world, ray, vert_collision))
 		dv = dist_pts(world->pl_point, vert_collision);
 	if (dh <= dv)
-		assign_point(coll_point, hori_collision);
-	else
-		assign_point(coll_point, vert_collision);
-	*coll_card = get_cardinal(coll_point);
-}
-
-t_bool	ray_wall_loop(int p[2], int inc[2], t_world *world, int col_point[2])
-{
-	while (is_inside_grid(world->map, grid_row(p), grid_column(p),
-			world->map_height))
 	{
-		if (pos_is_wall(p, world))
-			return (assign_point(col_point, p), TRUE);
-		assign_point_ints(p, p[X] + inc[X], p[Y] + inc[Y]);
+		assign_point(coll_point, hori_collision);
+		*coll_card = get_cardinal_hori(coll_point);
 	}
-	return (FALSE);
+	else
+	{
+		assign_point(coll_point, vert_collision);
+		*coll_card = get_cardinal_veri(coll_point);
+	}
+	//debug_int("wall", *coll_card);
 }

@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 13:08:10 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:31:12 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,8 @@ void		show_info(t_info info);
 char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
 t_card		char_to_cardinal(char c);
-t_card		get_cardinal(int col_point[2]);
+t_card		get_cardinal_hori(int col_point[2]);
+t_card		get_cardinal_veri(int col_point[2]);
 
 //Utils2
 void		assign_point(int dst[2], int src[2]);
@@ -204,13 +205,11 @@ void		destroy_game(t_game *game);
 //Collision & Raycast
 void		get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
 				t_card *coll_card);
-t_bool		ray_wall_loop(int p[2], int inc[2], t_world *world,
-				int col_point[2]);
 t_bool		pos_is_wall(int point[2], t_world *world);
 t_bool		too_near_wall(int point[2], t_world *world);
 float		dist_pts(int a[2], int b[2]);
 void		assert_directions(float angle, int x_inc, int y_inc);
-int			get_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
+int			get_cube_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
 void		get_projwall_pts_y(t_world *world, float angle, int col_point[2],
 				int pts[2][2]);
 
@@ -223,10 +222,10 @@ void		set_minimap_player(t_game *game, t_color color);
 //Image and Draw
 t_image		new_empty_img(void *mlx, int width_px, int height_px);
 t_image		read_image(t_game *game, char *img_path);
-t_color		read_pixel_from_image(t_image img, int offset, int cube_height);
+t_color		read_pixel_from_image(t_image img, int img_offset[2]);
 void		img_set_pixel_color(t_image *img, int pixel,
 				t_color color, int alpha);
-void		draw_slice(t_game *game, int p_wall[2][2], t_card cardinal,
+void		draw_proj_slice(t_game *game, int p_wall[2][2], t_card cardinal,
 				int offset);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
 void		draw_game(t_game *game);

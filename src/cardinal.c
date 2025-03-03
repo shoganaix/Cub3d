@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/03 11:36:26 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:59:45 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,21 @@ t_card	char_to_cardinal(char c)
 	return (-1);
 }
 
-t_card	get_cardinal(int col_point[2])
+t_card	get_cardinal_hori(int col_point[2])
+{
+	if (col_point[Y] % CUB_SIZE == 0)
+		return (NO);
+	if (col_point[Y] % CUB_SIZE == CUB_SIZE - 1)
+		return (SO);
+	return (0);
+}
+
+
+t_card	get_cardinal_veri(int col_point[2])
 {
 	if (col_point[X] % CUB_SIZE == 0)
 		return (WE);
 	if (col_point[X] % CUB_SIZE == CUB_SIZE - 1)
 		return (EA);
-	if (col_point[Y] % CUB_SIZE == 0)
-		return (NO);
-	if (col_point[Y] % CUB_SIZE == CUB_SIZE - 1)
-		return (SO);
 	return (0);
 }
