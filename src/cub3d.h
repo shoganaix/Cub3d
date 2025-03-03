@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 11:55:54 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:08:10 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ typedef struct s_world
 	int		map_height;		// grid height
 	int		map_width;		// grid max width
 	int		pl_height;
-	int		pl_point[2];		// pixels [x][y]
+	int		pl_point[2];	// pixels [x][y]
 	float	pl_angle;
 	float	ray_angle;
 	int		dist_to_plane;
@@ -151,6 +151,7 @@ void		debug(char *msg);
 void		debug_int(char *name_desc, int n);
 void		debug_str(char *name_desc, char *str);
 void		debug_chr(char *name_desc, char c);
+void		debug_float(char *name_desc, float f);
 
 //Errors
 void		my_perror(char *msg);
@@ -201,15 +202,16 @@ void		init_game(t_game *game, t_cub *cub);
 void		destroy_game(t_game *game);
 
 //Collision & Raycast
-void		get_ray_collides_wall(t_world *world, float angle, int point[2]);
+void		get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
+				t_card *coll_card);
 t_bool		ray_wall_loop(int p[2], int inc[2], t_world *world,
 				int col_point[2]);
 t_bool		pos_is_wall(int point[2], t_world *world);
 t_bool		too_near_wall(int point[2], t_world *world);
-int			dist_between_points(int a[2], int b[2]);
+float		dist_pts(int a[2], int b[2]);
 void		assert_directions(float angle, int x_inc, int y_inc);
 int			get_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
-void		get_proj_points(t_world *world, float angle, int col_point[2],
+void		get_projwall_pts_y(t_world *world, float angle, int col_point[2],
 				int pts[2][2]);
 
 //Minimap

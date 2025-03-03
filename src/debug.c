@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/11 14:15:03 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:36:16 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	debug_chr(char *name_desc, char c)
 	ft_putchar_fd(c, 2);
 	write(2, "]\n", 2);
 	ft_putstr_fd("" ANSI_COLOR_RESET, 2);
+}
+
+void	debug_float(char *name_desc, float f)
+{
+	if (!DEBUG)
+		return ;
+	printf(ANSI_COLOR_YELLOW "%s [%f]\n" ANSI_COLOR_RESET, name_desc, f);
 }

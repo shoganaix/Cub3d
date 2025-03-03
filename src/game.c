@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/02/25 17:08:32 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:13:42 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,43 +84,47 @@ void	destroy_game(t_game *game)
 }
 
 /**
- * using angle and collision point, 
- * fills pts (2 points) that are the upper and bottom point of the wall slice
+ * using ray_angle and collision point, 
+ * fills wall_pts (2 points) that are the upper and bottom point of the wall slice
  * 
  * beta
- * BETA is the angle of the ray that is being cast relative to the viewing angle.
+ * BETA is the angle of the ray that is being cast relative to the viewing angle (ray angle).
  * On the figure above, the viewing angle (ALPHA) is 90 degrees because 
  * the player is facing straight upward.
  * Because we have 60 degrees field of view, 
  * BETA is 30 degrees for the leftmost ray
  * and it is -30 degrees for the rightmost ray.
  */
-void	get_proj_points(t_world *world, float angle,
-	int col_point[2], int pts[2][2])
+void	get_projwall_pts_y(t_world *world, float ray_angle,
+	int col_point[2], int wall_pts[2][2])
 {
-	const int	dist_to_plane = (WIN_W / 2) / ft_tan(FOV / 2);
-	int			proj_wall_height;
-	int			real_ray_len;
+	const int	dist_to_proj = (WIN_W / 2) / ft_tan(FOV / 2);
+	float		projwall_height;
+	float		dist_to_wall_improved;
+	float		angle_between;
 
-	if (world->pl_angle >= angle)
-		real_ray_len = dist_between_points(world->pl_point, col_point)
-			* ft_cos(world->pl_angle - angle);
+	if (world->pl_angle >= ray_angle)
+		angle_between = world->pl_angle - ray_angle;
 	else
-		real_ray_len = dist_between_points(world->pl_point, col_point)
-			* ft_cos(angle - world->pl_angle);
-	proj_wall_height = CUB_SIZE * dist_to_plane / real_ray_len;
-	//debug_int("proj_wall_height", proj_wall_height);
-	pts[0][Y] = WIN_H / 2 - proj_wall_height / 2;
-	pts[1][Y] = WIN_H - pts[0][Y];
+		angle_between = ray_angle - world->pl_angle;
+	dist_to_wall_improved = dist_pts(world->pl_point, col_point)
+		* ft_cos(angle_between);
+	projwall_height = CUB_SIZE * dist_to_proj / dist_to_wall_improved;
+	wall_pts[0][Y] = (WIN_H - projwall_height) / 2;
+	wall_pts[1][Y] = WIN_H - wall_pts[0][Y];
 }
 
-int	get_offset(t_image tx_img[4], t_card cardinal, int col_point[2])
+/**
+ * north/south wall -> use X axis
+ * east/west wall -> use Y axis
+ */
+int	get_offset(t_image tx_img[4], t_card wall, int col_point[2])
 {
 	int	offset;
 
-	if (cardinal == NO || cardinal == SO)
-		offset = col_point[X] % tx_img[cardinal].height;
+	if (wall == NO || wall == SO)
+		offset = col_point[X] % tx_img[wall].height;
 	else
-		offset = col_point[Y] % tx_img[cardinal].height;
+		offset = col_point[Y] % tx_img[wall].height;
 	return (offset);
 }

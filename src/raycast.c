@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:34:09 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/27 16:35:06 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:07:47 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,34 @@ t_bool	ray_collides_wall_hori(t_world *world, float angle, int col_point[2])
 	return (ray_wall_loop(p, inc, world, col_point));
 }
 
-void	get_ray_collides_wall(t_world *world, float angle, int coll_point[2])
+/**
+ * get ray-wall collision point
+ * Needs:
+ * - world (context, player)
+ * - ray angle in degrees
+ * returns
+ * - collision point in argument coll_point
+ * - collision wall cardinal (NSEW) in argument coll_card
+ */
+void	get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
+	t_card *coll_card)
 {
-	int	vert_collision[2];
-	int	hori_collision[2];
-	int	dh;
-	int	dv;
+	int		vert_collision[2];
+	int		hori_collision[2];
+	float	dh;
+	float	dv;
 
-	dh = INT_MAX;
-	dv = INT_MAX;
-	if (ray_collides_wall_hori(world, angle, hori_collision))
-		dh = dist_between_points(world->pl_point, hori_collision);
-	if (ray_collides_wall_vert(world, angle, vert_collision))
-		dv = dist_between_points(world->pl_point, vert_collision);
+	dh = 1.0 * INT_MAX;
+	dv = 1.0 * INT_MAX;
+	if (ray_collides_wall_hori(world, ray, hori_collision))
+		dh = dist_pts(world->pl_point, hori_collision);
+	if (ray_collides_wall_vert(world, ray, vert_collision))
+		dv = dist_pts(world->pl_point, vert_collision);
 	if (dh <= dv)
 		assign_point(coll_point, hori_collision);
 	else
 		assign_point(coll_point, vert_collision);
+	*coll_card = get_cardinal(coll_point);
 }
 
 t_bool	ray_wall_loop(int p[2], int inc[2], t_world *world, int col_point[2])

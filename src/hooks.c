@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 11:55:34 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:37:01 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	rotate_player(t_game *game, t_moves move)
 	if (move == RIGHT)
 		game->world.pl_angle = sum_degrees(game->world.pl_angle, -angle_inc);
 
-	printf("new angle %f\n", game->world.pl_angle); //
+	debug_float("new angle", game->world.pl_angle); //
 	debug("ROTATE 🔄"); //
 }
 

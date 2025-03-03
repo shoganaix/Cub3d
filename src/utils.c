@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:23:33 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 18:17:41 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/03 12:49:05 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	dist_between_points(int a[2], int b[2])
+float	dist_pts(int a[2], int b[2])
 {
 	return (floor(sqrt(pow(a[0] - b[0], 2) + pow(a[1] - b[1], 2))));
 }
