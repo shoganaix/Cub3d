@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/27 14:40:38 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:44:33 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	paint_img(t_game game, char *img_path, int posX, int posY)
+void	paint_img(t_game game, char *img_path, float posX, float posY)
 {
 	t_image	img;
 	int		img_width;

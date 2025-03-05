@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/03 16:01:59 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:42:05 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	destroy_game(t_game *game)
  * and it is -30 degrees for the rightmost ray.
  */
 void	get_projwall_pts_y(t_world *world, float ray_angle,
-	int col_point[2], int wall_pts[2][2])
+	float col_point[2], float wall_pts[2][2])
 {
 	const int	dist_to_proj = (WIN_W / 2) / ft_tan(FOV / 2);
 	float		projwall_height;
@@ -120,15 +120,15 @@ void	get_projwall_pts_y(t_world *world, float ray_angle,
  * north/south wall -> use X axis
  * east/west wall -> use Y axis
  */
-int	get_cube_offset(t_image tx_img[4], t_card wall, int col_point[2])
+int	get_cube_offset(t_image tx_img[4], t_card wall, float col_point[2])
 {
 	int	offset;
 
 	(void)tx_img; //
 
 	if (wall == NO || wall == SO)
-		offset = col_point[X] % CUB_SIZE;
+		offset = (int)col_point[X] % CUB_SIZE;
 	else
-		offset = col_point[Y] % CUB_SIZE;
+		offset = (int)col_point[Y] % CUB_SIZE;
 	return (offset);
 }

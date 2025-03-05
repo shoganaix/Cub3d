@@ -6,13 +6,13 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:34:09 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 17:31:20 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:42:30 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_bool	ray_wall_loop(int p[2], float inc[2], t_world *world, int col_point[2])
+t_bool	ray_wall_loop(float p[2], float inc[2], t_world *world, float col_point[2])
 {
 	while (is_inside_grid(world->map, grid_row(p), grid_column(p),
 			world->map_height))
@@ -24,9 +24,9 @@ t_bool	ray_wall_loop(int p[2], float inc[2], t_world *world, int col_point[2])
 	return (FALSE);
 }
 
-t_bool	ray_collides_wall_vert(t_world *world, float angle, int col_point[2])
+t_bool	ray_collides_wall_vert(t_world *world, float angle, float col_point[2])
 {
-	int		p[2];
+	float		p[2];
 	float	inc[2];
 
 	if (angle == 90 || angle == 270)
@@ -48,9 +48,9 @@ t_bool	ray_collides_wall_vert(t_world *world, float angle, int col_point[2])
 	return (ray_wall_loop(p, inc, world, col_point));
 }
 
-t_bool	ray_collides_wall_hori(t_world *world, float angle, int col_point[2])
+t_bool	ray_collides_wall_hori(t_world *world, float angle, float col_point[2])
 {
-	int		p[2];
+	float		p[2];
 	float	inc[2];
 
 	if (angle == 0 || angle == 180)
@@ -81,11 +81,11 @@ t_bool	ray_collides_wall_hori(t_world *world, float angle, int col_point[2])
  * - collision point in argument coll_point
  * - collision wall cardinal (NSEW) in argument coll_card
  */
-void	get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
+void	get_ray_wall_coll_pt(t_world *world, float ray, float coll_point[2],
 	t_card *coll_card)
 {
-	int		vert_collision[2];
-	int		hori_collision[2];
+	float		vert_collision[2];
+	float		hori_collision[2];
 	float	dh;
 	float	dv;
 

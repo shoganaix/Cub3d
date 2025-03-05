@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 12:37:01 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:37:34 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	move_player(t_game *game, t_moves move)
 {
 	const int	step_size = CUB_SIZE / 2;
 	float		move_dir_angle;
-	int			next_point[2];
+	float			next_point[2];
 
 	move_dir_angle = 0.0;
 	if (move == FORW)
@@ -45,8 +45,6 @@ void	move_player(t_game *game, t_moves move)
 	assign_point_ints(next_point,
 		game->world.pl_point[X] + step_size * ft_cos(move_dir_angle),
 		game->world.pl_point[Y] - step_size * ft_sin(move_dir_angle));
-	printf("MOVE next: (x, y) = (%i, %i)\n", next_point[X], next_point[Y]); //
-	printf("MOVE next: cell(x, y) = (%i, %i)\n", next_point[X]%CUB_SIZE, next_point[Y]%CUB_SIZE);
 	if (too_near_wall(next_point, &game->world))
 	{
 		debug("MOVE ❌ too near wall"); //

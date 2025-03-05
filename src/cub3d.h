@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 17:31:12 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:44:11 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 /* WINDOW */
 # define WIN_NAME           ".:++### CUB3D ###++:."
-# define WIN_H		        1080					// viewport height (pixels)
-# define WIN_W		        1920					// viewport width (pixels)
+# define WIN_H		        1280					// viewport height (pixels)
+# define WIN_W		        1940					// viewport width (pixels)
 # define CUB_SIZE           64						// cubes side in pixels
 # define MM_CELL          	16						// minimap cells in pixels
 # define FOV           		70						// field of view in degrees
@@ -123,7 +123,7 @@ typedef struct s_world
 	int		map_height;		// grid height
 	int		map_width;		// grid max width
 	int		pl_height;
-	int		pl_point[2];	// pixels [x][y]
+	float		pl_point[2];	// pixels [x][y]
 	float	pl_angle;
 	float	ray_angle;
 	int		dist_to_plane;
@@ -173,14 +173,14 @@ void		show_info(t_info info);
 char		*cardinal_to_str(t_card c);
 int			cardinal_to_angle(t_card c);
 t_card		char_to_cardinal(char c);
-t_card		get_cardinal_hori(int col_point[2]);
-t_card		get_cardinal_veri(int col_point[2]);
+t_card		get_cardinal_hori(float col_point[2]);
+t_card		get_cardinal_veri(float col_point[2]);
 
 //Utils2
-void		assign_point(int dst[2], int src[2]);
-void		assign_point_ints(int dst[2], int x, int y);
-int			grid_row(int point[2]);
-int			grid_column(int point[2]);
+void		assign_point(float dst[2], float src[2]);
+void		assign_point_ints(float dst[2], float x, float y);
+int			grid_row(float point[2]);
+int			grid_column(float point[2]);
 float		sum_degrees(float deg1, float deg2);
 
 //Parsing (Args, info & map)
@@ -203,15 +203,15 @@ void		init_game(t_game *game, t_cub *cub);
 void		destroy_game(t_game *game);
 
 //Collision & Raycast
-void		get_ray_wall_coll_pt(t_world *world, float ray, int coll_point[2],
+void		get_ray_wall_coll_pt(t_world *world, float ray, float coll_point[2],
 				t_card *coll_card);
-t_bool		pos_is_wall(int point[2], t_world *world);
-t_bool		too_near_wall(int point[2], t_world *world);
-float		dist_pts(int a[2], int b[2]);
+t_bool		pos_is_wall(float point[2], t_world *world);
+t_bool		too_near_wall(float point[2], t_world *world);
+float		dist_pts(float a[2], float b[2]);
 void		assert_directions(float angle, int x_inc, int y_inc);
-int			get_cube_offset(t_image tx_img[4], t_card cardinal, int col_point[2]);
-void		get_projwall_pts_y(t_world *world, float angle, int col_point[2],
-				int pts[2][2]);
+int			get_cube_offset(t_image tx_img[4], t_card cardinal, float col_point[2]);
+void		get_projwall_pts_y(t_world *world, float angle, float col_point[2],
+				float pts[2][2]);
 
 //Minimap
 void		draw_minimap_player(t_game *game);
@@ -225,11 +225,11 @@ t_image		read_image(t_game *game, char *img_path);
 t_color		read_pixel_from_image(t_image img, int img_offset[2]);
 void		img_set_pixel_color(t_image *img, int pixel,
 				t_color color, int alpha);
-void		draw_proj_slice(t_game *game, int p_wall[2][2], t_card cardinal,
+void		draw_proj_slice(t_game *game, float p_wall[2][2], t_card cardinal,
 				int offset);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
 void		draw_game(t_game *game);
-void		paint_img(t_game game, char *img_path, int posX, int posY);
+void		paint_img(t_game game, char *img_path, float posX, float posY);
 
 //Maths
 float		ft_tan(float degrees);
