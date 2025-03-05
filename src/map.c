@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:39:12 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 11:26:18 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:57:45 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_errcode	check_map_row(t_cub *cub, int r, t_bool *player_found)
 
 	c = 0;
 	last = '\0';
-	while (c < cub->smap.width && cub->smap.map[r][c] != '\n')
+	while (c < (int)ft_strlen(cub->smap.map[r]) && cub->smap.map[r][c] != '\n')
 	{
 		if (ft_strchr("01 ", cub->smap.map[r][c]) == NULL)
 		{
