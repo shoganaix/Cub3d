@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/05 12:42:05 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:19:42 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init_game(t_game *game, t_cub *cub)
 	game->world.map_width = cub->smap.width;
 	game->world.ceiling = cub->info.ceiling;
 	game->world.floor = cub->info.floor;
-	game->world.pl_height = CUB_SIZE / 2;
+	game->world.pl_height = CUB_SIZE / 2.0;
 	game->world.pl_point[X] = cub->smap.player_pos[C] * CUB_SIZE + CUB_SIZE / 2;
 	game->world.pl_point[Y] = cub->smap.player_pos[R] * CUB_SIZE + CUB_SIZE / 2;
 	game->world.pl_angle = cardinal_to_angle(cub->smap.player_or);
@@ -100,7 +100,7 @@ void	destroy_game(t_game *game)
 void	get_projwall_pts_y(t_world *world, float ray_angle,
 	float col_point[2], float wall_pts[2][2])
 {
-	const int	dist_to_proj = (WIN_W / 2) / ft_tan(FOV / 2);
+	const float	dist_to_proj = (WIN_W / 2) / ft_tan(FOV / 2);
 	float		projwall_height;
 	float		dist_to_wall_improved;
 	float		angle_between;
@@ -120,9 +120,9 @@ void	get_projwall_pts_y(t_world *world, float ray_angle,
  * north/south wall -> use X axis
  * east/west wall -> use Y axis
  */
-int	get_cube_offset(t_image tx_img[4], t_card wall, float col_point[2])
+float	get_cube_offset(t_image tx_img[4], t_card wall, float col_point[2])
 {
-	int	offset;
+	float	offset;
 
 	(void)tx_img; //
 

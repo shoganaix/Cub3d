@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 12:44:11 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:22:56 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define WIN_NAME           ".:++### CUB3D ###++:."
 # define WIN_H		        1280					// viewport height (pixels)
 # define WIN_W		        1940					// viewport width (pixels)
-# define CUB_SIZE           64						// cubes side in pixels
-# define MM_CELL          	16						// minimap cells in pixels
+# define CUB_SIZE           2048						// cubes side in pixels
+# define MM_CELL          	8						// minimap cells in pixels
 # define FOV           		70						// field of view in degrees
 # define R           		0						// row
 # define C           		1						// column
@@ -122,7 +122,7 @@ typedef struct s_world
 	char	**map;			// grid
 	int		map_height;		// grid height
 	int		map_width;		// grid max width
-	int		pl_height;
+	float		pl_height;
 	float		pl_point[2];	// pixels [x][y]
 	float	pl_angle;
 	float	ray_angle;
@@ -178,7 +178,7 @@ t_card		get_cardinal_veri(float col_point[2]);
 
 //Utils2
 void		assign_point(float dst[2], float src[2]);
-void		assign_point_ints(float dst[2], float x, float y);
+void		assign_point_floats(float dst[2], float x, float y);
 int			grid_row(float point[2]);
 int			grid_column(float point[2]);
 float		sum_degrees(float deg1, float deg2);
@@ -208,8 +208,8 @@ void		get_ray_wall_coll_pt(t_world *world, float ray, float coll_point[2],
 t_bool		pos_is_wall(float point[2], t_world *world);
 t_bool		too_near_wall(float point[2], t_world *world);
 float		dist_pts(float a[2], float b[2]);
-void		assert_directions(float angle, int x_inc, int y_inc);
-int			get_cube_offset(t_image tx_img[4], t_card cardinal, float col_point[2]);
+void		assert_directions(float angle, float x_inc, float y_inc);
+float		get_cube_offset(t_image tx_img[4], t_card cardinal, float col_point[2]);
 void		get_projwall_pts_y(t_world *world, float angle, float col_point[2],
 				float pts[2][2]);
 
@@ -226,7 +226,7 @@ t_color		read_pixel_from_image(t_image img, int img_offset[2]);
 void		img_set_pixel_color(t_image *img, int pixel,
 				t_color color, int alpha);
 void		draw_proj_slice(t_game *game, float p_wall[2][2], t_card cardinal,
-				int offset);
+				float offset);
 void		draw_bg_on_img(t_color ceiling, t_color floor, t_image *img);
 void		draw_game(t_game *game);
 void		paint_img(t_game game, char *img_path, float posX, float posY);

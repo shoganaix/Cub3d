@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 11:23:33 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/03 11:28:02 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:58:10 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * assert - optional
  */
-void	assert_directions(float angle, int x_inc, int y_inc)
+void	assert_directions(float angle, float x_inc, float y_inc)
 {
 	t_bool	err;
 
@@ -30,10 +30,7 @@ void	assert_directions(float angle, int x_inc, int y_inc)
 		|| (270 < angle && angle < 360 && !(x_inc >= 0 && y_inc >= 0)))
 		err = TRUE;
 	if (err)
-	{
-		printf("INFO. angle:%f x_inc:%i y_inc:%i\n", angle, x_inc, y_inc); //
 		my_perror_exit("assert_directions failed");
-	}
 }
 
 float	sum_degrees(float deg1, float deg2)

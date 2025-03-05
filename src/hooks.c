@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 12:37:34 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:19:28 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	rotate_player(t_game *game, t_moves move)
 {
-	const int	angle_inc = FOV / 4;
+	const float	angle_inc = FOV / 4;
 
 	if (move == LEFT)
 		game->world.pl_angle = sum_degrees(game->world.pl_angle, angle_inc);
@@ -27,7 +27,7 @@ void	rotate_player(t_game *game, t_moves move)
 
 void	move_player(t_game *game, t_moves move)
 {
-	const int	step_size = CUB_SIZE / 2;
+	const float	step_size = CUB_SIZE / 2.0;
 	float		move_dir_angle;
 	float			next_point[2];
 
@@ -42,7 +42,7 @@ void	move_player(t_game *game, t_moves move)
 		move_dir_angle = sum_degrees(game->world.pl_angle, -90);
 	else
 		my_perror_exit("Unexpected move");
-	assign_point_ints(next_point,
+	assign_point_floats(next_point,
 		game->world.pl_point[X] + step_size * ft_cos(move_dir_angle),
 		game->world.pl_point[Y] - step_size * ft_sin(move_dir_angle));
 	if (too_near_wall(next_point, &game->world))

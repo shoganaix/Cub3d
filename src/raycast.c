@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:34:09 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 12:42:30 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:19:53 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_bool	ray_wall_loop(float p[2], float inc[2], t_world *world, float col_point[2
 	{
 		if (pos_is_wall(p, world))
 			return (assign_point(col_point, p), TRUE);
-		assign_point_ints(p, p[X] + inc[X], p[Y] + inc[Y]);
+		assign_point_floats(p, p[X] + inc[X], p[Y] + inc[Y]);
 	}
 	return (FALSE);
 }
@@ -50,7 +50,7 @@ t_bool	ray_collides_wall_vert(t_world *world, float angle, float col_point[2])
 
 t_bool	ray_collides_wall_hori(t_world *world, float angle, float col_point[2])
 {
-	float		p[2];
+	float	p[2];
 	float	inc[2];
 
 	if (angle == 0 || angle == 180)
@@ -84,8 +84,8 @@ t_bool	ray_collides_wall_hori(t_world *world, float angle, float col_point[2])
 void	get_ray_wall_coll_pt(t_world *world, float ray, float coll_point[2],
 	t_card *coll_card)
 {
-	float		vert_collision[2];
-	float		hori_collision[2];
+	float	vert_collision[2];
+	float	hori_collision[2];
 	float	dh;
 	float	dv;
 

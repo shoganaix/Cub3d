@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:54:43 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 12:48:54 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:16:42 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // todo here
 void	draw_proj_slice(t_game *game, float proj_wall_pts[2][2],
-		t_card coll_wall, int cube_offset)
+		t_card coll_wall, float cube_offset)
 {
 	int		i;
 	int		img_offset[2];
@@ -32,8 +32,7 @@ void	draw_proj_slice(t_game *game, float proj_wall_pts[2][2],
 			i++;
 			continue ;
 		}
-		img_offset[Y] = (i - proj_wall_pts[0][Y]) * img.height
-			/ (proj_wall_pts[1][Y] - proj_wall_pts[0][Y]);
+		img_offset[Y] = (i - proj_wall_pts[0][Y]) * img.height / (proj_wall_pts[1][Y] - proj_wall_pts[0][Y]);
 		pixel_to_paint = i * WIN_W + proj_wall_pts[0][X];
 		color = read_pixel_from_image(img, img_offset);
 		// if (i ==  WIN_H / 2)
@@ -66,12 +65,12 @@ void	draw_game_on_img(t_game *game)
 		// if (pt2[X] != ray_wall_coll_pt[X] || pt2[Y] != ray_wall_coll_pt[Y])
 		// 	debug_int(",,", i);
 		assign_point(pt2, ray_wall_coll_pt);
-		printf("coll_wall x,y %f %f\n", 
-			1.0*ray_wall_coll_pt[X]/CUB_SIZE, 
-			1.0*ray_wall_coll_pt[Y]/CUB_SIZE);
+		printf("coll_wall x,y %f %f\n", //
+			1.0*ray_wall_coll_pt[X]/CUB_SIZE, //
+			1.0*ray_wall_coll_pt[Y]/CUB_SIZE); //
 		get_projwall_pts_y(&game->world, angle, ray_wall_coll_pt, wall_pts);
-		assign_point_ints(wall_pts[0], WIN_W - i - 1, wall_pts[0][Y]);
-		assign_point_ints(wall_pts[1], WIN_W - i - 1, wall_pts[1][Y]);
+		assign_point_floats(wall_pts[0], WIN_W - i - 1, wall_pts[0][Y]);
+		assign_point_floats(wall_pts[1], WIN_W - i - 1, wall_pts[1][Y]);
 		draw_proj_slice(game, wall_pts, coll_wall,
 			get_cube_offset(game->world.tx_imgs, coll_wall, ray_wall_coll_pt));
 		angle = sum_degrees(angle, game->world.ray_angle);

@@ -6,26 +6,26 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:59:52 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/05 12:47:27 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:19:34 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_bool	check_wall_collision(float point[2], int offset_x, int offset_y,
+t_bool	check_wall_collision(float point[2], float offset_x, float offset_y,
 	t_world *world)
 {
 	float	next_point[2];
 
-	assign_point_ints(next_point, point[X] + offset_x, point[Y] + offset_y);
+	assign_point_floats(next_point, point[X] + offset_x, point[Y] + offset_y);
 	return (pos_is_wall(next_point, world));
 }
 
 t_bool	too_near_wall(float point[2], t_world *world)
 {
-	const int	min_dist = CUB_SIZE / 4;
+	const float	min_dist = CUB_SIZE / 4.0;
 	int			grid_pos[2];
-	int			cell_pt[2];
+	float		cell_pt[2];
 
 	grid_pos[R] = grid_row(point);
 	grid_pos[C] = grid_column(point);
