@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:54:43 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:16:42 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:41:34 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	draw_proj_slice(t_game *game, float proj_wall_pts[2][2],
 
 void	draw_game_on_img(t_game *game)
 {
-	int			i;
-	float		angle;
-	float			ray_wall_coll_pt[2];
-	float			pt2[2];
-	float			wall_pts[2][2];
-	t_card		coll_wall;
+	int		i;
+	float	angle;
+	float	ray_wall_coll_pt[2];
+	float	pt2[2];
+	float	wall_pts[2][2];
+	t_card	coll_wall;
 
 	ft_bzero(&ray_wall_coll_pt, sizeof(int) * 2);
 	assign_point(pt2, ray_wall_coll_pt);
@@ -60,14 +60,8 @@ void	draw_game_on_img(t_game *game)
 	i = 0;
 	while (i < WIN_W)
 	{
-		printf("x %i --\t ", i);
 		get_ray_wall_coll_pt(&game->world, angle, ray_wall_coll_pt, &coll_wall);
-		// if (pt2[X] != ray_wall_coll_pt[X] || pt2[Y] != ray_wall_coll_pt[Y])
-		// 	debug_int(",,", i);
 		assign_point(pt2, ray_wall_coll_pt);
-		printf("coll_wall x,y %f %f\n", //
-			1.0*ray_wall_coll_pt[X]/CUB_SIZE, //
-			1.0*ray_wall_coll_pt[Y]/CUB_SIZE); //
 		get_projwall_pts_y(&game->world, angle, ray_wall_coll_pt, wall_pts);
 		assign_point_floats(wall_pts[0], WIN_W - i - 1, wall_pts[0][Y]);
 		assign_point_floats(wall_pts[1], WIN_W - i - 1, wall_pts[1][Y]);

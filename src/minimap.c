@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:43:49 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/27 16:59:33 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/05 13:36:41 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ void	init_minimap(t_game *game)
 {
 	int				r;
 	int				c;
-	const t_color	black = (t_color){.r = 0, .g = 0, .b = 0};
-	const t_color	white = (t_color){.r = 255, .g = 255, .b = 255};
-	const t_color	blue = (t_color){.r = 0, .g = 150, .b = 255};
+	const t_color	black = (t_color){.r = 50, .g = 50, .b = 50};
 
 	game->minimap = new_empty_img(game->mlx, game->world.map_width * MM_CELL,
 			game->world.map_height * MM_CELL);
@@ -67,18 +65,20 @@ void	init_minimap(t_game *game)
 	while (r < game->world.map_height)
 	{
 		c = 0;
-		while ((size_t)c < ft_strlen(game->world.map[r]))
+		while (c < game->world.map_width )
 		{
-			if (game->world.map[r][c] == '1')
+			if ((size_t)c < ft_strlen(game->world.map[r]) && game->world.map[r][c] == '1')
 				set_minimap_cell(game, r, c, black);
-			else if (game->world.map[r][c] == '0')
-				set_minimap_cell(game, r, c, white);
+			else if ((size_t)c < ft_strlen(game->world.map[r]) && game->world.map[r][c] == '0')
+				set_minimap_cell(game, r, c, game->world.ceiling);
+			else
+				set_minimap_cell(game, r, c, black);
 			c++;
 		}
 		r++;
 	}
-	game->minimap_player = new_empty_img(game->mlx, MM_CELL / 2, MM_CELL / 2);
-	set_minimap_player(game, blue);
+	game->minimap_player = new_empty_img(game->mlx, MM_CELL, MM_CELL);
+	set_minimap_player(game, game->world.floor);
 }
 
 void	draw_minimap_player(t_game *game)
