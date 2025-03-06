@@ -1,9 +1,9 @@
 NO ./img/xpm/test/teapot.xpm
 SO ./img/xpm/test/teapot.xpm
 WE ./img/xpm/test/teapot.xpm
-EA ./img/xpm/test/teapot.xpm
+EA ./img/xpm/teapot
 
-F 20,20,-20
+F 20,20,20
 C 200,200,200
 
 11111

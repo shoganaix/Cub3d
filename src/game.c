@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/05 13:19:42 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:35:54 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	destroy_game(t_game *game)
 		mlx_destroy_image(game->mlx, game->img.mlximg);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
-	// destroy: img, win, mlx
 }
 
 /**
@@ -120,11 +119,9 @@ void	get_projwall_pts_y(t_world *world, float ray_angle,
  * north/south wall -> use X axis
  * east/west wall -> use Y axis
  */
-float	get_cube_offset(t_image tx_img[4], t_card wall, float col_point[2])
+float	get_cube_offset(t_card wall, float col_point[2])
 {
 	float	offset;
-
-	(void)tx_img; //
 
 	if (wall == NO || wall == SO)
 		offset = (int)col_point[X] % CUB_SIZE;

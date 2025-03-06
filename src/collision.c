@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 14:59:52 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/05 13:19:34 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:33:49 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ t_bool	too_near_wall(float point[2], t_world *world)
 	cell_pt[X] = (int)point[X] % CUB_SIZE;
 	cell_pt[Y] = (int)point[Y] % CUB_SIZE;
 	if (cell_pt[X] < min_dist && check_wall_collision(point,
-			-cell_pt[X] - 1, 0, world)) // left
+			-cell_pt[X] - 1, 0, world))
 		return (TRUE);
 	if (CUB_SIZE - cell_pt[X] < min_dist && check_wall_collision(point,
-			cell_pt[X] + 1, 0, world)) // right
+			cell_pt[X] + 1, 0, world))
 		return (TRUE);
 	if (cell_pt[Y] < min_dist && check_wall_collision(point, 0,
-			-cell_pt[Y] - 1, world)) // up
+			-cell_pt[Y] - 1, world))
 		return (TRUE);
 	if (CUB_SIZE - cell_pt[Y] < min_dist && check_wall_collision(point, 0,
-			cell_pt[Y] + 1, world)) // down
+			cell_pt[Y] + 1, world))
 		return (TRUE);
 	return (world->map[grid_pos[R]][grid_pos[C]] == '1');
 }

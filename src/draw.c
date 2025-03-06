@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 17:54:43 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:41:34 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:56:18 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,10 @@ void	draw_proj_slice(t_game *game, float proj_wall_pts[2][2],
 			i++;
 			continue ;
 		}
-		img_offset[Y] = (i - proj_wall_pts[0][Y]) * img.height / (proj_wall_pts[1][Y] - proj_wall_pts[0][Y]);
+		img_offset[Y] = (i - proj_wall_pts[0][Y]) * img.height
+			/ (proj_wall_pts[1][Y] - proj_wall_pts[0][Y]);
 		pixel_to_paint = i * WIN_W + proj_wall_pts[0][X];
 		color = read_pixel_from_image(img, img_offset);
-		// if (i ==  WIN_H / 2)
-		// {
-		// 	ft_printf("painting x,y %i %i\n", proj_wall_pts[0][X], i);
-		// 	printf("color %i %i %i\n", color.r, color.g, color.b); // 
-		// }
 		img_set_pixel_color(&game->img, pixel_to_paint, color, 1);
 		i++;
 	}
@@ -66,7 +62,7 @@ void	draw_game_on_img(t_game *game)
 		assign_point_floats(wall_pts[0], WIN_W - i - 1, wall_pts[0][Y]);
 		assign_point_floats(wall_pts[1], WIN_W - i - 1, wall_pts[1][Y]);
 		draw_proj_slice(game, wall_pts, coll_wall,
-			get_cube_offset(game->world.tx_imgs, coll_wall, ray_wall_coll_pt));
+			get_cube_offset(coll_wall, ray_wall_coll_pt));
 		angle = sum_degrees(angle, game->world.ray_angle);
 		i++;
 	}
@@ -83,15 +79,10 @@ void	draw_game_on_img(t_game *game)
 void	draw_game(t_game *game)
 {
 	draw_bg_on_img(game->world.ceiling, game->world.floor, &game->img);
-	printf("PlayerR:%i inside cell[Y]: %i\n", grid_row(game->world.pl_point),
-		(int)game->world.pl_point[X] % CUB_SIZE); //
-	printf("PlayerC:%i inside cell[X]: %i\n", grid_column(game->world.pl_point),
-		(int)game->world.pl_point[Y] % CUB_SIZE); //
 	draw_game_on_img(game);
 	mlx_put_image_to_window(game->mlx, game->win, game->img.mlximg, 0, 0);
 	mlx_put_image_to_window(game->mlx, game->win, game->minimap.mlximg, 0, 0);
 	draw_minimap_player(game);
 	mlx_pixel_put(game->mlx, game->win, 192, WIN_H / 2, 0xFF0000);
 	mlx_pixel_put(game->mlx, game->win, 210, WIN_H / 2, 0xFF0000);
-	debug("🐸 DRAWN! 🐸"); //
 }

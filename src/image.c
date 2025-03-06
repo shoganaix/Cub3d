@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:05:10 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:37:08 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ t_image	new_empty_img(void *mlx, int width_px, int height_px)
 	if (img.bits_per_pixel % 8 != 0)
 		my_perror_exit("bit per pixel failed");
 	bytes_per_px = img.bits_per_pixel / 8;
-	// img.chpp = bytes_per_px;
-	// img.mlx = mlx;
 	img.height = height_px;
 	img.width = width_px;
 	return (img);

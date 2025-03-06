@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:34:09 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:19:53 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:39:47 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_bool	ray_wall_loop(float p[2], float inc[2], t_world *world, float col_point[2])
+t_bool	ray_wall_loop(float p[2], float inc[2],
+	t_world *world, float col_point[2])
 {
 	while (is_inside_grid(world->map, grid_row(p), grid_column(p),
 			world->map_height))
@@ -26,7 +27,7 @@ t_bool	ray_wall_loop(float p[2], float inc[2], t_world *world, float col_point[2
 
 t_bool	ray_collides_wall_vert(t_world *world, float angle, float col_point[2])
 {
-	float		p[2];
+	float	p[2];
 	float	inc[2];
 
 	if (angle == 90 || angle == 270)
@@ -106,5 +107,4 @@ void	get_ray_wall_coll_pt(t_world *world, float ray, float coll_point[2],
 		assign_point(coll_point, vert_collision);
 		*coll_card = get_cardinal_veri(coll_point);
 	}
-	//debug_int("wall", *coll_card);
 }

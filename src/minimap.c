@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 16:43:49 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:36:41 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:03:39 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_minimap(t_game *game)
 {
 	int				r;
 	int				c;
-	const t_color	black = (t_color){.r = 50, .g = 50, .b = 50};
+	const t_color	black = (t_color){.r = 30, .g = 30, .b = 30};
 
 	game->minimap = new_empty_img(game->mlx, game->world.map_width * MM_CELL,
 			game->world.map_height * MM_CELL);
@@ -65,11 +65,13 @@ void	init_minimap(t_game *game)
 	while (r < game->world.map_height)
 	{
 		c = 0;
-		while (c < game->world.map_width )
+		while (c < game->world.map_width)
 		{
-			if ((size_t)c < ft_strlen(game->world.map[r]) && game->world.map[r][c] == '1')
+			if ((size_t)c < ft_strlen(game->world.map[r])
+				&& game->world.map[r][c] == '1')
 				set_minimap_cell(game, r, c, black);
-			else if ((size_t)c < ft_strlen(game->world.map[r]) && game->world.map[r][c] == '0')
+			else if ((size_t)c < ft_strlen(game->world.map[r])
+				&& game->world.map[r][c] == '0')
 				set_minimap_cell(game, r, c, game->world.ceiling);
 			else
 				set_minimap_cell(game, r, c, black);

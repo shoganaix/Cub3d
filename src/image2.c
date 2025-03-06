@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:06:01 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:02:08 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:37:07 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_color	assign_color(t_image img,
 
 	if (img.endian == 1)
 	{
-		//alpha = pixel_in_buffer[vals - 4];
 		color.r = pixel_in_buffer[vals - 3];
 		color.g = pixel_in_buffer[vals - 2];
 		color.b = pixel_in_buffer[vals - 1];
@@ -29,7 +28,6 @@ t_color	assign_color(t_image img,
 		color.b = pixel_in_buffer[0];
 		color.g = pixel_in_buffer[1];
 		color.r = pixel_in_buffer[2];
-		// alpha = pixel_in_buffer[3];
 	}
 	return (color);
 }

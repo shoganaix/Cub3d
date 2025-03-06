@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:22:56 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:00:05 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,8 @@ typedef struct s_world
 	char	**map;			// grid
 	int		map_height;		// grid height
 	int		map_width;		// grid max width
-	float		pl_height;
-	float		pl_point[2];	// pixels [x][y]
+	float	pl_height;
+	float	pl_point[2];	// pixels [x][y]
 	float	pl_angle;
 	float	ray_angle;
 	int		dist_to_plane;
@@ -209,7 +209,7 @@ t_bool		pos_is_wall(float point[2], t_world *world);
 t_bool		too_near_wall(float point[2], t_world *world);
 float		dist_pts(float a[2], float b[2]);
 void		assert_directions(float angle, float x_inc, float y_inc);
-float		get_cube_offset(t_image tx_img[4], t_card cardinal, float col_point[2]);
+float		get_cube_offset(t_card cardinal, float col_point[2]);
 void		get_projwall_pts_y(t_world *world, float angle, float col_point[2],
 				float pts[2][2]);
 

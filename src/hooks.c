@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/05 13:19:28 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:50:24 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,49 +20,40 @@ void	rotate_player(t_game *game, t_moves move)
 		game->world.pl_angle = sum_degrees(game->world.pl_angle, angle_inc);
 	if (move == RIGHT)
 		game->world.pl_angle = sum_degrees(game->world.pl_angle, -angle_inc);
-
-	debug_float("new angle", game->world.pl_angle); //
-	debug("ROTATE 🔄"); //
 }
 
+/**
+ * 'step size' is now called 'step'
+ * 'next_point' is now called 'next_p'
+ * 'move_direction_angle' is now called 'dir_ag'
+ */
 void	move_player(t_game *game, t_moves move)
 {
-	const float	step_size = CUB_SIZE / 2.0;
-	float		move_dir_angle;
-	float			next_point[2];
+	const float	step = CUB_SIZE / 2.0;
+	float		dir_ag;
+	float		next_p[2];
 
-	move_dir_angle = 0.0;
+	dir_ag = 0.0;
 	if (move == FORW)
-		move_dir_angle = game->world.pl_angle;
+		dir_ag = game->world.pl_angle;
 	else if (move == BACKW)
-		move_dir_angle = sum_degrees(game->world.pl_angle, -180);
+		dir_ag = sum_degrees(game->world.pl_angle, -180);
 	else if (move == LEFT)
-		move_dir_angle = sum_degrees(game->world.pl_angle, 90);
+		dir_ag = sum_degrees(game->world.pl_angle, 90);
 	else if (move == RIGHT)
-		move_dir_angle = sum_degrees(game->world.pl_angle, -90);
+		dir_ag = sum_degrees(game->world.pl_angle, -90);
 	else
 		my_perror_exit("Unexpected move");
-	assign_point_floats(next_point,
-		game->world.pl_point[X] + step_size * ft_cos(move_dir_angle),
-		game->world.pl_point[Y] - step_size * ft_sin(move_dir_angle));
-	if (too_near_wall(next_point, &game->world))
-	{
-		debug("MOVE ❌ too near wall"); //
+	assign_point_floats(next_p, game->world.pl_point[X] + step
+		* ft_cos(dir_ag), game->world.pl_point[Y] - step * ft_sin(dir_ag));
+	if (too_near_wall(next_p, &game->world))
 		return ;
-	}
-	if (pos_is_wall(next_point, &game->world))
-	{
-		debug("MOVE ❌ wall"); //
+	if (pos_is_wall(next_p, &game->world))
 		return ;
-	}
-	if (!is_inside_grid(game->world.map, grid_row(next_point),
-			grid_column(next_point), game->world.map_height))
-	{
-		debug("MOVE ❌ out of grid"); //
+	if (!is_inside_grid(game->world.map, grid_row(next_p),
+			grid_column(next_p), game->world.map_height))
 		return ;
-	}
-	debug("MOVE ✅"); //
-	assign_point(game->world.pl_point, next_point);
+	assign_point(game->world.pl_point, next_p);
 }
 
 int	key_press_hndlr(int keycode, void *param)

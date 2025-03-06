@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cardinal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/05 12:41:28 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:33:35 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ t_card	get_cardinal_hori(float col_point[2])
 		return (SO);
 	return (0);
 }
-
 
 t_card	get_cardinal_veri(float col_point[2])
 {

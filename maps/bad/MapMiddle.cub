@@ -3,9 +3,6 @@ SO ./img/xpm/test/teapot.xpm
 WE ./img/xpm/test/teapot.xpm
 EA ./img/xpm/test/teapot.xpm
 
-F 20,20,-20
-C 200,200,200
-
 11111
 10001
 10S01
@@ -19,3 +16,6 @@ C 200,200,200
 10001
 10001
 11111
+
+F 20,20,20
+C 200,200,200

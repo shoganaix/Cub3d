@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   playground.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:10:39 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/24 16:49:08 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:14:05 by msoriano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(void)
     t_game game;
     
     char	*img1 = "./img/xpm/test.xpm";
-    char	*img2 = "./img/xpm/teapot.xpm";
+    char	*img2 = "./img/xpm/test/teapot.xpm";
 
     game.mlx = mlx_init();
     game.win = mlx_new_window(game.mlx, WIN_W, WIN_H, "CUB3D");

@@ -3,7 +3,7 @@ SO ./img/xpm/test/teapot.xpm
 WE ./img/xpm/test/teapot.xpm
 EA ./img/xpm/test/teapot.xpm
 
-F 20,20,-20
+F 20,20,20
 C 200,200,200
 
 11111
