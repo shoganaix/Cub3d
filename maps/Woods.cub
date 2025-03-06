@@ -1,15 +1,15 @@
-NO ./img/xpm/foliage(256)/foliage_1.xpm
-SO ./img/xpm/foliage(256)/foliage_3.xpm
-WE ./img/xpm/foliage(256)/foliage_2.xpm
-EA ./img/xpm/foliage(256)/foliage_4.xpm
+NO ./img/xpm/foliage/foliage_1.xpm
+SO ./img/xpm/foliage/foliage_2.xpm
+WE ./img/xpm/foliage/foliage_3.xpm
+EA ./img/xpm/foliage/foliage_4.xpm
 
-F 105,142,141
-C 80,44,83
+F 75,38,27
+C 85,93,54
 
 111111111111111
 111111000111111
 111110000011111
-1111000N0001111
+1111000W0001111
 111000000000111
 110000000000011
 100001111100001

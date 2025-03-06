@@ -1,10 +1,10 @@
-NO img/xpm/test/MARBFAC2.xpm
-WE img/xpm/test/SKULWALL.xpm
-SO img/xpm/test/MARBFACE.xpm
-EA img/xpm/test/SKULWAL3.xpm
+NO img/xpm/doom/MARBFACE.xpm
+WE img/xpm/doom/MARBLE2.xpm
+SO img/xpm/doom/MARBLE3.xpm
+EA img/xpm/doom/MARBLE1.xpm
 
 F 0,32,0
-C 120,0,16
+C 20,20,20
 
         1111111111111111111111111
         1000000000110000000000001
