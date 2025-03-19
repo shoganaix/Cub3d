@@ -1,10 +1,10 @@
-NO img/xpm/borderlands/wall_10.xpm
-WE img/xpm/borderlands/wall_11.xpm
-SO img/xpm/borderlands/wall_9.xpm
-EA img/xpm/borderlands/wall_6.xpm
+NO img/xpm/test/checker.xpm
+SO img/xpm/test/checker.xpm
+WE img/xpm/test/checker.xpm
+EA img/xpm/test/checker.xpm
 
-F 80,80,80
-C 20,20,20
+F 0,0,0
+C 0,0,0
 
 111111111111111111111111
 100000000000000000000001

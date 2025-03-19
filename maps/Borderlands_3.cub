@@ -1,10 +1,10 @@
 NO img/xpm/borderlands/wall_3.xpm
 WE img/xpm/borderlands/wall_4.xpm
 SO img/xpm/borderlands/wall_5.xpm
-EA img/xpm/borderlands/wall_9.xpm
+EA img/xpm/borderlands/wall_1.xpm
 
-C 35,19,73
-F 15,6,40
+F 80,80,80
+C 20,20,20
 
         1111111111111111111111111
         1000000000110000000000001

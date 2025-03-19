@@ -1,7 +1,7 @@
-NO ./img/xpm/foliage/foliage_1.xpm
-SO ./img/xpm/foliage/foliage_2.xpm
-WE ./img/xpm/foliage/foliage_3.xpm
-EA ./img/xpm/foliage/foliage_4.xpm
+NO ./img/xpm/foliage/foliage_1_px.xpm
+SO ./img/xpm/foliage/foliage_2_px.xpm
+WE ./img/xpm/foliage/foliage_3_px.xpm
+EA ./img/xpm/foliage/foliage_4_px.xpm
 
 F 75,38,27
 C 85,93,54
