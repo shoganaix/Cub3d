@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 20:27:33 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/06 16:35:54 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:35:00 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_game_textures(t_game *game, t_cub *cub)
 
 void	init_game(t_game *game, t_cub *cub)
 {
+	const t_color	black = (t_color){.r = 30, .g = 30, .b = 30};
+
 	ft_bzero(game, sizeof(t_game));
 	game->mlx = mlx_init();
 	game->win = mlx_new_window(game->mlx, WIN_W, WIN_H, WIN_NAME);
@@ -57,7 +59,7 @@ void	init_game(t_game *game, t_cub *cub)
 	game->world.ray_angle = (1.0 * FOV) / WIN_W;
 	game->world.dist_to_plane = WIN_W / 2 / ft_tan(FOV / 2);
 	init_game_textures(game, cub);
-	init_minimap(game);
+	init_minimap(game, black);
 	destroy_cub(cub);
 }
 

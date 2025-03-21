@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/06 16:37:08 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:29:09 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ t_image	read_image(t_game *game, char *img_path)
 
 	img.mlximg = mlx_xpm_file_to_image(game->mlx, img_path,
 			&img.width, &img.height);
+	img.addr = mlx_get_data_addr(img.mlximg,
+			&img.bits_per_pixel, &img.line_size, &img.endian);
+	if (img.bits_per_pixel % 8 != 0)
+		my_perror_exit("bit per pixel failed");
 	return (img);
 }
 

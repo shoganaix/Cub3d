@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   info2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 19:12:17 by macastro          #+#    #+#             */
-/*   Updated: 2025/03/19 13:43:14 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:55:05 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_errcode	check_cub_info(int fd_in, t_info *info, char **line)
 		{
 			e = check_infoline(*line, info);
 			if (e != ERR_OK)
-				return (my_perr_arg("error in line", *line), e);
+				return (my_perr_arg("Error in line", *line), e);
 			is_complete = ((info->tx_paths[NO] != NULL)
 					&& (info->tx_paths[SO] != NULL)
 					&& (info->tx_paths[WE] != NULL)

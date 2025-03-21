@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/06 16:50:24 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:27:53 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	rotate_player(t_game *game, t_moves move)
 {
-	const float	angle_inc = FOV / 4;
+	const float	angle_inc = TURN;
 
 	if (move == LEFT)
 		game->world.pl_angle = sum_degrees(game->world.pl_angle, angle_inc);

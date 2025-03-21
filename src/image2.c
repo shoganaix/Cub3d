@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:06:01 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/06 16:37:07 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:29:25 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,6 @@ t_color	read_pixel_from_image(t_image img, int img_offset[2])
 	int		vals;
 	char	*pixel_in_buffer;
 
-	img.addr = mlx_get_data_addr(img.mlximg,
-			&img.bits_per_pixel, &img.line_size, &img.endian);
-	if (img.bits_per_pixel % 8 != 0)
-		my_perror_exit("bit per pixel failed");
 	vals = img.bits_per_pixel / 8;
 	pixel = img_offset[Y] * img.width + img_offset[X];
 	pixel_in_buffer = &img.addr[pixel * vals];

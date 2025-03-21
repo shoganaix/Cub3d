@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msoriano <msoriano@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/06 17:00:05 by msoriano         ###   ########.fr       */
+/*   Updated: 2025/03/21 13:52:22 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define CUB_SIZE           2048						// cubes side in pixels
 # define MM_CELL          	8						// minimap cells in pixels
 # define FOV           		70						// field of view in degrees
+# define TURN           	45						// in degrees
 # define R           		0						// row
 # define C           		1						// column
 # define X           		0						// x-axis
@@ -215,7 +216,7 @@ void		get_projwall_pts_y(t_world *world, float angle, float col_point[2],
 
 //Minimap
 void		draw_minimap_player(t_game *game);
-void		init_minimap(t_game *game);
+void		init_minimap(t_game *game, t_color minimap_color);
 void		set_minimap_cell(t_game *game, int r, int c, t_color color);
 void		set_minimap_player(t_game *game, t_color color);
 

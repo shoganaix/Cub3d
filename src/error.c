@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 16:10:36 by msoriano          #+#    #+#             */
-/*   Updated: 2025/02/12 17:25:16 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/20 17:13:14 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	my_perrorcode(t_errcode err, char *msg)
 	const char	*err_msg[NUM_ERR] = {
 		"Success",
 		"Error: wrong number of args. Expected 1: a cub file.",
-		"Error: file not found or not enough permissions.",
 		"Error: argument must be a cub file.",
+		"Error: file not found or not enough permissions.",
 		"Error: not valid format in cub info.",
 		"Error: info is missing in cub file.",
 		"Error: info is dupped in cub file.",
