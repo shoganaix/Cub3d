@@ -1,10 +1,11 @@
-NO img/xpm/borderlands/wall_3.xpm
-WE img/xpm/borderlands/wall_4.xpm
-SO img/xpm/borderlands/wall_5.xpm
-EA img/xpm/borderlands/wall_1.xpm
+NO img/xpm/test/checker_blue.xpm
+SO img/xpm/test/checker_pink.xpm
+WE img/xpm/test/checker_orange.xpm
+EA img/xpm/test/checker_red.xpm
 
-F 80,80,80
-C 20,20,20
+F 255,255,255
+C 60,0,100
+
 
         1111111111111111111111111
         1000000000110000000000001
