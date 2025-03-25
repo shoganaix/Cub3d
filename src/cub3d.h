@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/21 13:52:22 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:23:56 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define CUB_SIZE           2048						// cubes side in pixels
 # define MM_CELL          	8						// minimap cells in pixels
 # define FOV           		70						// field of view in degrees
-# define TURN           	45						// in degrees
+# define TURN           	22.5					// in degrees
 # define R           		0						// row
 # define C           		1						// column
 # define X           		0						// x-axis

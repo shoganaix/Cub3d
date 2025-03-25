@@ -6,7 +6,7 @@
 /*   By: macastro <macastro@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 11:02:57 by msoriano          #+#    #+#             */
-/*   Updated: 2025/03/21 13:27:53 by macastro         ###   ########.fr       */
+/*   Updated: 2025/03/25 12:23:36 by macastro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int	key_press_hndlr(int keycode, void *param)
 {
 	t_game	*game;
 
+	if (keycode != KEY_ESC
+		&& keycode != KEY_A && keycode != KEY_W
+		&& keycode != KEY_S && keycode != KEY_D
+		&& keycode != KEY_LEFT && keycode != KEY_RIGHT)
+		return (0);
 	game = (t_game *)param;
 	if (keycode == KEY_ESC)
 		close_window(game);
